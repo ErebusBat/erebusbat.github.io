@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Golang on ErebusBat</title>
+    <link>http://www.erebusbat.com/tags/golang/</link>
+    <description>Recent content in Golang on ErebusBat</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 08 Mar 2015 08:07:13 -0600</lastBuildDate>
+    <atom:link href="http://www.erebusbat.com/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Dumping Character Codes in Go</title>
+      <link>http://www.erebusbat.com/golang/dumping-char-codes-golang/</link>
+      <pubDate>Sun, 08 Mar 2015 08:07:13 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/golang/dumping-char-codes-golang/</guid>
+      <description>
+
+&lt;p&gt;While iterating file names on my OSX system I noticed that I could not do conditional matching the the &lt;code&gt;Icon?&lt;/code&gt; file, which is used to store custom icons for the Mac OSX Finder.&lt;/p&gt;
+
+&lt;p&gt;Turns out that OSX appends a CR (yes a carriage return) at the end of the file name.  WTF?&lt;/p&gt;
+
+&lt;p&gt;Anyway&amp;hellip; I ended up with this small snippet of code to dump char codes of a string to the console that has no business remaining in the original project:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;func DumpString(str string) {
+  for _, c := range str {
+    fmt.Printf(&amp;quot;&amp;gt;%s&amp;lt; %d\n&amp;quot;, string(c), c)
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;example:1a90af6c5b320cda1ae891e245fd4f54&#34;&gt;Example&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;$ go run main.go
+&amp;gt;H&amp;lt; 72
+&amp;gt;e&amp;lt; 101
+&amp;gt;l&amp;lt; 108
+&amp;gt;l&amp;lt; 108
+&amp;gt;o&amp;lt; 111
+&amp;gt; &amp;lt; 32
+&amp;gt;W&amp;lt; 87
+&amp;gt;o&amp;lt; 111
+&amp;gt;r&amp;lt; 114
+&amp;gt;l&amp;lt; 108
+&amp;gt;d&amp;lt; 100
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

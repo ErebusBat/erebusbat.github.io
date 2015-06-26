@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ErebusBat</title>
+    <link>http://www.erebusbat.com/</link>
+    <description>Recent content on ErebusBat</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 08 Mar 2015 08:07:13 -0600</lastBuildDate>
+    <atom:link href="http://www.erebusbat.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Dumping Character Codes in Go</title>
+      <link>http://www.erebusbat.com/golang/dumping-char-codes-golang/</link>
+      <pubDate>Sun, 08 Mar 2015 08:07:13 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/golang/dumping-char-codes-golang/</guid>
+      <description>
+
+&lt;p&gt;While iterating file names on my OSX system I noticed that I could not do conditional matching the the &lt;code&gt;Icon?&lt;/code&gt; file, which is used to store custom icons for the Mac OSX Finder.&lt;/p&gt;
+
+&lt;p&gt;Turns out that OSX appends a CR (yes a carriage return) at the end of the file name.  WTF?&lt;/p&gt;
+
+&lt;p&gt;Anyway&amp;hellip; I ended up with this small snippet of code to dump char codes of a string to the console that has no business remaining in the original project:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;func DumpString(str string) {
+  for _, c := range str {
+    fmt.Printf(&amp;quot;&amp;gt;%s&amp;lt; %d\n&amp;quot;, string(c), c)
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;example:1a90af6c5b320cda1ae891e245fd4f54&#34;&gt;Example&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;$ go run main.go
+&amp;gt;H&amp;lt; 72
+&amp;gt;e&amp;lt; 101
+&amp;gt;l&amp;lt; 108
+&amp;gt;l&amp;lt; 108
+&amp;gt;o&amp;lt; 111
+&amp;gt; &amp;lt; 32
+&amp;gt;W&amp;lt; 87
+&amp;gt;o&amp;lt; 111
+&amp;gt;r&amp;lt; 114
+&amp;gt;l&amp;lt; 108
+&amp;gt;d&amp;lt; 100
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Embed SASS in HAML</title>
+      <link>http://www.erebusbat.com/dev/embed-sass-in-haml/</link>
+      <pubDate>Wed, 04 Mar 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://www.erebusbat.com/dev/embed-sass-in-haml/</guid>
+      <description>&lt;p&gt;Sometimes it is necessary to add CSS styling tags directly into HAML content.  I am forever forgetting the proper way to do this.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-haml&#34;&gt;%style{type:&#39;text/css&#39;}
+  :sass
+    .bundle_logo
+      background: url(logo.jpg) no-repeat scroll left top transparent
+      height: 133px
+      width: 128px
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>AWK Field Notes</title>
+      <link>http://www.erebusbat.com/linux/awk/</link>
+      <pubDate>Thu, 19 Jun 2014 13:52:50 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/linux/awk/</guid>
+      <description>
+
+&lt;h4 id=&#34;links:6929c066a1635d550302642d3d7c34ff&#34;&gt;Links&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://stackoverflow.com/a/6546314/3683&#34;&gt;http://stackoverflow.com/a/6546314/3683&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;quick:6929c066a1635d550302642d3d7c34ff&#34;&gt;Quick&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# Get amount of free mem (in -m MB)
+$ free -m | grep -E &#39;^Mem&#39; | awk &#39;{print $4}&#39;
+$ free -m | awk &#39;/^Mem/ {print $4}&#39;
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>MySQL Dump Field Notes</title>
+      <link>http://www.erebusbat.com/mysql/mysqldump/</link>
+      <pubDate>Tue, 15 Apr 2014 20:07:28 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/mysql/mysqldump/</guid>
+      <description>
+
+&lt;h4 id=&#34;large-tables:88db73746f7b201d5d160d4ae8934898&#34;&gt;Large Tables&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://stackoverflow.com/questions/5666784/how-can-i-slow-down-a-mysql-dump-as-to-not-affect-current-load-on-the-server&#34;&gt;http://stackoverflow.com/questions/5666784/how-can-i-slow-down-a-mysql-dump-as-to-not-affect-current-load-on-the-server&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# http://stackoverflow.com/a/12142501/3683
+mysqldump -u USER -p --single-transaction --quick \
+  --lock-tables=false DATABASE | gzip &amp;gt; OUTPUT.gz
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;examples:88db73746f7b201d5d160d4ae8934898&#34;&gt;Examples&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;mysqldump [options] [db_name [tbl_name ...]]
+
+# Copy a subset of content to another server (-t no create table, -i add info comments):
+mysqldump -i -t -uroot database_development contents \
+  --where=&amp;quot;url LIKE &#39;corporate/protected%&#39;&amp;quot; \
+  | ssh devsrv &amp;quot;mysql database_production&amp;quot;
+
+mysqldump database_production widgets \
+  | bzip2 -c &amp;gt; production_widgets.sql.bz2
+
+bzcat db/sql/production_widgets.sql.bz2 \
+  | mysql -uroot database_development
+
+# Dump table over SSH tunnel w/o temp file
+ssh prodsrv &amp;quot;mysqldump database_production widgets&amp;quot; \
+  | mysql -uroot database_development
+ssh prodsrv &amp;quot;mysqldump database_production contents&amp;quot; \
+  | mysql -uroot database_development
+
+# Dump table over SSH, compress
+ssh prodsrv &amp;quot;mysqldump database_production widgets \
+  | gzip&amp;quot; \
+  | gzip -d \
+  | mysql -uroot database_development
+
+# Dump table to date/time stamped GPG encrypted file
+mysqldump database_production widgets \
+  | gpg -e -r user@domain.com -o &amp;quot;widgets-$(date +%Y%m%d-%H%M%S).sql.gpg&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;move-tables-data-around:88db73746f7b201d5d160d4ae8934898&#34;&gt;Move tables/data around&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# Copy table from local server to remote server, compressing the transport
+mysqldump -uroot database_development portal_agencies \
+  | gzip \
+  | ssh prodsrv &amp;quot;gzip -d | mysql database_production&amp;quot;
+
+# Copy table from remote server to local, compress
+ssh prodsrv &amp;quot;mysqldump database_production portal_agencies | gzip&amp;quot; \
+  | gzip -d \
+  | mysql -uroot database_development
+
+# Copy table from production to file on local workstation
+ssh prodsrv &amp;quot;mysqldump database_production --comments widgets \
+  | bzip2 -c&amp;quot; &amp;gt; widgets.sql.bz2
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Calculating Table Sizes in MySQL</title>
+      <link>http://www.erebusbat.com/mysql/table-sizes/</link>
+      <pubDate>Tue, 15 Apr 2014 13:57:40 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/mysql/table-sizes/</guid>
+      <description>&lt;nav&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#links:3e8ba73afe940e0453b56d3dc51e8ddc&#34;&gt;Links&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/nav&gt;
+
+&lt;h6 id=&#34;links:3e8ba73afe940e0453b56d3dc51e8ddc&#34;&gt;Links&lt;/h6&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://stackoverflow.com/a/6474642/3683&#34;&gt;SO: how-can-you-determine-how-much-disk-space-a-particular-mysql-table-is-taking-up&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;--BYTES
+SELECT (data_length+index_length) tablesize
+FROM information_schema.tables
+WHERE table_schema=&#39;mydb&#39; and table_name=&#39;mytable&#39;;
+
+--KILOBYTES
+SELECT (data_length+index_length)/power(1024,1) tablesize_kb
+FROM information_schema.tables
+WHERE table_schema=&#39;mydb&#39; and table_name=&#39;mytable&#39;;
+
+--MEGABYTES
+SELECT (data_length+index_length)/power(1024,2) tablesize_mb
+FROM information_schema.tables
+WHERE table_schema=&#39;mydb&#39; and table_name=&#39;mytable&#39;;
+
+--GIGABYTES
+SELECT (data_length+index_length)/power(1024,3) tablesize_gb
+FROM information_schema.tables
+WHERE table_schema=&#39;mydb&#39; and table_name=&#39;mytable&#39;;
+
+
+--GENERIC
+--Here is a generic query where the maximum unit display is TB (TeraBytes)
+SELECT
+    CONCAT(FORMAT(DAT/POWER(1024,pw1),2),&#39; &#39;,SUBSTR(units,pw1*2+1,2)) DATSIZE,
+    CONCAT(FORMAT(NDX/POWER(1024,pw2),2),&#39; &#39;,SUBSTR(units,pw2*2+1,2)) NDXSIZE,
+    CONCAT(FORMAT(TBL/POWER(1024,pw3),2),&#39; &#39;,SUBSTR(units,pw3*2+1,2)) TBLSIZE
+FROM
+(
+    SELECT DAT,NDX,TBL,IF(px&amp;gt;4,4,px) pw1,IF(py&amp;gt;4,4,py) pw2,IF(pz&amp;gt;4,4,pz) pw3
+    FROM
+    (
+        SELECT data_length DAT,index_length NDX,data_length+index_length TBL,
+        FLOOR(LOG(IF(data_length=0,1,data_length))/LOG(1024)) px,
+        FLOOR(LOG(IF(index_length=0,1,index_length))/LOG(1024)) py,
+        FLOOR(LOG(IF(data_length+index_length=0,1,data_length+index_length))/LOG(1024)) pz
+        FROM information_schema.tables
+        WHERE table_schema=&#39;mydb&#39;
+        AND table_name=&#39;mytable&#39;
+    ) AA
+) A,(SELECT &#39;B KBMBGBTB&#39; units) B;
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Microsoft SQL Server Field Notes</title>
+      <link>http://www.erebusbat.com/mssql/field-notes/</link>
+      <pubDate>Wed, 26 Mar 2014 16:41:06 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/mssql/field-notes/</guid>
+      <description>
+
+&lt;p&gt;Random field notes on Microsoft SQL Server&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&#34;misc-snippets:a34e8838774afbd86c31d4cce476018f&#34;&gt;Misc Snippets&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;-- Create new table from select:
+SELECT [WHFCustomerID], [CustomerNumber], [LastName], [FirstName], [MiddleInitial], [Address], [City], [State], [Zip], [PhoneNumber], [SocialSecurityNumber], [MedicaidID], [EmailAddress], [DateOfBirth], [Sex], [DateCreated], [DateUpdated], [WHFConvertDate], [MayoEventCode], [MayoUpdateDate]
+INTO Roundup_Test.dbo.Customers
+FROM Roundup.[dbo].[Customers];
+
+-- Insert into existing table from select
+INSERT INTO Customers
+SELECT [WHFCustomerID], [CustomerNumber], [LastName], [FirstName], [MiddleInitial], [Address], [City], [State], [Zip], [PhoneNumber], [SocialSecurityNumber], [MedicaidID], [EmailAddress], [DateOfBirth], [Sex], [DateCreated], [DateUpdated], [WHFConvertDate], [MayoEventCode], [MayoUpdateDate]
+FROM Roundup.[dbo].[Customers];
+
+--Strip time component
+update C
+SET C.DateOfBirth=DATEADD(dd, DATEDIFF(dd, 0, C.DateOfBirth), 0)
+from Customers C
+where C.CustomerNumber like &#39;W85%&#39;;
+
+-- Display date as mm/dd/yyyy (text)
+select convert(char(10),getdate(), 0),101) as Today
+select convert(char(10),DATEADD(dd, DATEDIFF(dd, 0, CD.DateCollected), 0),101) as DateCollected
+
+-- bundle_participants
+
+-- TRUNCATE TABLE Roundup_Test.dbo.bundle_participants;
+-- DROP TABLE Roundup_Test.dbo.bundle_participants;
+
+SET IDENTITY_INSERT Roundup_Test.dbo.bundle_participants ON;
+INSERT INTO Roundup_Test.dbo.bundle_participants
+(id,portal_id, family_id, family_seq_number, customer_number, member_id, ssn, dob, last_name, first_name, member_class, relationship_code, relationship_desc, is_split, address, city, state, zipcode, start_date, end_date, agency_code, gender, activation_date, sub_agency1, sub_agency2, is_termed, member_uid, phone_number, email, bundle_id, matched_by, created_at, updated_at )
+SELECT *
+  FROM Roundup.dbo.bundle_participants;
+SET IDENTITY_INSERT Roundup_Test.dbo.bundle_participants OFF;
+
+
+delete from Roundup.dbo.bundle_participants where portal_id=1;
+INSERT INTO Roundup.dbo.bundle_participants
+SELECT  [portal_id], [family_id], [family_seq_number], [customer_number], [member_id], [ssn], [dob], [last_name], [first_name], [member_class], [relationship_code], [relationship_desc], [is_split], [address], [city], [state], [zipcode], [start_date], [end_date], [agency_code], [gender], [activation_date], [sub_agency1], [sub_agency2], [is_termed], [phone_number], [email], [bundle_id], [matched_by], [created_at], [updated_at]
+	FROM Roundup_test.[dbo].[bundle_participants]
+ where portal_id=1;
+
+
+
+--Update with JOIN
+-- http://stackoverflow.com/questions/1604091/update-a-table-using-join-in-sql-server
+UPDATE t1
+  SET t1.CalculatedColumn = t2.[Calculated Column]
+  FROM dbo.Table1 AS t1
+  INNER JOIN dbo.Table2 AS t2
+  ON t1.CommonField = t2.[Common Field]
+  WHERE t1.BatchNo = &#39;110&#39;;
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;ddl-management:a34e8838774afbd86c31d4cce476018f&#34;&gt;DDL/Management&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;-- Find FK References
+SELECT
+    f.name AS ForeignKey,
+    OBJECT_NAME(f.parent_object_id) AS TableName,
+    COL_NAME(fc.parent_object_id,
+    fc.parent_column_id) AS ColumnName,
+    OBJECT_NAME (f.referenced_object_id) AS ReferenceTableName,
+    COL_NAME(fc.referenced_object_id,
+    fc.referenced_column_id) AS ReferenceColumnName
+FROM
+    sys.foreign_keys AS f
+    INNER JOIN sys.foreign_key_columns AS fc ON f.OBJECT_ID = fc.constraint_object_id
+ORDER BY ReferenceTableName;
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>MySQL Field Notes</title>
+      <link>http://www.erebusbat.com/mysql/field-notes/</link>
+      <pubDate>Thu, 13 Sep 2012 20:51:28 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/mysql/field-notes/</guid>
+      <description>
+
+&lt;h2 id=&#34;create-db-user:a34e8838774afbd86c31d4cce476018f&#34;&gt;Create DB / User&lt;/h2&gt;
+
+&lt;p&gt;Make sure the DB exists with a &amp;ldquo;mysqladmin create jira&amp;rdquo; first&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;-- Create User
+CREATE USER &#39;jira&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;password&#39;;
+
+-- Grant root on jira DB
+GRANT ALL PRIVILEGES ON jira.* TO &#39;jira&#39;@&#39;localhost&#39; WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+
+-- Grant root on all DBs/tables
+GRANT ALL PRIVILEGES ON *.* TO &#39;jira&#39;@&#39;localhost&#39; WITH GRANT OPTION;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;dates:a34e8838774afbd86c31d4cce476018f&#34;&gt;Dates&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://dev.mysql.com/doc/refman/5.5/en/date-and-time-functions.html&#34;&gt;http://dev.mysql.com/doc/refman/5.5/en/date-and-time-functions.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;SELECT DATE_FORMAT(created_at,GET_FORMAT(DATE,&#39;USA&#39;)) FROM users ;
+-- 12.07.2011
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;coderwalls:a34e8838774afbd86c31d4cce476018f&#34;&gt;Coderwalls&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://coderwall.com/p/gfwcfw&#34;&gt;Move Homebrew MySql datadir&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;commands:a34e8838774afbd86c31d4cce476018f&#34;&gt;Commands&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;use database;
+drop user &#39;database&#39;@&#39;127.0.0.1&#39;;
+show tables;
+describe table;
+select Host,User from user;
+delete from user where Host=&#39;192.168.85.70&#39;;
+FLUSH PRIVILEGES;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;update-user-passwords:a34e8838774afbd86c31d4cce476018f&#34;&gt;Update User Passwords&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;--# Method 1
+use mysql;
+SET PASSWORD FOR &#39;user-name-here&#39;@&#39;hostname-name-here&#39; = PASSWORD(&#39;new-password-here&#39;);
+
+--# Method 2
+UPDATE mysql.user SET Password=PASSWORD(&#39;new-password-here&#39;) WHERE User=&#39;user-name-here&#39; AND Host=&#39;host-name-here&#39;;
+FLUSH PRIVILEGES;
+
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>ZSH Field Notes</title>
+      <link>http://www.erebusbat.com/fieldnotes/zsh/</link>
+      <pubDate>Tue, 04 Sep 2012 16:17:49 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/fieldnotes/zsh/</guid>
+      <description>
+
+&lt;h2 id=&#34;links:aa364d83240e3026be0190c02971a96d&#34;&gt;Links&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.cs.elte.hu/zsh-manual/zsh_12.html&#34;&gt;ZSH Conditional Expressions&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://zanshin.net/2013/09/03/how-to-use-homebrew-zsh-instead-of-max-os-x-default/&#34;&gt;http://zanshin.net/2013/09/03/how-to-use-homebrew-zsh-instead-of-max-os-x-default/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://linux-training.be/files/books/html/fun/index.html&#34;&gt; Some basic but good generic linux docs&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;path-expansion:aa364d83240e3026be0190c02971a96d&#34;&gt;Path Expansion&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;#!/usr/bin/zsh
+# test script
+theVar=&#39;/bin/path/file.txt&#39;
+echo ${theVar:e}    # txt
+echo ${theVar:t}    # file.txt
+echo ${theVar:r}    # /bin/path/file
+echo ${theVar:h}    # /bin/path
+echo ${theVar:h:h}  # /bin
+echo ${theVar:t:r}  # file
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Flag&lt;/th&gt;
+&lt;th&gt;Description&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;h&lt;/td&gt;
+&lt;td&gt;Remove a trailing pathname component, leaving the head.  This works like `dirname&amp;rsquo;.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;r&lt;/td&gt;
+&lt;td&gt;Remove a filename extension of the form `.XXX&amp;rsquo;, leaving the root name.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;e&lt;/td&gt;
+&lt;td&gt;Remove all but the extension.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;t&lt;/td&gt;
+&lt;td&gt;Remove all leading pathname components, leaving the tail.  This works like `basename&amp;rsquo;.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;loops:aa364d83240e3026be0190c02971a96d&#34;&gt;Loops&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# WHILE - Simple watch
+while (sleep 60) do; clear; ./command; done
+# FOR - Every file
+for f in *.m4v; do mvmedia $f; done
+for f in *.{html,sass}; do echo $f; done
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# Dump MySQL table &#39;contents&#39; into development, every M5 /w messages
+while (true) do;
+  echo &amp;quot;Dumping $(date)...&amp;quot;;
+  ssh prodsrv &amp;quot;mysqldump database_production contents&amp;quot; | mysql database_development;
+  echo &amp;quot;    done&amp;quot;;
+  sleep 300;
+done
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# Very simple benchmark
+for i in {1..5}; do time echo &#39;exit&#39; | rails c production; done
+for i in {1..5}; do time rake -T &amp;gt; /dev/null; done
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# Process a subset of zero padded files, like D02S00.  03-13 in this example:
+for s in `seq -f &amp;quot;%02g&amp;quot; 3 13`; do \
+  task1.rb &amp;quot;IMG.D02S${s}.mkv&amp;quot; &amp;amp;&amp;amp; \
+  task2 &amp;quot;IMG.D02S${s}.m4v&amp;quot;; done
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;regular-expressions-regex:aa364d83240e3026be0190c02971a96d&#34;&gt;Regular Expressions Regex&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ITEMS=(
+  Desktop
+  Pictures
+  Backups
+)
+# Allow specifying items to select as $1, separated by a space (/ /),
+if [[ ! -z $1 ]]; then
+  # This will become an array
+  SPECIFIED_ITEMS=(&amp;quot;${(s/ /)1}&amp;quot;)
+  for i in $SPECIFIED_ITEMS; do
+    # This syntax will remove the extension (r), then check the ITEMS
+    # collection to get the index ($i), -1 if not found
+    if [[ ${${ITEMS[(r)$i]}:--1} == &amp;quot;-1&amp;quot; ]]; then
+      echo &amp;quot;*** ERROR: $i is not a valid item! Valid items are: $ITEMS&amp;quot;
+      exit 1
+    else
+      # OK
+    fi
+  done
+  ITEMS=$SPECIFIED_ITEMS
+fi
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;arrays:aa364d83240e3026be0190c02971a96d&#34;&gt;Arrays&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# Allow specifying items to override as $1, separated by a space (/ /),
+# check to make sure that said items are valid (appear in the ITEMS list).
+URLS=(
+  Desktop
+  Pictures
+  Backups
+)
+
+# Loop
+for f in $URLS; do
+  wget $f
+done
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;hotkeys:aa364d83240e3026be0190c02971a96d&#34;&gt;Hotkeys&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://coderwall.com/p/a8uxma&#34;&gt;https://coderwall.com/p/a8uxma&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.geekmind.net/2011/01/shortcuts-to-improve-your-bash-zsh.html&#34;&gt;http://www.geekmind.net/2011/01/shortcuts-to-improve-your-bash-zsh.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;history:aa364d83240e3026be0190c02971a96d&#34;&gt;History&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://stackoverflow.com/questions/9502274/last-command-in-same-terminal&#34;&gt;http://stackoverflow.com/questions/9502274/last-command-in-same-terminal&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# Don&#39;t share history between sessions
+setopt no_share_history
+
+# Share history between sessions
+setopt share_history
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;passing-arguments-to-app:aa364d83240e3026be0190c02971a96d&#34;&gt;Passing Arguments to App&lt;/h3&gt;
+
+&lt;p&gt;Below is a wrapper script that sources [[rbenv]] and passes ALL arguments (correctly) to the ruby script.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;#!/bin/zsh
+export HOME=/Users/aburns
+export PATH=$HOME/.rbenv/bin:$PATH
+eval &amp;quot;$(rbenv init -)&amp;quot;
+cd $HOME/bin/1.9.3
+# echo -E ${(q)@}
+ruby ./myIL.rb ${(Q)@}
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

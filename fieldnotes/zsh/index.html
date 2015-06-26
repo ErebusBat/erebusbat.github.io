@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+    <head>
+
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+
+        <title>ZSH Field Notes &middot; ErebusBat</title>
+        <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' type='text/css'>
+        <link rel="stylesheet" href="http://www.erebusbat.com/libraries/normalize.3.0.1.css" />
+        <link rel="stylesheet" href="http://www.erebusbat.com/css/liquorice.css" />
+        <link rel="stylesheet" href="http://www.erebusbat.com/css/erebusbat.css" />
+
+        
+        <link rel="stylesheet" href="https://yandex.st/highlightjs/8.0/styles/default.min.css">
+        <script src="https://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        
+
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-144-precomposed.png" sizes="144x144" />
+        <link rel="alternate" href="" type="application/rss+xml" title="ErebusBat" />
+    </head>
+    <body class="li-body">
+
+<header class="li-page-header">
+    <div class="container">
+        <div class="row">
+            <div class="sixteen columns">
+                <div class="li-brand li-left">
+                <a href="http://www.erebusbat.com">ErebusBat</a></div>
+                <div class="li-menu li-right">
+                    <span class="li-menu-icon" onclick="javascript:toggle('menu');">&#9776;</span>
+                    <ul id="menu2" class="li-menu-items">
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="sixteen columns">
+                <ul id="menu" class="li-menu-items li-menu-mobile">
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+
+
+    <div class="container">
+        <div class="row">
+            <div class="sixteen columns">
+                <article class="li-article">
+                    <header class="li-article-header">
+                        <h1 class="li-article-title">ZSH Field Notes</h1>
+                        <span class="li-article-taxonomies">
+                            
+
+                            
+                                with tags
+                                
+                                    <a href="http://www.erebusbat.com/tags/zsh">zsh</a>
+                                
+                                    <a href="http://www.erebusbat.com/tags/field-notes">field-notes</a>
+                                
+                                    <a href="http://www.erebusbat.com/tags/dokuwiki">DokuWiki</a>
+                                
+                            
+                        </span>
+                         - 
+                        <time class="li-article-date">Tuesday, September 4, 2012</time>
+                    </header>
+                    <section>
+                        
+
+<h2 id="links:aa364d83240e3026be0190c02971a96d">Links</h2>
+
+<ul>
+<li><a href="http://www.cs.elte.hu/zsh-manual/zsh_12.html">ZSH Conditional Expressions</a></li>
+<li><a href="http://zanshin.net/2013/09/03/how-to-use-homebrew-zsh-instead-of-max-os-x-default/">http://zanshin.net/2013/09/03/how-to-use-homebrew-zsh-instead-of-max-os-x-default/</a></li>
+<li><a href="http://linux-training.be/files/books/html/fun/index.html"> Some basic but good generic linux docs</a></li>
+</ul>
+
+<hr />
+
+<h3 id="path-expansion:aa364d83240e3026be0190c02971a96d">Path Expansion</h3>
+
+<pre><code class="language-bash">#!/usr/bin/zsh
+# test script
+theVar='/bin/path/file.txt'
+echo ${theVar:e}    # txt
+echo ${theVar:t}    # file.txt
+echo ${theVar:r}    # /bin/path/file
+echo ${theVar:h}    # /bin/path
+echo ${theVar:h:h}  # /bin
+echo ${theVar:t:r}  # file
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>h</td>
+<td>Remove a trailing pathname component, leaving the head.  This works like `dirname&rsquo;.</td>
+</tr>
+
+<tr>
+<td>r</td>
+<td>Remove a filename extension of the form `.XXX&rsquo;, leaving the root name.</td>
+</tr>
+
+<tr>
+<td>e</td>
+<td>Remove all but the extension.</td>
+</tr>
+
+<tr>
+<td>t</td>
+<td>Remove all leading pathname components, leaving the tail.  This works like `basename&rsquo;.</td>
+</tr>
+</tbody>
+</table>
+
+<hr />
+
+<h3 id="loops:aa364d83240e3026be0190c02971a96d">Loops</h3>
+
+<pre><code class="language-bash"># WHILE - Simple watch
+while (sleep 60) do; clear; ./command; done
+# FOR - Every file
+for f in *.m4v; do mvmedia $f; done
+for f in *.{html,sass}; do echo $f; done
+</code></pre>
+
+<pre><code class="language-bash"># Dump MySQL table 'contents' into development, every M5 /w messages
+while (true) do;
+  echo &quot;Dumping $(date)...&quot;;
+  ssh prodsrv &quot;mysqldump database_production contents&quot; | mysql database_development;
+  echo &quot;    done&quot;;
+  sleep 300;
+done
+</code></pre>
+
+<pre><code class="language-bash"># Very simple benchmark
+for i in {1..5}; do time echo 'exit' | rails c production; done
+for i in {1..5}; do time rake -T &gt; /dev/null; done
+</code></pre>
+
+<pre><code class="language-bash"># Process a subset of zero padded files, like D02S00.  03-13 in this example:
+for s in `seq -f &quot;%02g&quot; 3 13`; do \
+  task1.rb &quot;IMG.D02S${s}.mkv&quot; &amp;&amp; \
+  task2 &quot;IMG.D02S${s}.m4v&quot;; done
+</code></pre>
+
+<hr />
+
+<h3 id="regular-expressions-regex:aa364d83240e3026be0190c02971a96d">Regular Expressions Regex</h3>
+
+<pre><code class="language-bash">ITEMS=(
+  Desktop
+  Pictures
+  Backups
+)
+# Allow specifying items to select as $1, separated by a space (/ /),
+if [[ ! -z $1 ]]; then
+  # This will become an array
+  SPECIFIED_ITEMS=(&quot;${(s/ /)1}&quot;)
+  for i in $SPECIFIED_ITEMS; do
+    # This syntax will remove the extension (r), then check the ITEMS
+    # collection to get the index ($i), -1 if not found
+    if [[ ${${ITEMS[(r)$i]}:--1} == &quot;-1&quot; ]]; then
+      echo &quot;*** ERROR: $i is not a valid item! Valid items are: $ITEMS&quot;
+      exit 1
+    else
+      # OK
+    fi
+  done
+  ITEMS=$SPECIFIED_ITEMS
+fi
+</code></pre>
+
+<hr />
+
+<h3 id="arrays:aa364d83240e3026be0190c02971a96d">Arrays</h3>
+
+<pre><code class="language-bash"># Allow specifying items to override as $1, separated by a space (/ /),
+# check to make sure that said items are valid (appear in the ITEMS list).
+URLS=(
+  Desktop
+  Pictures
+  Backups
+)
+
+# Loop
+for f in $URLS; do
+  wget $f
+done
+</code></pre>
+
+<hr />
+
+<h3 id="hotkeys:aa364d83240e3026be0190c02971a96d">Hotkeys</h3>
+
+<ul>
+<li><a href="https://coderwall.com/p/a8uxma">https://coderwall.com/p/a8uxma</a></li>
+<li><a href="http://www.geekmind.net/2011/01/shortcuts-to-improve-your-bash-zsh.html">http://www.geekmind.net/2011/01/shortcuts-to-improve-your-bash-zsh.html</a></li>
+</ul>
+
+<hr />
+
+<h3 id="history:aa364d83240e3026be0190c02971a96d">History</h3>
+
+<p><a href="http://stackoverflow.com/questions/9502274/last-command-in-same-terminal">http://stackoverflow.com/questions/9502274/last-command-in-same-terminal</a></p>
+
+<pre><code class="language-bash"># Don't share history between sessions
+setopt no_share_history
+
+# Share history between sessions
+setopt share_history
+</code></pre>
+
+<hr />
+
+<h3 id="passing-arguments-to-app:aa364d83240e3026be0190c02971a96d">Passing Arguments to App</h3>
+
+<p>Below is a wrapper script that sources [[rbenv]] and passes ALL arguments (correctly) to the ruby script.</p>
+
+<pre><code class="language-bash">#!/bin/zsh
+export HOME=/Users/aburns
+export PATH=$HOME/.rbenv/bin:$PATH
+eval &quot;$(rbenv init -)&quot;
+cd $HOME/bin/1.9.3
+# echo -E ${(q)@}
+ruby ./myIL.rb ${(Q)@}
+</code></pre>
+
+                    </section>
+                </article>
+            </div>
+        </div>
+
+        
+
+
+        <div class="row li-pagination">
+            <div class="eight columns">
+                <div class="li-pagination-previous">
+                    
+                        Later article<br />
+                        <a href="http://www.erebusbat.com/mysql/field-notes/"> MySQL Field Notes</a>
+                    
+                </div>
+            </div>
+            <div class="eight columns">
+                <div class="li-pagination-next">
+                    
+                        &nbsp;
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+<footer class="li-page-footer">
+    <div class="container">
+        <div class="row">
+            <div class="sixteen columns">
+                <div class="li-page-footer-legal">
+                    &copy; 2015. All rights reserved. 
+                </div>
+                <div class="li-page-footer-theme">
+                    <span class=""><a href="https://github.com/eliasson/liquorice/">liquorice</a> is a theme for <a href="http://hugo.spf13.com">hugo</a></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script type="text/javascript">
+    <!--
+    function toggle(id) {
+        var e = document.getElementById(id);
+        e.style.display == 'block' ? e.style.display = 'none' : e.style.display = 'block';
+    }
+    
+    </script>
+    <script type="text/javascript">
+    <!--
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', ""]);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    -->
+    </script>
+    </body>
+</html>
+
