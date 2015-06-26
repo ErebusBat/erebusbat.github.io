@@ -19,8 +19,6 @@
 
 &lt;p&gt;Random field notes on Microsoft SQL Server&lt;/p&gt;
 
-&lt;hr /&gt;
-
 &lt;h2 id=&#34;misc-snippets:a34e8838774afbd86c31d4cce476018f&#34;&gt;Misc Snippets&lt;/h2&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;-- Create new table from select:

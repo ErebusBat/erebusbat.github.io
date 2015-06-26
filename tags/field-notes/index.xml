@@ -17,6 +17,8 @@
       <guid>http://www.erebusbat.com/linux/awk/</guid>
       <description>
 
+&lt;p&gt;Misc notes and snippets in a &lt;em&gt;Field Notes&lt;/em&gt; style&lt;/p&gt;
+
 &lt;h4 id=&#34;links:6929c066a1635d550302642d3d7c34ff&#34;&gt;Links&lt;/h4&gt;
 
 &lt;ul&gt;
@@ -39,6 +41,8 @@ $ free -m | awk &#39;/^Mem/ {print $4}&#39;
       
       <guid>http://www.erebusbat.com/mysql/mysqldump/</guid>
       <description>
+
+&lt;p&gt;Misc notes and snippets in a &lt;em&gt;Field Notes&lt;/em&gt; style&lt;/p&gt;
 
 &lt;h4 id=&#34;large-tables:88db73746f7b201d5d160d4ae8934898&#34;&gt;Large Tables&lt;/h4&gt;
 
@@ -111,8 +115,6 @@ ssh prodsrv &amp;quot;mysqldump database_production --comments widgets \
       <description>
 
 &lt;p&gt;Random field notes on Microsoft SQL Server&lt;/p&gt;
-
-&lt;hr /&gt;
 
 &lt;h2 id=&#34;misc-snippets:a34e8838774afbd86c31d4cce476018f&#34;&gt;Misc Snippets&lt;/h2&gt;
 
@@ -195,6 +197,8 @@ ORDER BY ReferenceTableName;
       <guid>http://www.erebusbat.com/mysql/field-notes/</guid>
       <description>
 
+&lt;p&gt;Misc notes and snippets in a &lt;em&gt;Field Notes&lt;/em&gt; style&lt;/p&gt;
+
 &lt;h2 id=&#34;create-db-user:a34e8838774afbd86c31d4cce476018f&#34;&gt;Create DB / User&lt;/h2&gt;
 
 &lt;p&gt;Make sure the DB exists with a &amp;ldquo;mysqladmin create jira&amp;rdquo; first&lt;/p&gt;
@@ -254,6 +258,8 @@ FLUSH PRIVILEGES;
       
       <guid>http://www.erebusbat.com/fieldnotes/zsh/</guid>
       <description>
+
+&lt;p&gt;Misc notes and snippets in a &lt;em&gt;Field Notes&lt;/em&gt; style&lt;/p&gt;
 
 &lt;h2 id=&#34;links:aa364d83240e3026be0190c02971a96d&#34;&gt;Links&lt;/h2&gt;
 

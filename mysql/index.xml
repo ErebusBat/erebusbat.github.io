@@ -17,6 +17,8 @@
       <guid>http://www.erebusbat.com/mysql/mysqldump/</guid>
       <description>
 
+&lt;p&gt;Misc notes and snippets in a &lt;em&gt;Field Notes&lt;/em&gt; style&lt;/p&gt;
+
 &lt;h4 id=&#34;large-tables:88db73746f7b201d5d160d4ae8934898&#34;&gt;Large Tables&lt;/h4&gt;
 
 &lt;ul&gt;
@@ -106,6 +108,8 @@ ssh prodsrv &amp;quot;mysqldump database_production --comments widgets \
 &lt;/ul&gt;
 &lt;/nav&gt;
 
+&lt;p&gt;How to calculate table sized in MySQL&lt;/p&gt;
+
 &lt;h6 id=&#34;links:3e8ba73afe940e0453b56d3dc51e8ddc&#34;&gt;Links&lt;/h6&gt;
 
 &lt;ul&gt;
@@ -164,6 +168,8 @@ FROM
       
       <guid>http://www.erebusbat.com/mysql/field-notes/</guid>
       <description>
+
+&lt;p&gt;Misc notes and snippets in a &lt;em&gt;Field Notes&lt;/em&gt; style&lt;/p&gt;
 
 &lt;h2 id=&#34;create-db-user:a34e8838774afbd86c31d4cce476018f&#34;&gt;Create DB / User&lt;/h2&gt;
 

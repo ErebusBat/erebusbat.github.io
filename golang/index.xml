@@ -21,7 +21,7 @@
 
 &lt;p&gt;Turns out that OSX appends a CR (yes a carriage return) at the end of the file name.  WTF?&lt;/p&gt;
 
-&lt;p&gt;Anyway&amp;hellip; I ended up with this small snippet of code to dump char codes of a string to the console that has no business remaining in the original project:&lt;/p&gt;
+&lt;p&gt;Anyway&amp;hellip; I ended up with this small snippet of code to dump char codes of a string to the console that has no business remaining in the original project.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;func DumpString(str string) {
   for _, c := range str {

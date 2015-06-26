@@ -60,7 +60,12 @@
         <time class="li-article-date">Sunday, March 8, 2015</time>
     </header>
     <section class="li-article-section">
-        While iterating file names on my OSX system I noticed that I could not do conditional matching the the Icon? file, which is used to store custom icons for the Mac OSX Finder. Turns out that OSX appends a CR (yes a carriage return) at the end of the file name. WTF? Anyway&hellip; I ended up with this small snippet of code to dump char codes of a string to
+        <p>While iterating file names on my OSX system I noticed that I could not do conditional matching the the <code>Icon?</code> file, which is used to store custom icons for the Mac OSX Finder.</p>
+
+<p>Turns out that OSX appends a CR (yes a carriage return) at the end of the file name.  WTF?</p>
+
+<p>Anyway&hellip; I ended up with this small snippet of code to dump char codes of a string to the console that has no business remaining in the original project.</p>
+
     </section>
     <footer>
         <a href='http://www.erebusbat.com/golang/dumping-char-codes-golang/'>More</a>
@@ -76,7 +81,8 @@
         <time class="li-article-date">Wednesday, March 4, 2015</time>
     </header>
     <section class="li-article-section">
-        Sometimes it is necessary to add CSS styling tags directly into HAML content. I am forever forgetting the proper way to do this. %style{type:'text/css'} :sass .bundle_logo background: url(logo.jpg) no-repeat scroll left top transparent height: 133px width: 128px
+        <p>Sometimes it is necessary to add CSS styling tags directly into HAML content.  I am forever forgetting the proper way to do this.</p>
+
     </section>
     <footer>
         <a href='http://www.erebusbat.com/dev/embed-sass-in-haml/'>More</a>
@@ -92,7 +98,8 @@
         <time class="li-article-date">Thursday, June 19, 2014</time>
     </header>
     <section class="li-article-section">
-        Links http://stackoverflow.com/a/6546314/3683 Quick # Get amount of free mem (in -m MB) $ free -m | grep -E '^Mem' | awk '{print $4}' $ free -m | awk '/^Mem/ {print $4}'
+        <p>Misc notes and snippets in a <em>Field Notes</em> style</p>
+
     </section>
     <footer>
         <a href='http://www.erebusbat.com/linux/awk/'>More</a>
@@ -108,7 +115,8 @@
         <time class="li-article-date">Tuesday, April 15, 2014</time>
     </header>
     <section class="li-article-section">
-        Large Tables http://stackoverflow.com/questions/5666784/how-can-i-slow-down-a-mysql-dump-as-to-not-affect-current-load-on-the-server # http://stackoverflow.com/a/12142501/3683 mysqldump -u USER -p --single-transaction --quick \ --lock-tables=false DATABASE | gzip &gt; OUTPUT.gz Examples mysqldump [options] [db_name [tbl_name ...]] # Copy a subset of content to another server (-t no create table, -i add info comments): mysqldump -i -t -uroot database_development contents \ --where=&quot;url LIKE 'corporate/protected%'&quot; \ | ssh devsrv &quot;mysql database_production&quot; mysqldump database_production widgets \ | bzip2 -c &gt; production_widgets.sql.bz2 bzcat db/sql/production_widgets.sql.bz2 \ |
+        <p>Misc notes and snippets in a <em>Field Notes</em> style</p>
+
     </section>
     <footer>
         <a href='http://www.erebusbat.com/mysql/mysqldump/'>More</a>
@@ -124,7 +132,8 @@
         <time class="li-article-date">Tuesday, April 15, 2014</time>
     </header>
     <section class="li-article-section">
-        Links Links SO: how-can-you-determine-how-much-disk-space-a-particular-mysql-table-is-taking-up --BYTES SELECT (data_length+index_length) tablesize FROM information_schema.tables WHERE table_schema='mydb' and table_name='mytable'; --KILOBYTES SELECT (data_length+index_length)/power(1024,1) tablesize_kb FROM information_schema.tables WHERE table_schema='mydb' and table_name='mytable'; --MEGABYTES SELECT (data_length+index_length)/power(1024,2) tablesize_mb FROM information_schema.tables WHERE table_schema='mydb' and table_name='mytable'; --GIGABYTES SELECT (data_length+index_length)/power(1024,3) tablesize_gb FROM information_schema.tables WHERE table_schema='mydb' and table_name='mytable'; --GENERIC --Here is a generic query where the maximum unit display is TB (TeraBytes) SELECT CONCAT(FORMAT(DAT/POWER(1024,pw1),2),' ',SUBSTR(units,pw1*2+1,2)) DATSIZE, CONCAT(FORMAT(NDX/POWER(1024,pw2),2),' ',SUBSTR(units,pw2*2+1,2)) NDXSIZE, CONCAT(FORMAT(TBL/POWER(1024,pw3),2),' ',SUBSTR(units,pw3*2+1,2)) TBLSIZE FROM (
+        <p>How to calculate table sized in MySQL</p>
+
     </section>
     <footer>
         <a href='http://www.erebusbat.com/mysql/table-sizes/'>More</a>
@@ -140,7 +149,8 @@
         <time class="li-article-date">Wednesday, March 26, 2014</time>
     </header>
     <section class="li-article-section">
-        Random field notes on Microsoft SQL Server Misc Snippets -- Create new table from select: SELECT [WHFCustomerID], [CustomerNumber], [LastName], [FirstName], [MiddleInitial], [Address], [City], [State], [Zip], [PhoneNumber], [SocialSecurityNumber], [MedicaidID], [EmailAddress], [DateOfBirth], [Sex], [DateCreated], [DateUpdated], [WHFConvertDate], [MayoEventCode], [MayoUpdateDate] INTO Roundup_Test.dbo.Customers FROM Roundup.[dbo].[Customers]; -- Insert into existing table from select INSERT INTO Customers SELECT [WHFCustomerID], [CustomerNumber], [LastName], [FirstName], [MiddleInitial], [Address], [City], [State], [Zip], [PhoneNumber], [SocialSecurityNumber], [MedicaidID], [EmailAddress], [DateOfBirth], [Sex], [DateCreated], [DateUpdated], [WHFConvertDate], [MayoEventCode],
+        <p>Random field notes on Microsoft SQL Server</p>
+
     </section>
     <footer>
         <a href='http://www.erebusbat.com/mssql/field-notes/'>More</a>
@@ -156,7 +166,8 @@
         <time class="li-article-date">Thursday, September 13, 2012</time>
     </header>
     <section class="li-article-section">
-        Create DB / User Make sure the DB exists with a &ldquo;mysqladmin create jira&rdquo; first -- Create User CREATE USER 'jira'@'localhost' IDENTIFIED BY 'password'; -- Grant root on jira DB GRANT ALL PRIVILEGES ON jira.* TO 'jira'@'localhost' WITH GRANT OPTION; FLUSH PRIVILEGES; -- Grant root on all DBs/tables GRANT ALL PRIVILEGES ON *.* TO 'jira'@'localhost' WITH GRANT OPTION; Dates http://dev.mysql.com/doc/refman/5.5/en/date-and-time-functions.html SELECT DATE_FORMAT(created_at,GET_FORMAT(DATE,'USA')) FROM users ; -- 12.07.2011 Coderwalls Move Homebrew
+        <p>Misc notes and snippets in a <em>Field Notes</em> style</p>
+
     </section>
     <footer>
         <a href='http://www.erebusbat.com/mysql/field-notes/'>More</a>
@@ -172,7 +183,8 @@
         <time class="li-article-date">Tuesday, September 4, 2012</time>
     </header>
     <section class="li-article-section">
-        Links ZSH Conditional Expressions http://zanshin.net/2013/09/03/how-to-use-homebrew-zsh-instead-of-max-os-x-default/ Some basic but good generic linux docs Path Expansion #!/usr/bin/zsh # test script theVar='/bin/path/file.txt' echo ${theVar:e} # txt echo ${theVar:t} # file.txt echo ${theVar:r} # /bin/path/file echo ${theVar:h} # /bin/path echo ${theVar:h:h} # /bin echo ${theVar:t:r} # file Flag Description h Remove a trailing pathname component, leaving the head. This works like `dirname&rsquo;. r Remove a filename extension of the form `.XXX&rsquo;, leaving the root name.
+        <p>Misc notes and snippets in a <em>Field Notes</em> style</p>
+
     </section>
     <footer>
         <a href='http://www.erebusbat.com/fieldnotes/zsh/'>More</a>
