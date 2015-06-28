@@ -5,7 +5,7 @@
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
 
-        <title>Embed SASS in HAML &middot; ErebusBat</title>
+        <title>AWK Field Notes &middot; ErebusBat</title>
         <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' type='text/css'>
         <link rel="stylesheet" href="http://www.erebusbat.com/libraries/normalize.3.0.1.css" />
         <link rel="stylesheet" href="http://www.erebusbat.com/css/liquorice.css" />
@@ -73,31 +73,40 @@
             <div class="sixteen columns">
                 <article class="li-article">
                     <header class="li-article-header">
-                        <h1 class="li-article-title">Embed SASS in HAML</h1>
+                        <h1 class="li-article-title">AWK Field Notes</h1>
                         <span class="li-article-taxonomies">
                             
 
                             
                                 with tags
                                 
-                                    <a href="http://www.erebusbat.com/tags/sass">sass</a>
+                                    <a href="http://www.erebusbat.com/tags/linux">linux</a>
                                 
-                                    <a href="http://www.erebusbat.com/tags/haml">haml</a>
+                                    <a href="http://www.erebusbat.com/tags/field-notes">field-notes</a>
+                                
+                                    <a href="http://www.erebusbat.com/tags/awk">awk</a>
                                 
                             
                         </span>
                          - 
-                        <time class="li-article-date">Wednesday, March 4, 2015</time>
+                        <time class="li-article-date">Thursday, June 19, 2014</time>
                     </header>
                     <section>
-                        <p>Sometimes it is necessary to add CSS styling tags directly into HAML content.  I am forever forgetting the proper way to do this.</p>
+                        
 
-<pre><code class="language-haml">%style{type:'text/css'}
-  :sass
-    .bundle_logo
-      background: url(logo.jpg) no-repeat scroll left top transparent
-      height: 133px
-      width: 128px
+<p>Misc notes and snippets in a <em>Field Notes</em> style</p>
+
+<h4 id="links:6929c066a1635d550302642d3d7c34ff">Links</h4>
+
+<ul>
+<li><a href="http://stackoverflow.com/a/6546314/3683">http://stackoverflow.com/a/6546314/3683</a></li>
+</ul>
+
+<h4 id="quick:6929c066a1635d550302642d3d7c34ff">Quick</h4>
+
+<pre><code class="language-bash"># Get amount of free mem (in -m MB)
+$ free -m | grep -E '^Mem' | awk '{print $4}'
+$ free -m | awk '/^Mem/ {print $4}'
 </code></pre>
 
                     </section>
@@ -113,7 +122,7 @@
                 <div class="li-pagination-previous">
                     
                         Later article<br />
-                        <a href="http://www.erebusbat.com/golang/dumping-char-codes-golang/"> Dumping Character Codes in Go</a>
+                        <a href="http://www.erebusbat.com/2015/03/embed-sass-in-haml/"> Embed SASS in HAML</a>
                     
                 </div>
             </div>
@@ -121,7 +130,7 @@
                 <div class="li-pagination-next">
                     
                         Older article<br />
-                        <a href="http://www.erebusbat.com/linux/awk/"> AWK Field Notes</a>
+                        <a href="http://www.erebusbat.com/2014/04/mysql-dump-field-notes/"> MySQL Dump Field Notes</a>
                     
                 </div>
             </div>

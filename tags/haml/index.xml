@@ -11,10 +11,10 @@
     
     <item>
       <title>Embed SASS in HAML</title>
-      <link>http://www.erebusbat.com/dev/embed-sass-in-haml/</link>
+      <link>http://www.erebusbat.com/2015/03/embed-sass-in-haml/</link>
       <pubDate>Wed, 04 Mar 2015 00:00:00 +0000</pubDate>
       
-      <guid>http://www.erebusbat.com/dev/embed-sass-in-haml/</guid>
+      <guid>http://www.erebusbat.com/2015/03/embed-sass-in-haml/</guid>
       <description>&lt;p&gt;Sometimes it is necessary to add CSS styling tags directly into HAML content.  I am forever forgetting the proper way to do this.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-haml&#34;&gt;%style{type:&#39;text/css&#39;}

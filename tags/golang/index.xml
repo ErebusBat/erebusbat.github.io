@@ -11,10 +11,10 @@
     
     <item>
       <title>Dumping Character Codes in Go</title>
-      <link>http://www.erebusbat.com/golang/dumping-char-codes-golang/</link>
+      <link>http://www.erebusbat.com/2015/03/dumping-character-codes-in-go/</link>
       <pubDate>Sun, 08 Mar 2015 08:07:13 -0600</pubDate>
       
-      <guid>http://www.erebusbat.com/golang/dumping-char-codes-golang/</guid>
+      <guid>http://www.erebusbat.com/2015/03/dumping-character-codes-in-go/</guid>
       <description>
 
 &lt;p&gt;While iterating file names on my OSX system I noticed that I could not do conditional matching the the &lt;code&gt;Icon?&lt;/code&gt; file, which is used to store custom icons for the Mac OSX Finder.&lt;/p&gt;

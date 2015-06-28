@@ -11,10 +11,10 @@
     
     <item>
       <title>MySQL Dump Field Notes</title>
-      <link>http://www.erebusbat.com/mysql/mysqldump/</link>
+      <link>http://www.erebusbat.com/2014/04/mysql-dump-field-notes/</link>
       <pubDate>Tue, 15 Apr 2014 20:07:28 -0600</pubDate>
       
-      <guid>http://www.erebusbat.com/mysql/mysqldump/</guid>
+      <guid>http://www.erebusbat.com/2014/04/mysql-dump-field-notes/</guid>
       <description>
 
 &lt;p&gt;Misc notes and snippets in a &lt;em&gt;Field Notes&lt;/em&gt; style&lt;/p&gt;
@@ -83,10 +83,10 @@ ssh prodsrv &amp;quot;mysqldump database_production --comments widgets \
     
     <item>
       <title>Calculating Table Sizes in MySQL</title>
-      <link>http://www.erebusbat.com/mysql/table-sizes/</link>
+      <link>http://www.erebusbat.com/2014/04/calculating-table-sizes-in-mysql/</link>
       <pubDate>Tue, 15 Apr 2014 13:57:40 -0600</pubDate>
       
-      <guid>http://www.erebusbat.com/mysql/table-sizes/</guid>
+      <guid>http://www.erebusbat.com/2014/04/calculating-table-sizes-in-mysql/</guid>
       <description>&lt;nav&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -163,10 +163,10 @@ FROM
     
     <item>
       <title>MySQL Field Notes</title>
-      <link>http://www.erebusbat.com/mysql/field-notes/</link>
+      <link>http://www.erebusbat.com/2012/09/mysql-field-notes/</link>
       <pubDate>Thu, 13 Sep 2012 20:51:28 -0600</pubDate>
       
-      <guid>http://www.erebusbat.com/mysql/field-notes/</guid>
+      <guid>http://www.erebusbat.com/2012/09/mysql-field-notes/</guid>
       <description>
 
 &lt;p&gt;Misc notes and snippets in a &lt;em&gt;Field Notes&lt;/em&gt; style&lt;/p&gt;

@@ -5,7 +5,7 @@
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
 
-        <title>AWK Field Notes &middot; ErebusBat</title>
+        <title>Dumping Character Codes in Go &middot; ErebusBat</title>
         <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' type='text/css'>
         <link rel="stylesheet" href="http://www.erebusbat.com/libraries/normalize.3.0.1.css" />
         <link rel="stylesheet" href="http://www.erebusbat.com/css/liquorice.css" />
@@ -73,40 +73,50 @@
             <div class="sixteen columns">
                 <article class="li-article">
                     <header class="li-article-header">
-                        <h1 class="li-article-title">AWK Field Notes</h1>
+                        <h1 class="li-article-title">Dumping Character Codes in Go</h1>
                         <span class="li-article-taxonomies">
                             
 
                             
                                 with tags
                                 
-                                    <a href="http://www.erebusbat.com/tags/linux">linux</a>
-                                
-                                    <a href="http://www.erebusbat.com/tags/field-notes">field-notes</a>
-                                
-                                    <a href="http://www.erebusbat.com/tags/awk">awk</a>
+                                    <a href="http://www.erebusbat.com/tags/golang">golang</a>
                                 
                             
                         </span>
                          - 
-                        <time class="li-article-date">Thursday, June 19, 2014</time>
+                        <time class="li-article-date">Sunday, March 8, 2015</time>
                     </header>
                     <section>
                         
 
-<p>Misc notes and snippets in a <em>Field Notes</em> style</p>
+<p>While iterating file names on my OSX system I noticed that I could not do conditional matching the the <code>Icon?</code> file, which is used to store custom icons for the Mac OSX Finder.</p>
 
-<h4 id="links:6929c066a1635d550302642d3d7c34ff">Links</h4>
+<p>Turns out that OSX appends a CR (yes a carriage return) at the end of the file name.  WTF?</p>
 
-<ul>
-<li><a href="http://stackoverflow.com/a/6546314/3683">http://stackoverflow.com/a/6546314/3683</a></li>
-</ul>
+<p>Anyway&hellip; I ended up with this small snippet of code to dump char codes of a string to the console that has no business remaining in the original project.</p>
 
-<h4 id="quick:6929c066a1635d550302642d3d7c34ff">Quick</h4>
+<pre><code class="language-go">func DumpString(str string) {
+  for _, c := range str {
+    fmt.Printf(&quot;&gt;%s&lt; %d\n&quot;, string(c), c)
+  }
+}
+</code></pre>
 
-<pre><code class="language-bash"># Get amount of free mem (in -m MB)
-$ free -m | grep -E '^Mem' | awk '{print $4}'
-$ free -m | awk '/^Mem/ {print $4}'
+<h3 id="example:1a90af6c5b320cda1ae891e245fd4f54">Example</h3>
+
+<pre><code class="language-bash">$ go run main.go
+&gt;H&lt; 72
+&gt;e&lt; 101
+&gt;l&lt; 108
+&gt;l&lt; 108
+&gt;o&lt; 111
+&gt; &lt; 32
+&gt;W&lt; 87
+&gt;o&lt; 111
+&gt;r&lt; 114
+&gt;l&lt; 108
+&gt;d&lt; 100
 </code></pre>
 
                     </section>
@@ -121,8 +131,7 @@ $ free -m | awk '/^Mem/ {print $4}'
             <div class="eight columns">
                 <div class="li-pagination-previous">
                     
-                        Later article<br />
-                        <a href="http://www.erebusbat.com/dev/embed-sass-in-haml/"> Embed SASS in HAML</a>
+                        &nbsp;
                     
                 </div>
             </div>
@@ -130,7 +139,7 @@ $ free -m | awk '/^Mem/ {print $4}'
                 <div class="li-pagination-next">
                     
                         Older article<br />
-                        <a href="http://www.erebusbat.com/mysql/mysqldump/"> MySQL Dump Field Notes</a>
+                        <a href="http://www.erebusbat.com/2015/03/embed-sass-in-haml/"> Embed SASS in HAML</a>
                     
                 </div>
             </div>
