@@ -5,7 +5,7 @@
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
 
-        <title>FFmpeg Oneliners &middot; ErebusBat</title>
+        <title>App won&#39;t Install with Apple Configurator &middot; ErebusBat</title>
         <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' type='text/css'>
         <link rel="stylesheet" href="http://www.erebusbat.com/libraries/normalize.3.0.1.css" />
         <link rel="stylesheet" href="http://www.erebusbat.com/css/liquorice.css" />
@@ -73,68 +73,42 @@
             <div class="sixteen columns">
                 <article class="li-article">
                     <header class="li-article-header">
-                        <h1 class="li-article-title">FFmpeg Oneliners</h1>
+                        <h1 class="li-article-title">App won&#39;t Install with Apple Configurator</h1>
                         <span class="li-article-taxonomies">
                             
 
                             
                                 with tags
                                 
-                                    <a href="http://www.erebusbat.com/tags/ffmpeg">ffmpeg</a>
+                                    <a href="http://www.erebusbat.com/tags/ios">ios</a>
+                                
+                                    <a href="http://www.erebusbat.com/tags/mdm">mdm</a>
                                 
                             
                         </span>
                          - 
-                        <time class="li-article-date">Saturday, November 3, 2012</time>
+                        <time class="li-article-date">Monday, June 29, 2015</time>
                     </header>
                     <section>
-                        <p>Here are a bunch of <code>ffmpeg</code> commands that I have collected</p>
+                        <p>Recently at work we had the need to provision roughly ten iPads in a secure way for a single app usage scenario.</p>
 
-<pre><code class="language-sh"># File Info
-ffmpeg -i &lt;file&gt;
+<p>I was making good progress using <a href="https://itunes.apple.com/us/app/apple-configurator/id434433123?mt=12">Apple Configurator</a> (AC) to lock down the iPad.  Then all of the sudden my app wouldn&rsquo;t install on the iPad, despite being very clearly checked on the <em>App</em> tab of the AC interface.</p>
 
-# Convert (not transcode)
-ffmpeg -i &lt;file&gt; -c copy &lt;file.out&gt;
+<p>This was especially troubling because it had worked just the day before.</p>
 
-# Convert lowbitrate -&gt; 128k (to get around iCloud)
-ffmpeg -i in.m4a -b:a 128k out.mp3
+<p>After some looking around I found the culprit.  Due to my over zealousness I i had changed a very innocuous feature that prevented <em>any</em> apps from being installed, even ones I specified in AC.</p>
 
-# Convert, but transcode audio to 2ch AC3
-ffmpeg -i &lt;file.mkv&gt; -c:v copy -c:a ac3 -ac 2 &lt;file.mp4&gt;
+<p>The offending setting is configured in the <em>Restrictions</em> payload, under the <em>Media Content</em> section there is a drown down for App ratings.  A quick and naive reading of that section might think that is just for downloading apps; however it will also block AC from installing them as well.</p>
 
-# Extract Audio Stream (0:1 = 0-First input file  1-Second Stream)
-ffmpeg -i Movie.m4v -map 0:1 -acodec copy Movie_Audio.m4a
+<p><img src="/img/2015/06-AC-no-apps.png" alt="AC No Apps" />
+</p>
 
-# Extract Audio Stream (0:1 = 0-First input file  1-Second Stream)
-#   Copy 5 minutes from 25 min in (1500s=25m, 300s=5m)
-ffmpeg -i Movie.m4v -map 0:1 -acodec copy -ss 1500 -t 300 Movie_Audio.m4a
+<p>Changing the setting back to <em>Allow All Apps</em> and a quick refresh in AC later and my app appeared as expected.</p>
 
-# Convert audio file to iTunes format (works with non-standard extensions, like m4b)
-ffmpeg -i audio.mp3 -f adts -c:a libfdk_aac audio.m4b
+<p>I am OK leaving this setting as it because there is another setting under the <em>Apps</em> tab that disables the App Store altogether.  When enabled the App Store icon doesn&rsquo;t even appear on the device.</p>
 
-# Convert all MP3 files to AAC, then rename to M4B (for audiobooks)
-for f in *.mp3; do ffmpeg -i $f  -c:a libfdk_aac ${f:r}.m4a &amp;&amp; mv ${f:r}.m4a ${f:r}.m4b; done
-for f in *.mp3; do ffmpeg -i $f -f adts -c:a libfdk_aac ${f:r}.m4b; done
-for f in *.mp3; do ffmpeg -i $f -acodec libfdk_aac -b:a 96k -f adts ${f:r}.m4b; done
-
-# Convert to AAC/M4A that will import into iTunes
-ffmpeg -i Input.mp3 -c:a libfdk_aac Test96.m4a
-#     If you want a different file extension, specify iPod format:
-ffmpeg -i Input.mp3 -c:a libfdk_aac -f ipod -b:a 96k Test96.m4b
-
-# Convert all FLAC-&gt;M4A, using separate folders
-mkdir aac; mkdir processed; for f in *.flac; do
-  ffmpeg -i $f -acodec libfdk_aac -b:a 256k &quot;aac/${f:t:r}.m4a&quot; &amp;&amp; mv $f processed/; done
-# Simple FLAC conversion
-for f in *.flac; do ffmpeg -i $f -c:a libfdk_aac -ab 256k ${f:r}.m4a; done
-
-# Take an input that has 0:0-h264 0:1-ac3 and output a file that copies those and adds an AAC channel
-# Notice the duplicated input, this is so we can copy one audio, but process the other
-ffmpeg -i movie.m4v -i movie.m4v -map 0:0 -c:v copy -map 0:1 -c:a:0 copy -map 1:1 -c:a:1 libfdk_aac movie_fixed.m4v
-
-# Convert flash demo video to h264/m4v mono
-ffmpeg -i dd6796a8c742c83457e1d7a32985cc5e.flv -c:v h264 -c:a libfdk_aac -ac:1 1 -ab:1 48k SCID-workshop2.m4v
-</code></pre>
+<p><img src="/img/2015/06-AC-no-app-store.png" alt="AC No App Store" />
+</p>
 
                     </section>
                 </article>
@@ -148,8 +122,7 @@ ffmpeg -i dd6796a8c742c83457e1d7a32985cc5e.flv -c:v h264 -c:a libfdk_aac -ac:1 1
             <div class="eight columns">
                 <div class="li-pagination-previous">
                     
-                        Later article<br />
-                        <a href="http://www.erebusbat.com/2012/11/install-full-ffmpeg-homebrew/"> Install full ffmpeg Homebrew</a>
+                        &nbsp;
                     
                 </div>
             </div>
@@ -157,7 +130,7 @@ ffmpeg -i dd6796a8c742c83457e1d7a32985cc5e.flv -c:v h264 -c:a libfdk_aac -ac:1 1
                 <div class="li-pagination-next">
                     
                         Older article<br />
-                        <a href="http://www.erebusbat.com/2012/09/mysql-field-notes/"> MySQL Field Notes</a>
+                        <a href="http://www.erebusbat.com/2015/03/dumping-character-codes-in-go/"> Dumping Character Codes in Go</a>
                     
                 </div>
             </div>
