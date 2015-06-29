@@ -327,242 +327,270 @@ ORDER BY ReferenceTableName;
     </item>
     
     <item>
-      <title>MySQL Field Notes</title>
-      <link>http://www.erebusbat.com/2012/09/mysql-field-notes/</link>
-      <pubDate>Thu, 13 Sep 2012 20:51:28 -0600</pubDate>
+      <title>Hide/Unhide Chart Axis</title>
+      <link>http://www.erebusbat.com/2013/08/hide/unhide-chart-axis/</link>
+      <pubDate>Fri, 09 Aug 2013 19:02:12 -0600</pubDate>
       
-      <guid>http://www.erebusbat.com/2012/09/mysql-field-notes/</guid>
+      <guid>http://www.erebusbat.com/2013/08/hide/unhide-chart-axis/</guid>
       <description>
 
-&lt;p&gt;Misc notes and snippets in a &lt;em&gt;Field Notes&lt;/em&gt; style&lt;/p&gt;
+&lt;h2 id=&#34;hide-unhide-chart-axis:a9e8c812db8650e2096509e92c06400a&#34;&gt;Hide/Unhide Chart Axis&lt;/h2&gt;
 
-&lt;h2 id=&#34;create-db-user:a34e8838774afbd86c31d4cce476018f&#34;&gt;Create DB / User&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-vbnet&#34;&gt;&#39;// This takes a sheet name, where it is a chart sheet.
+&#39;// If your chart lives on a regular worksheet then you will probably need to add a call to Sheet.ChartObject(&amp;quot;chart name&amp;quot;)
+Function ToggleChartAxisValues(sheetName As String)
+    Dim c As Chart, isHidden As Boolean, ax As Axis
+    Set c = Sheets(sheetName)
+    Set ax = c.Axes(xlValue)
+    isHidden = (ax.TickLabelPosition = xlTickLabelPositionNone)
 
-&lt;p&gt;Make sure the DB exists with a &amp;ldquo;mysqladmin create jira&amp;rdquo; first&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;-- Create User
-CREATE USER &#39;jira&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;password&#39;;
-
--- Grant root on jira DB
-GRANT ALL PRIVILEGES ON jira.* TO &#39;jira&#39;@&#39;localhost&#39; WITH GRANT OPTION;
-FLUSH PRIVILEGES;
-
--- Grant root on all DBs/tables
-GRANT ALL PRIVILEGES ON *.* TO &#39;jira&#39;@&#39;localhost&#39; WITH GRANT OPTION;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;dates:a34e8838774afbd86c31d4cce476018f&#34;&gt;Dates&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://dev.mysql.com/doc/refman/5.5/en/date-and-time-functions.html&#34;&gt;http://dev.mysql.com/doc/refman/5.5/en/date-and-time-functions.html&lt;/a&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;SELECT DATE_FORMAT(created_at,GET_FORMAT(DATE,&#39;USA&#39;)) FROM users ;
--- 12.07.2011
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;coderwalls:a34e8838774afbd86c31d4cce476018f&#34;&gt;Coderwalls&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://coderwall.com/p/gfwcfw&#34;&gt;Move Homebrew MySql datadir&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;commands:a34e8838774afbd86c31d4cce476018f&#34;&gt;Commands&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;use database;
-drop user &#39;database&#39;@&#39;127.0.0.1&#39;;
-show tables;
-describe table;
-select Host,User from user;
-delete from user where Host=&#39;192.168.85.70&#39;;
-FLUSH PRIVILEGES;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;update-user-passwords:a34e8838774afbd86c31d4cce476018f&#34;&gt;Update User Passwords&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;--# Method 1
-use mysql;
-SET PASSWORD FOR &#39;user-name-here&#39;@&#39;hostname-name-here&#39; = PASSWORD(&#39;new-password-here&#39;);
-
---# Method 2
-UPDATE mysql.user SET Password=PASSWORD(&#39;new-password-here&#39;) WHERE User=&#39;user-name-here&#39; AND Host=&#39;host-name-here&#39;;
-FLUSH PRIVILEGES;
-
+    If isHidden Then
+        &#39;// Unhide
+        ax.TickLabelPosition = xlTickLabelPositionNextToAxis
+    Else
+        &#39;// Hide
+        ax.TickLabelPosition = xlTickLabelPositionNone
+    End If
+End Function
 &lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
     
     <item>
-      <title>ZSH Field Notes</title>
-      <link>http://www.erebusbat.com/2012/09/zsh-field-notes/</link>
-      <pubDate>Tue, 04 Sep 2012 16:17:49 -0600</pubDate>
+      <title>Calculating EMA in Excel</title>
+      <link>http://www.erebusbat.com/2013/08/calculating-ema-in-excel/</link>
+      <pubDate>Thu, 08 Aug 2013 20:13:07 -0600</pubDate>
       
-      <guid>http://www.erebusbat.com/2012/09/zsh-field-notes/</guid>
+      <guid>http://www.erebusbat.com/2013/08/calculating-ema-in-excel/</guid>
       <description>
 
-&lt;p&gt;Misc notes and snippets in a &lt;em&gt;Field Notes&lt;/em&gt; style&lt;/p&gt;
-
-&lt;h2 id=&#34;links:aa364d83240e3026be0190c02971a96d&#34;&gt;Links&lt;/h2&gt;
+&lt;h4 id=&#34;exponential-moving-average:8409931a967e1b7377cbecc480e552ae&#34;&gt;Exponential Moving Average&lt;/h4&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.cs.elte.hu/zsh-manual/zsh_12.html&#34;&gt;ZSH Conditional Expressions&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://zanshin.net/2013/09/03/how-to-use-homebrew-zsh-instead-of-max-os-x-default/&#34;&gt;http://zanshin.net/2013/09/03/how-to-use-homebrew-zsh-instead-of-max-os-x-default/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://linux-training.be/files/books/html/fun/index.html&#34;&gt; Some basic but good generic linux docs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.willowsolutions.com/tips/tips_2002_11.shtml&#34;&gt;http://www.willowsolutions.com/tips/tips_2002_11.shtml&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.willowsolutions.com/tips/tips_2002_11_1.shtml&#34;&gt;http://www.willowsolutions.com/tips/tips_2002_11_1.shtml&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.aaii.com/computerizedinvesting/article/spreadsheet-corner-constructing-moving-averages&#34;&gt;http://www.aaii.com/computerizedinvesting/article/spreadsheet-corner-constructing-moving-averages&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;hr /&gt;
+&lt;p&gt;A simple moving average calculates the average price for a set number of time periods. To calculate a 10 day moving average you would calculate the sum of the closing price for a period of 10 days and divide by 10. On the eleventh day you would add the price for the eleventh day to the average and subtract the price for the first day.&lt;/p&gt;
 
-&lt;h3 id=&#34;path-expansion:aa364d83240e3026be0190c02971a96d&#34;&gt;Path Expansion&lt;/h3&gt;
+&lt;p&gt;The formula used to calculate an EMA uses a smoothing constant. The smoothing constant applies the appropriate weighting for the most recent price relative to the previous day’s EMA calculation.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;#!/usr/bin/zsh
-# test script
-theVar=&#39;/bin/path/file.txt&#39;
-echo ${theVar:e}    # txt
-echo ${theVar:t}    # file.txt
-echo ${theVar:r}    # /bin/path/file
-echo ${theVar:h}    # /bin/path
-echo ${theVar:h:h}  # /bin
-echo ${theVar:t:r}  # file
+&lt;pre&gt;&lt;code&gt;EMA=(Today’s Last – Yesterday’s EMA) x (SmoothingConstant) + Yesterday’s EMA
+
+# N=EMA Periods
+SmoothingConstant = 2 / (1 + N)
 &lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Convert to Excel Time from Unix Time</title>
+      <link>http://www.erebusbat.com/2013/08/convert-to-excel-time-from-unix-time/</link>
+      <pubDate>Thu, 08 Aug 2013 18:50:09 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2013/08/convert-to-excel-time-from-unix-time/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;UnixTime&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ExcelTime = (UnixTime + (&amp;quot;1/1/1970&amp;quot;-&amp;quot;1/1/1900&amp;quot;+1)*86400) / 86400
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>How to Format Data for OHLC charts</title>
+      <link>http://www.erebusbat.com/2013/08/how-to-format-data-for-ohlc-charts/</link>
+      <pubDate>Thu, 08 Aug 2013 18:49:36 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2013/08/how-to-format-data-for-ohlc-charts/</guid>
+      <description>
+
+&lt;h1 id=&#34;howto-format-data-for-ohlc-charts:1f72f7308066a43c90d3c8131ce4d84d&#34;&gt;HOWTO: Format Data for OHLC charts&lt;/h1&gt;
+
+&lt;p&gt;Format data in this manner:&lt;/p&gt;
 
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
-&lt;th&gt;Flag&lt;/th&gt;
-&lt;th&gt;Description&lt;/th&gt;
+&lt;th&gt;Date&lt;/th&gt;
+&lt;th&gt;Open&lt;/th&gt;
+&lt;th&gt;High&lt;/th&gt;
+&lt;th&gt;Low&lt;/th&gt;
+&lt;th&gt;Close&lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
 
 &lt;tbody&gt;
 &lt;tr&gt;
-&lt;td&gt;h&lt;/td&gt;
-&lt;td&gt;Remove a trailing pathname component, leaving the head.  This works like `dirname&amp;rsquo;.&lt;/td&gt;
+&lt;td&gt;1/1/12&lt;/td&gt;
+&lt;td&gt;4.72202&lt;/td&gt;
+&lt;td&gt;5.4999&lt;/td&gt;
+&lt;td&gt;4.615&lt;/td&gt;
+&lt;td&gt;5.26766&lt;/td&gt;
 &lt;/tr&gt;
 
 &lt;tr&gt;
-&lt;td&gt;r&lt;/td&gt;
-&lt;td&gt;Remove a filename extension of the form `.XXX&amp;rsquo;, leaving the root name.&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;e&lt;/td&gt;
-&lt;td&gt;Remove all but the extension.&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;t&lt;/td&gt;
-&lt;td&gt;Remove all leading pathname components, leaving the tail.  This works like `basename&amp;rsquo;.&lt;/td&gt;
+&lt;td&gt;1/2/12&lt;/td&gt;
+&lt;td&gt;5.26766&lt;/td&gt;
+&lt;td&gt;5.47&lt;/td&gt;
+&lt;td&gt;4.8&lt;/td&gt;
+&lt;td&gt;5.21678&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Converting DTS/BluRay with FFmpeg</title>
+      <link>http://www.erebusbat.com/2013/08/converting-dts/bluray-with-ffmpeg/</link>
+      <pubDate>Thu, 08 Aug 2013 16:36:00 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2013/08/converting-dts/bluray-with-ffmpeg/</guid>
+      <description>&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ ffmpeg -i video.mkv
+Stream #0:0(eng): Video: h264 (High), yuv420p, 1280x536, SAR 1:1 DAR 160:67, 23.98 fps, 23.98 tbr, 1k tbn, 47.95 tbc (default)
+    Metadata:
+      title           : Video Title
+    Stream #0:1(eng): Audio: dts (DTS), 48000 Hz, 5.1(side), fltp, 1536 kb/s (default)
+    Metadata:
+      title           : DTS 5.1 1.5 Mbps
+    Stream #0:2(eng): Subtitle: subrip
+
+# AppleTV doesn&#39;t support DTS so we output AAC (2ch) and AC3 (5.1)
+$ ffmpeg -i video.mkv -i video.mkv \
+  -map 0:0 -c:v:0 copy \
+  -map 0:1 -ac:1 2 -c:a:0 libfdk_aac \
+  -map 1:1 -c:a:1 ac3 video.m4v
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Concatenate files with ffmpeg</title>
+      <link>http://www.erebusbat.com/2012/11/concatenate-files-with-ffmpeg/</link>
+      <pubDate>Sat, 03 Nov 2012 19:16:11 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2012/11/concatenate-files-with-ffmpeg/</guid>
+      <description>
+
+&lt;p&gt;Take a list of media files and concatenate them into a single file.&lt;/p&gt;
 
 &lt;hr /&gt;
 
-&lt;h3 id=&#34;loops:aa364d83240e3026be0190c02971a96d&#34;&gt;Loops&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# WHILE - Simple watch
-while (sleep 60) do; clear; ./command; done
-# FOR - Every file
-for f in *.m4v; do mvmedia $f; done
-for f in *.{html,sass}; do echo $f; done
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# Dump MySQL table &#39;contents&#39; into development, every M5 /w messages
-while (true) do;
-  echo &amp;quot;Dumping $(date)...&amp;quot;;
-  ssh prodsrv &amp;quot;mysqldump database_production contents&amp;quot; | mysql database_development;
-  echo &amp;quot;    done&amp;quot;;
-  sleep 300;
-done
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# Very simple benchmark
-for i in {1..5}; do time echo &#39;exit&#39; | rails c production; done
-for i in {1..5}; do time rake -T &amp;gt; /dev/null; done
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# Process a subset of zero padded files, like D02S00.  03-13 in this example:
-for s in `seq -f &amp;quot;%02g&amp;quot; 3 13`; do \
-  task1.rb &amp;quot;IMG.D02S${s}.mkv&amp;quot; &amp;amp;&amp;amp; \
-  task2 &amp;quot;IMG.D02S${s}.m4v&amp;quot;; done
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&#34;regular-expressions-regex:aa364d83240e3026be0190c02971a96d&#34;&gt;Regular Expressions Regex&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ITEMS=(
-  Desktop
-  Pictures
-  Backups
-)
-# Allow specifying items to select as $1, separated by a space (/ /),
-if [[ ! -z $1 ]]; then
-  # This will become an array
-  SPECIFIED_ITEMS=(&amp;quot;${(s/ /)1}&amp;quot;)
-  for i in $SPECIFIED_ITEMS; do
-    # This syntax will remove the extension (r), then check the ITEMS
-    # collection to get the index ($i), -1 if not found
-    if [[ ${${ITEMS[(r)$i]}:--1} == &amp;quot;-1&amp;quot; ]]; then
-      echo &amp;quot;*** ERROR: $i is not a valid item! Valid items are: $ITEMS&amp;quot;
-      exit 1
-    else
-      # OK
-    fi
-  done
-  ITEMS=$SPECIFIED_ITEMS
-fi
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&#34;arrays:aa364d83240e3026be0190c02971a96d&#34;&gt;Arrays&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# Allow specifying items to override as $1, separated by a space (/ /),
-# check to make sure that said items are valid (appear in the ITEMS list).
-URLS=(
-  Desktop
-  Pictures
-  Backups
-)
-
-# Loop
-for f in $URLS; do
-  wget $f
-done
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&#34;hotkeys:aa364d83240e3026be0190c02971a96d&#34;&gt;Hotkeys&lt;/h3&gt;
+&lt;h3 id=&#34;references:5eb3cda2ab2d24c54adb700c53258e2d&#34;&gt;References&lt;/h3&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://coderwall.com/p/a8uxma&#34;&gt;https://coderwall.com/p/a8uxma&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.geekmind.net/2011/01/shortcuts-to-improve-your-bash-zsh.html&#34;&gt;http://www.geekmind.net/2011/01/shortcuts-to-improve-your-bash-zsh.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://trac.ffmpeg.org/wiki/Concatenate&#34;&gt;FFmpeg Trac Docs&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;hr /&gt;
-
-&lt;h3 id=&#34;history:aa364d83240e3026be0190c02971a96d&#34;&gt;History&lt;/h3&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://stackoverflow.com/questions/9502274/last-command-in-same-terminal&#34;&gt;http://stackoverflow.com/questions/9502274/last-command-in-same-terminal&lt;/a&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# Don&#39;t share history between sessions
-setopt no_share_history
-
-# Share history between sessions
-setopt share_history
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;for f in *.wav; do echo &amp;quot;file &#39;$f&#39;&amp;quot; &amp;gt;&amp;gt; mylist.txt; done
+ffmpeg -f concat -i mylist.txt -c copy output.wav
 &lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Copy &amp; Convert Single Stream with FFmpeg</title>
+      <link>http://www.erebusbat.com/2012/11/copy--convert-single-stream-with-ffmpeg/</link>
+      <pubDate>Sat, 03 Nov 2012 19:16:11 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2012/11/copy--convert-single-stream-with-ffmpeg/</guid>
+      <description>&lt;p&gt;Assume you have a video with AC3 audio, but you want AC3 &lt;em&gt;and&lt;/em&gt; AAC audio in the output.&lt;/p&gt;
 
-&lt;hr /&gt;
+&lt;p&gt;The trick is the double &lt;code&gt;-i&lt;/code&gt; to get another input to pump into &lt;code&gt;-map 1:&lt;/code&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;passing-arguments-to-app:aa364d83240e3026be0190c02971a96d&#34;&gt;Passing Arguments to App&lt;/h3&gt;
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;$ ffmpeg -i video.mkv -i video.mkv \
+  -map 0:1 -c:v:0 copy \                  # Copy video from stream 1
+  -map 0:0 -c:a:0 copy \                  # Copy audio from stream 0
+  -map 1:0 -c:a:1 libfdk_aac -ac:2 2 \    # Convert audio in stream 0 to AAC
+  video.m4v
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>FFmpeg Oneliners</title>
+      <link>http://www.erebusbat.com/2012/11/ffmpeg-oneliners/</link>
+      <pubDate>Sat, 03 Nov 2012 19:16:11 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2012/11/ffmpeg-oneliners/</guid>
+      <description>&lt;p&gt;Here are a bunch of &lt;code&gt;ffmpeg&lt;/code&gt; commands that I have collected&lt;/p&gt;
 
-&lt;p&gt;Below is a wrapper script that sources [[rbenv]] and passes ALL arguments (correctly) to the ruby script.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;# File Info
+ffmpeg -i &amp;lt;file&amp;gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;#!/bin/zsh
-export HOME=/Users/aburns
-export PATH=$HOME/.rbenv/bin:$PATH
-eval &amp;quot;$(rbenv init -)&amp;quot;
-cd $HOME/bin/1.9.3
-# echo -E ${(q)@}
-ruby ./myIL.rb ${(Q)@}
+# Convert (not transcode)
+ffmpeg -i &amp;lt;file&amp;gt; -c copy &amp;lt;file.out&amp;gt;
+
+# Convert lowbitrate -&amp;gt; 128k (to get around iCloud)
+ffmpeg -i in.m4a -b:a 128k out.mp3
+
+# Convert, but transcode audio to 2ch AC3
+ffmpeg -i &amp;lt;file.mkv&amp;gt; -c:v copy -c:a ac3 -ac 2 &amp;lt;file.mp4&amp;gt;
+
+# Extract Audio Stream (0:1 = 0-First input file  1-Second Stream)
+ffmpeg -i Movie.m4v -map 0:1 -acodec copy Movie_Audio.m4a
+
+# Extract Audio Stream (0:1 = 0-First input file  1-Second Stream)
+#   Copy 5 minutes from 25 min in (1500s=25m, 300s=5m)
+ffmpeg -i Movie.m4v -map 0:1 -acodec copy -ss 1500 -t 300 Movie_Audio.m4a
+
+# Convert audio file to iTunes format (works with non-standard extensions, like m4b)
+ffmpeg -i audio.mp3 -f adts -c:a libfdk_aac audio.m4b
+
+# Convert all MP3 files to AAC, then rename to M4B (for audiobooks)
+for f in *.mp3; do ffmpeg -i $f  -c:a libfdk_aac ${f:r}.m4a &amp;amp;&amp;amp; mv ${f:r}.m4a ${f:r}.m4b; done
+for f in *.mp3; do ffmpeg -i $f -f adts -c:a libfdk_aac ${f:r}.m4b; done
+for f in *.mp3; do ffmpeg -i $f -acodec libfdk_aac -b:a 96k -f adts ${f:r}.m4b; done
+
+# Convert to AAC/M4A that will import into iTunes
+ffmpeg -i Input.mp3 -c:a libfdk_aac Test96.m4a
+#     If you want a different file extension, specify iPod format:
+ffmpeg -i Input.mp3 -c:a libfdk_aac -f ipod -b:a 96k Test96.m4b
+
+# Convert all FLAC-&amp;gt;M4A, using separate folders
+mkdir aac; mkdir processed; for f in *.flac; do
+  ffmpeg -i $f -acodec libfdk_aac -b:a 256k &amp;quot;aac/${f:t:r}.m4a&amp;quot; &amp;amp;&amp;amp; mv $f processed/; done
+# Simple FLAC conversion
+for f in *.flac; do ffmpeg -i $f -c:a libfdk_aac -ab 256k ${f:r}.m4a; done
+
+# Take an input that has 0:0-h264 0:1-ac3 and output a file that copies those and adds an AAC channel
+# Notice the duplicated input, this is so we can copy one audio, but process the other
+ffmpeg -i movie.m4v -i movie.m4v -map 0:0 -c:v copy -map 0:1 -c:a:0 copy -map 1:1 -c:a:1 libfdk_aac movie_fixed.m4v
+
+# Convert flash demo video to h264/m4v mono
+ffmpeg -i dd6796a8c742c83457e1d7a32985cc5e.flv -c:v h264 -c:a libfdk_aac -ac:1 1 -ab:1 48k SCID-workshop2.m4v
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Install full ffmpeg Homebrew</title>
+      <link>http://www.erebusbat.com/2012/11/install-full-ffmpeg-homebrew/</link>
+      <pubDate>Sat, 03 Nov 2012 19:16:11 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2012/11/install-full-ffmpeg-homebrew/</guid>
+      <description>&lt;p&gt;Will install &lt;code&gt;ffmpeg&lt;/code&gt; with all the codecs that I care about (namely fdk-aac).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;brew install ffmpeg \
+  --with-fdk-aac \
+  --with-ffplay \
+  --with-freetype \
+  --with-frei0r \
+  --with-libass \
+  --with-libcaca \
+  --with-libvo-aacenc \
+  --with-libvorbis \
+  --with-libvpx \
+  --with-opencore-amr \
+  --with-openjpeg \
+  --with-openssl \
+  --with-opus \
+  --with-rtmpdump \
+  --with-schroedinger \
+  --with-speex \
+  --with-theora \
+  --with-tools
 &lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>

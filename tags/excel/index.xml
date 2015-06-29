@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Excel on ErebusBat</title>
+    <link>http://www.erebusbat.com/tags/excel/</link>
+    <description>Recent content in Excel on ErebusBat</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 09 Aug 2013 19:02:12 -0600</lastBuildDate>
+    <atom:link href="http://www.erebusbat.com/tags/excel/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Hide/Unhide Chart Axis</title>
+      <link>http://www.erebusbat.com/2013/08/hide/unhide-chart-axis/</link>
+      <pubDate>Fri, 09 Aug 2013 19:02:12 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2013/08/hide/unhide-chart-axis/</guid>
+      <description>
+
+&lt;h2 id=&#34;hide-unhide-chart-axis:a9e8c812db8650e2096509e92c06400a&#34;&gt;Hide/Unhide Chart Axis&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-vbnet&#34;&gt;&#39;// This takes a sheet name, where it is a chart sheet.
+&#39;// If your chart lives on a regular worksheet then you will probably need to add a call to Sheet.ChartObject(&amp;quot;chart name&amp;quot;)
+Function ToggleChartAxisValues(sheetName As String)
+    Dim c As Chart, isHidden As Boolean, ax As Axis
+    Set c = Sheets(sheetName)
+    Set ax = c.Axes(xlValue)
+    isHidden = (ax.TickLabelPosition = xlTickLabelPositionNone)
+
+    If isHidden Then
+        &#39;// Unhide
+        ax.TickLabelPosition = xlTickLabelPositionNextToAxis
+    Else
+        &#39;// Hide
+        ax.TickLabelPosition = xlTickLabelPositionNone
+    End If
+End Function
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Calculating EMA in Excel</title>
+      <link>http://www.erebusbat.com/2013/08/calculating-ema-in-excel/</link>
+      <pubDate>Thu, 08 Aug 2013 20:13:07 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2013/08/calculating-ema-in-excel/</guid>
+      <description>
+
+&lt;h4 id=&#34;exponential-moving-average:8409931a967e1b7377cbecc480e552ae&#34;&gt;Exponential Moving Average&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.willowsolutions.com/tips/tips_2002_11.shtml&#34;&gt;http://www.willowsolutions.com/tips/tips_2002_11.shtml&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.willowsolutions.com/tips/tips_2002_11_1.shtml&#34;&gt;http://www.willowsolutions.com/tips/tips_2002_11_1.shtml&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.aaii.com/computerizedinvesting/article/spreadsheet-corner-constructing-moving-averages&#34;&gt;http://www.aaii.com/computerizedinvesting/article/spreadsheet-corner-constructing-moving-averages&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;A simple moving average calculates the average price for a set number of time periods. To calculate a 10 day moving average you would calculate the sum of the closing price for a period of 10 days and divide by 10. On the eleventh day you would add the price for the eleventh day to the average and subtract the price for the first day.&lt;/p&gt;
+
+&lt;p&gt;The formula used to calculate an EMA uses a smoothing constant. The smoothing constant applies the appropriate weighting for the most recent price relative to the previous day’s EMA calculation.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;EMA=(Today’s Last – Yesterday’s EMA) x (SmoothingConstant) + Yesterday’s EMA
+
+# N=EMA Periods
+SmoothingConstant = 2 / (1 + N)
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Convert to Excel Time from Unix Time</title>
+      <link>http://www.erebusbat.com/2013/08/convert-to-excel-time-from-unix-time/</link>
+      <pubDate>Thu, 08 Aug 2013 18:50:09 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2013/08/convert-to-excel-time-from-unix-time/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;UnixTime&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ExcelTime = (UnixTime + (&amp;quot;1/1/1970&amp;quot;-&amp;quot;1/1/1900&amp;quot;+1)*86400) / 86400
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>How to Format Data for OHLC charts</title>
+      <link>http://www.erebusbat.com/2013/08/how-to-format-data-for-ohlc-charts/</link>
+      <pubDate>Thu, 08 Aug 2013 18:49:36 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2013/08/how-to-format-data-for-ohlc-charts/</guid>
+      <description>
+
+&lt;h1 id=&#34;howto-format-data-for-ohlc-charts:1f72f7308066a43c90d3c8131ce4d84d&#34;&gt;HOWTO: Format Data for OHLC charts&lt;/h1&gt;
+
+&lt;p&gt;Format data in this manner:&lt;/p&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Date&lt;/th&gt;
+&lt;th&gt;Open&lt;/th&gt;
+&lt;th&gt;High&lt;/th&gt;
+&lt;th&gt;Low&lt;/th&gt;
+&lt;th&gt;Close&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;1/1/12&lt;/td&gt;
+&lt;td&gt;4.72202&lt;/td&gt;
+&lt;td&gt;5.4999&lt;/td&gt;
+&lt;td&gt;4.615&lt;/td&gt;
+&lt;td&gt;5.26766&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;1/2/12&lt;/td&gt;
+&lt;td&gt;5.26766&lt;/td&gt;
+&lt;td&gt;5.47&lt;/td&gt;
+&lt;td&gt;4.8&lt;/td&gt;
+&lt;td&gt;5.21678&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

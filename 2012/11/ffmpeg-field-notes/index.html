@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+    <head>
+
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+
+        <title>ffmpeg Field Notes &middot; ErebusBat</title>
+        <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' type='text/css'>
+        <link rel="stylesheet" href="http://www.erebusbat.com/libraries/normalize.3.0.1.css" />
+        <link rel="stylesheet" href="http://www.erebusbat.com/css/liquorice.css" />
+        <link rel="stylesheet" href="http://www.erebusbat.com/css/erebusbat.css" />
+
+        
+        
+        
+        <link rel="stylesheet" href="http://www.erebusbat.com/css/highlight/solarized_dark.css" />
+        <script src="http://www.erebusbat.com/js/highlight/highlight.pack.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        
+
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-144-precomposed.png" sizes="144x144" />
+        <link rel="alternate" href="" type="application/rss+xml" title="ErebusBat" />
+    </head>
+    <script>
+  (function() {
+    var cx = '013591816188747630712:0i-ftyqi2c8';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+
+    <body class="li-body">
+
+<header class="li-page-header">
+    <div class="container">
+        <div class="row">
+            <div class="sixteen columns">
+                <div class="li-brand li-left">
+                <a href="http://www.erebusbat.com">ErebusBat</a></div>
+                <div class="li-menu li-right">
+                    <span class="li-menu-icon" onclick="javascript:toggle('menu');">&#9776;</span>
+                    <ul id="menu2" class="li-menu-items">
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="sixteen columns">
+                <ul id="menu" class="li-menu-items li-menu-mobile">
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+
+
+    <div class="container">
+        <div class="row">
+            <div class="sixteen columns">
+                <article class="li-article">
+                    <header class="li-article-header">
+                        <h1 class="li-article-title">ffmpeg Field Notes</h1>
+                        <span class="li-article-taxonomies">
+                            
+
+                            
+                                with tags
+                                
+                                    <a href="http://www.erebusbat.com/tags/media">media</a>
+                                
+                                    <a href="http://www.erebusbat.com/tags/ffmpeg">ffmpeg</a>
+                                
+                                    <a href="http://www.erebusbat.com/tags/field-notes">field-notes</a>
+                                
+                            
+                        </span>
+                         - 
+                        <time class="li-article-date">Saturday, November 3, 2012</time>
+                    </header>
+                    <section>
+                        
+
+<p>This is a conversation of an old DokuWiki post where I would just dump ffmpeg commands for my reference.  It really needs to be split into multiple pages, but might be useful to someone in the raw form.</p>
+
+<h3 id="links:26a07dde200fd0da08764cfe96545b35">Links</h3>
+
+<ul>
+<li><a href="http://manpages.ubuntu.com/manpages/precise/en/man1/ffmpeg.1.html">Man Page</a></li>
+<li><a href="http://www.ffmpeg.org/general.html#Video-Codecs">Codec Listing</a></li>
+<li><a href="http://rodrigopolo.com/ffmpeg/cheats.html">http://rodrigopolo.com/ffmpeg/cheats.html</a></li>
+<li><a href="http://ubuntuforums.org/showthread.php?t=2017284">http://ubuntuforums.org/showthread.php?t=2017284</a></li>
+<li><a href="http://developer.apple.com/library/mac/#qa/qa1534/_index.html">Create CAF files</a></li>
+<li><a href="http://www.catswhocode.com/blog/19-ffmpeg-commands-for-all-needs">http://www.catswhocode.com/blog/19-ffmpeg-commands-for-all-needs</a></li>
+</ul>
+
+<h3 id="oneliners:26a07dde200fd0da08764cfe96545b35">Oneliners</h3>
+
+<pre><code class="language-bash"># File Info
+ffmpeg -i &lt;file&gt;
+
+# Convert (not transcode)
+ffmpeg -i &lt;file&gt; -c copy &lt;file.out&gt;
+
+# Convert lowbitrate -&gt; 128k (to get around iCloud)
+ffmpeg -i in.m4a -b:a 128k out.mp3
+
+# Convert, but transcode audio to 2ch AC3
+ffmpeg -i &lt;file.mkv&gt; -c:v copy -c:a ac3 -ac 2 &lt;file.mp4&gt;
+
+# Extract Audio Stream (0:1 = 0-First input file  1-Second Stream)
+ffmpeg -i Clue.m4v -map 0:1 -acodec copy Clue_Audio.m4a
+
+# Extract Audio Stream (0:1 = 0-First input file  1-Second Stream)
+#   Copy 5 minutes from 25 min in (1500s=25m, 300s=5m)
+ffmpeg -i Clue.m4v -map 0:1 -acodec copy -ss 1500 -t 300 Clue_Audio.m4a
+
+# Convert all MP3 files to AAC, then rename to M4B (for audiobooks)
+for f in *.mp3; do
+  ffmpeg -i $f -c:a libfdk_aac ${f:r}.m4a &amp;&amp; \
+  mv ${f:r}.m4a ${f:r}.m4b
+done
+for f in *.mp3; do ffmpeg -i $f -f adts -c:a libfdk_aac ${f:r}.m4b; done
+for f in *.mp3; do
+  ffmpeg -i $f -acodec libfdk_aac -b:a 96k -f adts ${f:r}.m4b
+done
+
+# Convert to AAC/M4A that will import into iTunes
+ffmpeg -i Input.mp3 -c:a libfdk_aac Test96.m4a
+#     If you want a different file extension, specify iPod format:
+ffmpeg -i Input.mp3 -c:a libfdk_aac -f ipod -b:a 96k Test96.m4b
+
+# Convert all FLAC-&gt;M4A, using separate folders
+mkdir aac; mkdir processed; for f in *.flac; do
+  ffmpeg -i $f -acodec libfdk_aac -b:a 256k &quot;aac/${f:t:r}.m4a&quot; &amp;&amp; \
+  mv $f processed/
+done
+# Simple FLAC conversion
+for f in *.flac; do
+  ffmpeg -i $f -c:a libfdk_aac -ab 256k ${f:r}.m4a
+done
+
+# Take an input that has 0:0-h264 0:1-ac3 and output a file that copies those and adds an AAC channel
+# Notice the duplicated input, this is so we can copy one audio, but process the other
+ffmpeg \
+-i 21.m4v \
+-i 21.m4v \
+-map 0:0 \
+-c:v copy \
+-map 0:1 \
+-c:a:0 copy \
+-map 1:1 \
+-c:a:1 libfdk_aac
+21_fixed.m4v
+
+# Convert flash demo video to h264/m4v mono
+ffmpeg \
+-i dd6796a8c742c83457e1d7a32985cc5e.flv \
+-c:v h264 \
+-c:a libfdk_aac \
+-ac:1 1 \
+-ab:1 48k
+SCID-workshop2.m4v
+
+</code></pre>
+
+<h3 id="video-in-1-stream:26a07dde200fd0da08764cfe96545b35">Video in 1 stream</h3>
+
+<pre><code class="language-bash">ffmpeg -i video.mkv -i video.mkv \
+  -map 0:1 -c:v:0 copy \                  # Copy video from stream 1
+  -map 0:0 -c:a:0 copy \                  # Copy audio from stream 0
+  -map 1:0 -c:a:1 libfdk_aac -ac:2 2 \    # Convert audio in stream 0 to AAC
+  video.m4v
+</code></pre>
+
+<h3 id="helper-functions:26a07dde200fd0da08764cfe96545b35">Helper Functions</h3>
+
+<pre><code class="language-bash"># This is a ZSH function that you can use as a shortcut when your input file looks like:
+#    Input #0, matroska,webm, from 'The.Americans.2013.S01E01.720p.WEB-DL-LFF.mkv':
+#      Metadata:
+#        creation_time   : 2013-02-15 09:11:09
+#      Duration: 01:09:02.18, start: 0.000000, bitrate: 4365 kb/s
+#        Stream #0:0(eng): Video: h264 (High), yuv420p, 1280x718 [SAR 1:1 DAR 640:359], 23.98 fps, 23.98 tbr, 1k tbn, 2k tbc #    (default)
+#        Stream #0:1(eng): Audio: ac3, 48000 Hz, 5.1(side), s16, 384 kb/s (default)
+#        Stream #0:2: Subtitle: subrip (default)
+
+## Video-AudioAC3
+function ff264_vac3() {
+  ffmpeg \
+  -i $1 \
+  -i $1 \
+  -map 0:0 \
+  -c:v:0 copy \
+  -map 0:1 \
+  -c:a:0 copy \
+  -map 1:1 \
+  -c:a:1 libfdk_aac \
+  -ac:2 2 ${1:r}.m4v
+}
+## AudioAC3-Video
+function ff264_ac3v() {
+  ffmpeg \
+  -i $1 \
+  -i $1 \
+  -map 0:1 \
+  -c:v:0 copy \
+  -map 0:0 \
+  -c:a:0 copy \
+  -map 1:0 \
+  -c:a:1 libfdk_aac \
+  -ac:2 2 ${1:r}.m4v
+}
+
+## Full Conversion on all channels, if WMV or DIVX or whatever, assumes audio is on second(1) stream
+function ff264_full() {
+  ffmpeg \
+  -i $1 \
+  -i $1 \
+  -map 0:1 \
+  -c:v:0 h264 \
+  -map 0:0 \
+  -c:a:0 ac3 \
+  -map 1:1 \
+  -c:a:1 libfdk_aac \
+  -ac:2 2
+  ${1:r}.m4v
+}
+
+## Full Audio Conversion, such as when the MKV
+#  is a BluRay rip and only has DTS
+function ff264_audio_full() {
+  ffmpeg \
+  -i $1 \
+  -i $1 \
+  -map 0:0 \
+  -c:v:0 copy \
+  -map 0:1 \
+  -ac:1 2 \
+  -c:a:0 libfdk_aac \
+  -map 1:1 \
+  -c:a:1 ac3
+  ${1:r}.m4v
+}
+## Convert &amp; Move functions
+function cvmv_ff264_vac3() { ff264_vac3 $1 &amp;&amp; mvmedia ${1:r}.m4v }
+function cvmv_ff264_ac3v() { ff264_ac3v $1 &amp;&amp; mvmedia ${1:r}.m4v }
+
+# Batch convert &amp; move files
+for f in *.mkv; do ff264_vac3 $f &amp;&amp; mvmedia ${f:r}.m4v;  done
+</code></pre>
+
+<h3 id="dts-bluray:26a07dde200fd0da08764cfe96545b35">DTS/BluRay</h3>
+
+<pre><code class="language-bash">$ ffmpeg -i LongKissGoodnight.mkv
+Stream #0:0(eng): Video: h264 (High), yuv420p, 1280x536, SAR 1:1 DAR 160:67, 23.98 fps, 23.98 tbr, 1k tbn, 47.95 tbc (default)
+    Metadata:
+      title           : The Long Kiss Goodnight (1996)
+    Stream #0:1(eng): Audio: dts (DTS), 48000 Hz, 5.1(side), fltp, 1536 kb/s (default)
+    Metadata:
+      title           : DTS 5.1 1.5 Mbps
+    Stream #0:2(eng): Subtitle: subrip
+
+# AppleTV doesn't support DTS (does it?) so we output AAC (2ch) and AC3 (5.1)
+$ ffmpeg -i LongKissGoodnight.mkv -i LongKissGoodnight.mkv \
+  -map 0:0 -c:v:0 copy \
+  -map 0:1 -ac:1 2 -c:a:0 libfdk_aac \
+  -map 1:1 -c:a:1 ac3 LongKissGoodnight.m4v
+</code></pre>
+
+<h3 id="concatenate-files:26a07dde200fd0da08764cfe96545b35">Concatenate Files</h3>
+
+<ul>
+<li><a href="https://trac.ffmpeg.org/wiki/How%20to%20concatenate%20(join,%20merge)%20media%20files">https://trac.ffmpeg.org/wiki/How%20to%20concatenate%20(join,%20merge)%20media%20files</a></li>
+</ul>
+
+<pre><code class="language-bash">for f in *.wav; do echo &quot;file '$f'&quot; &gt;&gt; mylist.txt; done
+ffmpeg -f concat -i mylist.txt -c copy output.wav
+</code></pre>
+
+<h3 id="install:26a07dde200fd0da08764cfe96545b35">Install</h3>
+
+<pre><code class="language-bash">brew install ffmpeg \
+--with-fdk-aac \
+--with-ffplay \
+--with-freetype \
+--with-frei0r \
+--with-libass \
+--with-libcaca \
+--with-libvo-aacenc \
+--with-libvorbis \
+--with-libvpx \
+--with-opencore-amr \
+--with-openjpeg \
+--with-openssl \
+--with-opus \
+--with-rtmpdump \
+--with-schroedinger \
+--with-speex \
+--with-theora \
+--with-tools
+</code></pre>
+
+                    </section>
+                </article>
+            </div>
+        </div>
+
+        
+
+
+        <div class="row li-pagination">
+            <div class="eight columns">
+                <div class="li-pagination-previous">
+                    
+                        Later article<br />
+                        <a href="http://www.erebusbat.com/2012/11/copy--convert-single-stream-with-ffmpeg/"> Copy &amp; Convert Single Stream with FFmpeg</a>
+                    
+                </div>
+            </div>
+            <div class="eight columns">
+                <div class="li-pagination-next">
+                    
+                        Older article<br />
+                        <a href="http://www.erebusbat.com/2012/11/install-full-ffmpeg-homebrew/"> Install full ffmpeg Homebrew</a>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+<footer class="li-page-footer">
+    <div class="container">
+        <div class="row">
+            <div class="sixteen columns">
+                <div class="li-page-footer-legal">
+                    &copy; 2015. All rights reserved. 
+                </div>
+                <div class="li-page-footer-theme">
+                    <span class=""><a href="https://github.com/eliasson/liquorice/">liquorice</a> is a theme for <a href="http://hugo.spf13.com">hugo</a></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script type="text/javascript">
+    <!--
+    function toggle(id) {
+        var e = document.getElementById(id);
+        e.style.display == 'block' ? e.style.display = 'none' : e.style.display = 'block';
+    }
+    
+    </script>
+    <script type="text/javascript">
+    <!--
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', ""]);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    -->
+    </script>
+    </body>
+</html>
+

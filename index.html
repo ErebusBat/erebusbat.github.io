@@ -178,15 +178,14 @@
                         <div class="li-article">
                             <article>
     <header>
-        <h2><a href="http://www.erebusbat.com/2012/09/mysql-field-notes/">MySQL Field Notes </a></h2>
-        <time class="li-article-date">Thursday, September 13, 2012</time>
+        <h2><a href="http://www.erebusbat.com/2013/08/hide/unhide-chart-axis/">Hide/Unhide Chart Axis </a></h2>
+        <time class="li-article-date">Friday, August 9, 2013</time>
     </header>
     <section class="li-article-section">
-        <p>Misc notes and snippets in a <em>Field Notes</em> style</p>
-
+        Hide/Unhide Chart Axis '// This takes a sheet name, where it is a chart sheet. '// If your chart lives on a regular worksheet then you will probably need to add a call to Sheet.ChartObject(&quot;chart name&quot;) Function ToggleChartAxisValues(sheetName As String) Dim c As Chart, isHidden As Boolean, ax As Axis Set c = Sheets(sheetName) Set ax = c.Axes(xlValue) isHidden = (ax.TickLabelPosition = xlTickLabelPositionNone) If isHidden Then '// Unhide ax.TickLabelPosition =
     </section>
     <footer>
-        <a href='http://www.erebusbat.com/2012/09/mysql-field-notes/'>More</a>
+        <a href='http://www.erebusbat.com/2013/08/hide/unhide-chart-axis/'>More</a>
     </footer>
 </article>
 
@@ -195,15 +194,46 @@
                         <div class="li-article">
                             <article>
     <header>
-        <h2><a href="http://www.erebusbat.com/2012/09/zsh-field-notes/">ZSH Field Notes </a></h2>
-        <time class="li-article-date">Tuesday, September 4, 2012</time>
+        <h2><a href="http://www.erebusbat.com/2013/08/calculating-ema-in-excel/">Calculating EMA in Excel </a></h2>
+        <time class="li-article-date">Thursday, August 8, 2013</time>
     </header>
     <section class="li-article-section">
-        <p>Misc notes and snippets in a <em>Field Notes</em> style</p>
-
+        Exponential Moving Average http://www.willowsolutions.com/tips/tips_2002_11.shtml http://www.willowsolutions.com/tips/tips_2002_11_1.shtml http://www.aaii.com/computerizedinvesting/article/spreadsheet-corner-constructing-moving-averages A simple moving average calculates the average price for a set number of time periods. To calculate a 10 day moving average you would calculate the sum of the closing price for a period of 10 days and divide by 10. On the eleventh day you would add the price for the eleventh day to the average and subtract the price for the first day.
     </section>
     <footer>
-        <a href='http://www.erebusbat.com/2012/09/zsh-field-notes/'>More</a>
+        <a href='http://www.erebusbat.com/2013/08/calculating-ema-in-excel/'>More</a>
+    </footer>
+</article>
+
+                        </div>
+                    
+                        <div class="li-article">
+                            <article>
+    <header>
+        <h2><a href="http://www.erebusbat.com/2013/08/convert-to-excel-time-from-unix-time/">Convert to Excel Time from Unix Time </a></h2>
+        <time class="li-article-date">Thursday, August 8, 2013</time>
+    </header>
+    <section class="li-article-section">
+        UnixTime ExcelTime = (UnixTime + (&quot;1/1/1970&quot;-&quot;1/1/1900&quot;+1)*86400) / 86400
+    </section>
+    <footer>
+        <a href='http://www.erebusbat.com/2013/08/convert-to-excel-time-from-unix-time/'>More</a>
+    </footer>
+</article>
+
+                        </div>
+                    
+                        <div class="li-article">
+                            <article>
+    <header>
+        <h2><a href="http://www.erebusbat.com/2013/08/how-to-format-data-for-ohlc-charts/">How to Format Data for OHLC charts </a></h2>
+        <time class="li-article-date">Thursday, August 8, 2013</time>
+    </header>
+    <section class="li-article-section">
+        HOWTO: Format Data for OHLC charts Format data in this manner: Date Open High Low Close 1/1/12 4.72202 5.4999 4.615 5.26766 1/2/12 5.26766 5.47 4.8 5.21678
+    </section>
+    <footer>
+        <a href='http://www.erebusbat.com/2013/08/how-to-format-data-for-ohlc-charts/'>More</a>
     </footer>
 </article>
 
