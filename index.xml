@@ -494,25 +494,6 @@ $ ffmpeg -i video.mkv -i video.mkv \
     </item>
     
     <item>
-      <title>Copy &amp; Convert Single Stream with FFmpeg</title>
-      <link>http://www.erebusbat.com/2012/11/copy--convert-single-stream-with-ffmpeg/</link>
-      <pubDate>Sat, 03 Nov 2012 19:16:11 -0600</pubDate>
-      
-      <guid>http://www.erebusbat.com/2012/11/copy--convert-single-stream-with-ffmpeg/</guid>
-      <description>&lt;p&gt;Assume you have a video with AC3 audio, but you want AC3 &lt;em&gt;and&lt;/em&gt; AAC audio in the output.&lt;/p&gt;
-
-&lt;p&gt;The trick is the double &lt;code&gt;-i&lt;/code&gt; to get another input to pump into &lt;code&gt;-map 1:&lt;/code&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;$ ffmpeg -i video.mkv -i video.mkv \
-  -map 0:1 -c:v:0 copy \                  # Copy video from stream 1
-  -map 0:0 -c:a:0 copy \                  # Copy audio from stream 0
-  -map 1:0 -c:a:1 libfdk_aac -ac:2 2 \    # Convert audio in stream 0 to AAC
-  video.m4v
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-    </item>
-    
-    <item>
       <title>ffmpeg Field Notes</title>
       <link>http://www.erebusbat.com/2012/11/ffmpeg-field-notes/</link>
       <pubDate>Sat, 03 Nov 2012 19:16:11 -0600</pubDate>
@@ -742,25 +723,51 @@ ffmpeg -f concat -i mylist.txt -c copy output.wav
     </item>
     
     <item>
-      <title>Concatenate files with ffmpeg</title>
-      <link>http://www.erebusbat.com/2012/11/concatenate-files-with-ffmpeg/</link>
+      <title>Copy &amp; Convert Single Stream with FFmpeg</title>
+      <link>http://www.erebusbat.com/2012/11/copy--convert-single-stream-with-ffmpeg/</link>
       <pubDate>Sat, 03 Nov 2012 19:16:11 -0600</pubDate>
       
-      <guid>http://www.erebusbat.com/2012/11/concatenate-files-with-ffmpeg/</guid>
-      <description>
+      <guid>http://www.erebusbat.com/2012/11/copy--convert-single-stream-with-ffmpeg/</guid>
+      <description>&lt;p&gt;Assume you have a video with AC3 audio, but you want AC3 &lt;em&gt;and&lt;/em&gt; AAC audio in the output.&lt;/p&gt;
 
-&lt;p&gt;Take a list of media files and concatenate them into a single file.&lt;/p&gt;
+&lt;p&gt;The trick is the double &lt;code&gt;-i&lt;/code&gt; to get another input to pump into &lt;code&gt;-map 1:&lt;/code&gt;&lt;/p&gt;
 
-&lt;hr /&gt;
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;$ ffmpeg -i video.mkv -i video.mkv \
+  -map 0:1 -c:v:0 copy \                  # Copy video from stream 1
+  -map 0:0 -c:a:0 copy \                  # Copy audio from stream 0
+  -map 1:0 -c:a:1 libfdk_aac -ac:2 2 \    # Convert audio in stream 0 to AAC
+  video.m4v
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Install full ffmpeg Homebrew</title>
+      <link>http://www.erebusbat.com/2012/11/install-full-ffmpeg-homebrew/</link>
+      <pubDate>Sat, 03 Nov 2012 19:16:11 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2012/11/install-full-ffmpeg-homebrew/</guid>
+      <description>&lt;p&gt;Will install &lt;code&gt;ffmpeg&lt;/code&gt; with all the codecs that I care about (namely fdk-aac).&lt;/p&gt;
 
-&lt;h3 id=&#34;references:5eb3cda2ab2d24c54adb700c53258e2d&#34;&gt;References&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://trac.ffmpeg.org/wiki/Concatenate&#34;&gt;FFmpeg Trac Docs&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;for f in *.wav; do echo &amp;quot;file &#39;$f&#39;&amp;quot; &amp;gt;&amp;gt; mylist.txt; done
-ffmpeg -f concat -i mylist.txt -c copy output.wav
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;brew install ffmpeg \
+  --with-fdk-aac \
+  --with-ffplay \
+  --with-freetype \
+  --with-frei0r \
+  --with-libass \
+  --with-libcaca \
+  --with-libvo-aacenc \
+  --with-libvorbis \
+  --with-libvpx \
+  --with-opencore-amr \
+  --with-openjpeg \
+  --with-openssl \
+  --with-opus \
+  --with-rtmpdump \
+  --with-schroedinger \
+  --with-speex \
+  --with-theora \
+  --with-tools
 &lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
