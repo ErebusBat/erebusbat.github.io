@@ -59,5 +59,248 @@ end
 </description>
     </item>
     
+    <item>
+      <title>Simple Ruby CLI Apps</title>
+      <link>http://www.erebusbat.com/2014/04/simple-ruby-cli-apps/</link>
+      <pubDate>Tue, 08 Apr 2014 21:52:21 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2014/04/simple-ruby-cli-apps/</guid>
+      <description>
+
+&lt;h2 id=&#34;see-also:628634f0f24cfc636eac2f4dfbfeb56c&#34;&gt;See Also&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.erebusbat.com/tags/bundler&#34;&gt;bundler&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;general-notes:628634f0f24cfc636eac2f4dfbfeb56c&#34;&gt;General Notes&lt;/h2&gt;
+
+&lt;h2 id=&#34;allow-file-to-be-a-library-script-at-the-same-time:628634f0f24cfc636eac2f4dfbfeb56c&#34;&gt;Allow file to be a library/script at the same time&lt;/h2&gt;
+
+&lt;h3 id=&#34;script-rb:628634f0f24cfc636eac2f4dfbfeb56c&#34;&gt;script.rb&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;###############
+# Entry Point
+###############
+if __FILE__ == $0 then
+  # Setup / Invocation code here
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;generic-script-header:628634f0f24cfc636eac2f4dfbfeb56c&#34;&gt;Generic Script Header&lt;/h2&gt;
+
+&lt;p&gt;Sets up Bundler and the current directory to be in the load path.&lt;/p&gt;
+
+&lt;h3 id=&#34;script-rb-1:628634f0f24cfc636eac2f4dfbfeb56c&#34;&gt;script.rb&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;#!/usr/bin/env ruby
+require &#39;rubygems&#39;
+require &#39;bundler/setup&#39;
+Bundler.require
+$: &amp;lt;&amp;lt; File.dirname(__FILE__) unless $:.include? File.dirname(__FILE__)
+
+###############
+# Entry Point
+###############
+if __FILE__ == $0 then
+  # Setup / Invocation code here
+end
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Find Method at Runtime</title>
+      <link>http://www.erebusbat.com/2014/03/find-method-at-runtime/</link>
+      <pubDate>Sun, 02 Mar 2014 22:42:40 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2014/03/find-method-at-runtime/</guid>
+      <description>&lt;p&gt;How to find the source location of a Ruby method at runtime.&lt;/p&gt;
+
+&lt;p&gt;Taken from the &lt;a href=&#34;http://stackoverflow.com/questions/175655/how-to-find-where-a-method-is-defined-at-runtime&#34;&gt;Stack Overflow&lt;/a&gt; answer by &lt;a href=&#34;http://stackoverflow.com/users/62140/&#34;&gt;wesgarrison&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;I take no credit for the work.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;# How to find out where a method comes from.
+# Learned this from Dave Thomas while teaching Advanced Ruby Studio
+# Makes the case for separating method definitions into
+# modules, especially when enhancing built-in classes.
+module Perpetrator
+  def crime
+  end
+end
+
+class Fixnum
+  include Perpetrator
+end
+
+p 2.method(:crime)
+#&amp;lt;Method: Fixnum(Perpetrator)#crime&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you&amp;rsquo;re on Ruby 1.9+, you can use &lt;a href=&#34;http://www.ruby-doc.org/core-1.9.3/Method.html#method-i-source_location&#34;&gt;&lt;code&gt;source_location&lt;/code&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;require &#39;csv&#39;
+
+p CSV.new(&#39;string&#39;).method(:flock)
+# =&amp;gt; #&amp;lt;Method: CSV#flock&amp;gt;
+
+CSV.new(&#39;string&#39;).method(:flock).source_location
+# =&amp;gt; [&amp;quot;/path/to/ruby/1.9.2-p290/lib/ruby/1.9.1/forwardable.rb&amp;quot;, 180]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note that this won&amp;rsquo;t work on everything, like native compiled code. The &lt;a href=&#34;http://www.ruby-doc.org/core-1.9.3/Method.html&#34;&gt;Method class&lt;/a&gt; has some neat functions, too, like &lt;a href=&#34;http://www.ruby-doc.org/core-1.9.3/Method.html#method-i-owner&#34;&gt;Method#owner&lt;/a&gt; which returns the file where the method is defined.&lt;/p&gt;
+
+&lt;p&gt;EDIT: Also see the &lt;code&gt;__file__&lt;/code&gt; and &lt;code&gt;__line__&lt;/code&gt; and notes for REE in the other answer, they&amp;rsquo;re handy too. &amp;ndash; wg&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Fix Nokogirl build warning</title>
+      <link>http://www.erebusbat.com/2013/05/fix-nokogirl-build-warning/</link>
+      <pubDate>Wed, 08 May 2013 22:33:03 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2013/05/fix-nokogirl-build-warning/</guid>
+      <description>
+
+&lt;h2 id=&#34;fix-build-warning:06003214dbbedc51a1addb7372c91b59&#34;&gt;Fix build warning&lt;/h2&gt;
+
+&lt;p&gt;If getting warnings like: &lt;code&gt;WARNING: Nokogiri was built against LibXML version 2.9.0, but has dynamically loaded 2.7.8&lt;/code&gt; then:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;gem uninstall nokogiri libxml-ruby
+
+brew update
+brew uninstall libxml2
+brew install libxml2 --with-xml2-config
+brew link libxml2
+brew install libxslt
+
+gem install nokogiri -- --with-xml2-include=/usr/local/opt/libxml2/include \
+ --with-xml2-lib=/usr/local/opt/libxml2/lib \
+ --with-xslt-dir=/usr/local/opt/libxslt
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Based off of &lt;a href=&#34;https://gist.github.com/devpuppy/1349681&#34;&gt;devpuppy&amp;rsquo;s work&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>rbenv Quick Reference</title>
+      <link>http://www.erebusbat.com/2013/05/rbenv-quick-reference/</link>
+      <pubDate>Wed, 08 May 2013 19:41:34 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2013/05/rbenv-quick-reference/</guid>
+      <description>
+
+&lt;p&gt;This page collectively describes &lt;a href=&#34;https://github.com/sstephenson/rbenv&#34;&gt;rbenv&lt;/a&gt; and &lt;a href=&#34;https://github.com/sstephenson/ruby-build&#34;&gt;ruby-build&lt;/a&gt; and quick hints on how to use them together.&lt;/p&gt;
+
+&lt;h2 id=&#34;quick-reference:97c32e8e3d08dc1eb9730aa6db7a2900&#34;&gt;Quick Reference&lt;/h2&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Command&lt;/th&gt;
+&lt;th&gt;Purpose&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;rbenv install --list&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Show available rubies to install&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;~/.rbenv/versions&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Path rubies intall into&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;rbenv install 1.9.3-p392&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Install ruby version&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;rm -rf $(rbenv prefix 1.9.3-p392)&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Remove specified ruby version&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;rbenv uninstall 1.9.3-p392&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Same as above, using ruby-build plugin&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;$RBENV_VERSION&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Special env var that overrides the ruby version&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;.ruby-version&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Normal way to specify ruby version to be used &lt;a href=&#34;https://github.com/sstephenson/rbenv#choosing-the-ruby-version&#34;&gt;more details&lt;/a&gt;.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;rbenv rehash&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Manually rebuild your shim files. Run this command after you install a new version of Ruby, or install a gem that provides commands.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;rbenv shell 1.9.3-p392&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Use specific ruby version in this shell instance, overrides any app-specific settings&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;rbenv shell&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Reports current shell specific override setting&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;rbenv shell --unset&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Removes shell specific override setting&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;rbenv local 1.9.3-p392&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Sets a local application-specific Ruby version by writing the version name to a .ruby-version file in the current directory.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;rbenv global 1.9.3-p392&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Sets the default version of Ruby to be used in all shells by writing the version name to the ~/.rbenv/version file.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;rbenv which irb&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Displays the full path to the executable that rbenv will invoke when you run the given command (irb).&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;rbenv whence rackup&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Lists all Ruby versions with the given command installed (rackup).&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;gem install ruby-debug19 -- --with-ruby-include=$(rbenv prefix 1.9.3-p392)&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Install ruby-debug19 gem bound to the specified ruby.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&#34;custom-build-options:97c32e8e3d08dc1eb9730aa6db7a2900&#34;&gt;Custom Build Options&lt;/h2&gt;
+
+&lt;p&gt;You can customize the way ruby builds using &lt;a href=&#34;https://github.com/sstephenson/ruby-build#special-environment-variables&#34;&gt;special env vars&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;links:97c32e8e3d08dc1eb9730aa6db7a2900&#34;&gt;Links&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/sstephenson/rbenv&#34;&gt;https://github.com/sstephenson/rbenv&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://journal.kaush.co/2013/01/31/rbenv-guide/&#34;&gt;http://journal.kaush.co/2013/01/31/rbenv-guide/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
   </channel>
 </rss>

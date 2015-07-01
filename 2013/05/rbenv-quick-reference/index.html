@@ -5,7 +5,7 @@
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
 
-        <title>Copy &amp; Convert Single Stream with FFmpeg &middot; ErebusBat</title>
+        <title>rbenv Quick Reference &middot; ErebusBat</title>
         <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' type='text/css'>
         <link rel="stylesheet" href="http://www.erebusbat.com/libraries/normalize.3.0.1.css" />
         <link rel="stylesheet" href="http://www.erebusbat.com/css/liquorice.css" />
@@ -73,31 +73,134 @@
             <div class="sixteen columns">
                 <article class="li-article">
                     <header class="li-article-header">
-                        <h1 class="li-article-title">Copy &amp; Convert Single Stream with FFmpeg</h1>
+                        <h1 class="li-article-title">rbenv Quick Reference</h1>
                         <span class="li-article-taxonomies">
                             
 
                             
                                 with tags
                                 
-                                    <a href="http://www.erebusbat.com/tags/ffmpeg">ffmpeg</a>
+                                    <a href="http://www.erebusbat.com/tags/dokuwiki">DokuWiki</a>
+                                
+                                    <a href="http://www.erebusbat.com/tags/field-notes">field-notes</a>
+                                
+                                    <a href="http://www.erebusbat.com/tags/ruby">ruby</a>
+                                
+                                    <a href="http://www.erebusbat.com/tags/rbenv">rbenv</a>
                                 
                             
                         </span>
                          - 
-                        <time class="li-article-date">Saturday, November 3, 2012</time>
+                        <time class="li-article-date">Wednesday, May 8, 2013</time>
                     </header>
                     <section>
-                        <p>Assume you have a video with AC3 audio, but you want AC3 <em>and</em> AAC audio in the output.</p>
+                        
 
-<p>The trick is the double <code>-i</code> to get another input to pump into <code>-map 1:</code></p>
+<p>This page collectively describes <a href="https://github.com/sstephenson/rbenv">rbenv</a> and <a href="https://github.com/sstephenson/ruby-build">ruby-build</a> and quick hints on how to use them together.</p>
 
-<pre><code class="language-sh">$ ffmpeg -i video.mkv -i video.mkv \
-  -map 0:1 -c:v:0 copy \                  # Copy video from stream 1
-  -map 0:0 -c:a:0 copy \                  # Copy audio from stream 0
-  -map 1:0 -c:a:1 libfdk_aac -ac:2 2 \    # Convert audio in stream 0 to AAC
-  video.m4v
-</code></pre>
+<h2 id="quick-reference:97c32e8e3d08dc1eb9730aa6db7a2900">Quick Reference</h2>
+
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Purpose</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><code>rbenv install --list</code></td>
+<td>Show available rubies to install</td>
+</tr>
+
+<tr>
+<td><code>~/.rbenv/versions</code></td>
+<td>Path rubies intall into</td>
+</tr>
+
+<tr>
+<td><code>rbenv install 1.9.3-p392</code></td>
+<td>Install ruby version</td>
+</tr>
+
+<tr>
+<td><code>rm -rf $(rbenv prefix 1.9.3-p392)</code></td>
+<td>Remove specified ruby version</td>
+</tr>
+
+<tr>
+<td><code>rbenv uninstall 1.9.3-p392</code></td>
+<td>Same as above, using ruby-build plugin</td>
+</tr>
+
+<tr>
+<td><code>$RBENV_VERSION</code></td>
+<td>Special env var that overrides the ruby version</td>
+</tr>
+
+<tr>
+<td><code>.ruby-version</code></td>
+<td>Normal way to specify ruby version to be used <a href="https://github.com/sstephenson/rbenv#choosing-the-ruby-version">more details</a>.</td>
+</tr>
+
+<tr>
+<td><code>rbenv rehash</code></td>
+<td>Manually rebuild your shim files. Run this command after you install a new version of Ruby, or install a gem that provides commands.</td>
+</tr>
+
+<tr>
+<td><code>rbenv shell 1.9.3-p392</code></td>
+<td>Use specific ruby version in this shell instance, overrides any app-specific settings</td>
+</tr>
+
+<tr>
+<td><code>rbenv shell</code></td>
+<td>Reports current shell specific override setting</td>
+</tr>
+
+<tr>
+<td><code>rbenv shell --unset</code></td>
+<td>Removes shell specific override setting</td>
+</tr>
+
+<tr>
+<td><code>rbenv local 1.9.3-p392</code></td>
+<td>Sets a local application-specific Ruby version by writing the version name to a .ruby-version file in the current directory.</td>
+</tr>
+
+<tr>
+<td><code>rbenv global 1.9.3-p392</code></td>
+<td>Sets the default version of Ruby to be used in all shells by writing the version name to the ~/.rbenv/version file.</td>
+</tr>
+
+<tr>
+<td><code>rbenv which irb</code></td>
+<td>Displays the full path to the executable that rbenv will invoke when you run the given command (irb).</td>
+</tr>
+
+<tr>
+<td><code>rbenv whence rackup</code></td>
+<td>Lists all Ruby versions with the given command installed (rackup).</td>
+</tr>
+
+<tr>
+<td><code>gem install ruby-debug19 -- --with-ruby-include=$(rbenv prefix 1.9.3-p392)</code></td>
+<td>Install ruby-debug19 gem bound to the specified ruby.</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="custom-build-options:97c32e8e3d08dc1eb9730aa6db7a2900">Custom Build Options</h2>
+
+<p>You can customize the way ruby builds using <a href="https://github.com/sstephenson/ruby-build#special-environment-variables">special env vars</a></p>
+
+<h2 id="links:97c32e8e3d08dc1eb9730aa6db7a2900">Links</h2>
+
+<ul>
+<li><a href="https://github.com/sstephenson/rbenv">https://github.com/sstephenson/rbenv</a></li>
+<li><a href="http://journal.kaush.co/2013/01/31/rbenv-guide/">http://journal.kaush.co/2013/01/31/rbenv-guide/</a></li>
+</ul>
 
                     </section>
                 </article>
@@ -112,7 +215,7 @@
                 <div class="li-pagination-previous">
                     
                         Later article<br />
-                        <a href="http://www.erebusbat.com/2013/01/deployment-via-capistrano-recipes/"> Deployment via Capistrano Recipes</a>
+                        <a href="http://www.erebusbat.com/2013/05/fix-nokogirl-build-warning/"> Fix Nokogirl build warning</a>
                     
                 </div>
             </div>
@@ -120,7 +223,7 @@
                 <div class="li-pagination-next">
                     
                         Older article<br />
-                        <a href="http://www.erebusbat.com/2012/11/ffmpeg-field-notes/"> ffmpeg Field Notes</a>
+                        <a href="http://www.erebusbat.com/2013/01/capistrano/"> Capistrano</a>
                     
                 </div>
             </div>

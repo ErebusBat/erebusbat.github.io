@@ -53,8 +53,23 @@
   </url>
   
   <url>
+    <loc>http://www.erebusbat.com/2014/04/simple-ruby-cli-apps/</loc>
+    <lastmod>2014-04-08T21:52:21-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.erebusbat.com/2014/04/ruby-bundler-field-notes/</loc>
+    <lastmod>2014-04-08T14:18:07-06:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://www.erebusbat.com/2014/03/microsoft-sql-server-field-notes/</loc>
     <lastmod>2014-03-26T16:41:06-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.erebusbat.com/2014/03/find-method-at-runtime/</loc>
+    <lastmod>2014-03-02T22:42:40-06:00</lastmod>
   </url>
   
   <url>
@@ -83,6 +98,26 @@
   </url>
   
   <url>
+    <loc>http://www.erebusbat.com/2013/05/fix-nokogirl-build-warning/</loc>
+    <lastmod>2013-05-08T22:33:03-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.erebusbat.com/2013/05/rbenv-quick-reference/</loc>
+    <lastmod>2013-05-08T19:41:34-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.erebusbat.com/2013/01/capistrano/</loc>
+    <lastmod>2013-01-15T22:44:00-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.erebusbat.com/2013/01/deployment-via-capistrano-recipes/</loc>
+    <lastmod>2013-01-15T17:38:45-06:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://www.erebusbat.com/2012/11/copy--convert-single-stream-with-ffmpeg/</loc>
     <lastmod>2012-11-03T19:16:11-06:00</lastmod>
   </url>
@@ -93,12 +128,12 @@
   </url>
   
   <url>
-    <loc>http://www.erebusbat.com/2012/11/concatenate-files-with-ffmpeg/</loc>
+    <loc>http://www.erebusbat.com/2012/11/install-full-ffmpeg-homebrew/</loc>
     <lastmod>2012-11-03T19:16:11-06:00</lastmod>
   </url>
   
   <url>
-    <loc>http://www.erebusbat.com/2012/11/install-full-ffmpeg-homebrew/</loc>
+    <loc>http://www.erebusbat.com/2012/11/concatenate-files-with-ffmpeg/</loc>
     <lastmod>2012-11-03T19:16:11-06:00</lastmod>
   </url>
   

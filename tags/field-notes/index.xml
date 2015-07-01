@@ -121,6 +121,47 @@ ssh prodsrv &amp;quot;mysqldump database_production --comments widgets \
     </item>
     
     <item>
+      <title>Ruby Bundler Field Notes</title>
+      <link>http://www.erebusbat.com/2014/04/ruby-bundler-field-notes/</link>
+      <pubDate>Tue, 08 Apr 2014 14:18:07 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2014/04/ruby-bundler-field-notes/</guid>
+      <description>
+
+&lt;h2 id=&#34;links:bc6aa8c0f0fcd2cbdf86dac3c7ca596d&#34;&gt;Links&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://bundler.io/v1.6/bundler_setup.html&#34;&gt; Bundler Setup Docs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://bundler.io/v1.6/git.html&#34;&gt; Bundler with Git Repos&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://bundler.io/v1.6/gemfile.html&#34;&gt; Gemfile docs&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;setup:bc6aa8c0f0fcd2cbdf86dac3c7ca596d&#34;&gt;Setup&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ bundle init
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;script-rb:bc6aa8c0f0fcd2cbdf86dac3c7ca596d&#34;&gt;&lt;code&gt;script.rb&lt;/code&gt;&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;#!/usr/bin/env ruby
+require &#39;rubygems&#39;
+require &#39;bundler/setup&#39;
+Bundler.require
+
+# Or
+Bundler.require(:group)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;gemfile:bc6aa8c0f0fcd2cbdf86dac3c7ca596d&#34;&gt;&lt;code&gt;Gemfile&lt;/code&gt;&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;source &#39;https://rubygems.org&#39;    # Default
+
+gem &#39;nokogiri&#39;, :git =&amp;gt; &#39;git://github.com/tenderlove/nokogiri.git&#39;,
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Microsoft SQL Server Field Notes</title>
       <link>http://www.erebusbat.com/2014/03/microsoft-sql-server-field-notes/</link>
       <pubDate>Wed, 26 Mar 2014 16:41:06 -0600</pubDate>
@@ -200,6 +241,122 @@ FROM
     INNER JOIN sys.foreign_key_columns AS fc ON f.OBJECT_ID = fc.constraint_object_id
 ORDER BY ReferenceTableName;
 &lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>rbenv Quick Reference</title>
+      <link>http://www.erebusbat.com/2013/05/rbenv-quick-reference/</link>
+      <pubDate>Wed, 08 May 2013 19:41:34 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2013/05/rbenv-quick-reference/</guid>
+      <description>
+
+&lt;p&gt;This page collectively describes &lt;a href=&#34;https://github.com/sstephenson/rbenv&#34;&gt;rbenv&lt;/a&gt; and &lt;a href=&#34;https://github.com/sstephenson/ruby-build&#34;&gt;ruby-build&lt;/a&gt; and quick hints on how to use them together.&lt;/p&gt;
+
+&lt;h2 id=&#34;quick-reference:97c32e8e3d08dc1eb9730aa6db7a2900&#34;&gt;Quick Reference&lt;/h2&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Command&lt;/th&gt;
+&lt;th&gt;Purpose&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;rbenv install --list&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Show available rubies to install&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;~/.rbenv/versions&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Path rubies intall into&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;rbenv install 1.9.3-p392&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Install ruby version&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;rm -rf $(rbenv prefix 1.9.3-p392)&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Remove specified ruby version&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;rbenv uninstall 1.9.3-p392&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Same as above, using ruby-build plugin&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;$RBENV_VERSION&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Special env var that overrides the ruby version&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;.ruby-version&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Normal way to specify ruby version to be used &lt;a href=&#34;https://github.com/sstephenson/rbenv#choosing-the-ruby-version&#34;&gt;more details&lt;/a&gt;.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;rbenv rehash&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Manually rebuild your shim files. Run this command after you install a new version of Ruby, or install a gem that provides commands.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;rbenv shell 1.9.3-p392&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Use specific ruby version in this shell instance, overrides any app-specific settings&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;rbenv shell&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Reports current shell specific override setting&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;rbenv shell --unset&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Removes shell specific override setting&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;rbenv local 1.9.3-p392&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Sets a local application-specific Ruby version by writing the version name to a .ruby-version file in the current directory.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;rbenv global 1.9.3-p392&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Sets the default version of Ruby to be used in all shells by writing the version name to the ~/.rbenv/version file.&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;rbenv which irb&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Displays the full path to the executable that rbenv will invoke when you run the given command (irb).&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;rbenv whence rackup&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Lists all Ruby versions with the given command installed (rackup).&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;gem install ruby-debug19 -- --with-ruby-include=$(rbenv prefix 1.9.3-p392)&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Install ruby-debug19 gem bound to the specified ruby.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&#34;custom-build-options:97c32e8e3d08dc1eb9730aa6db7a2900&#34;&gt;Custom Build Options&lt;/h2&gt;
+
+&lt;p&gt;You can customize the way ruby builds using &lt;a href=&#34;https://github.com/sstephenson/ruby-build#special-environment-variables&#34;&gt;special env vars&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;links:97c32e8e3d08dc1eb9730aa6db7a2900&#34;&gt;Links&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/sstephenson/rbenv&#34;&gt;https://github.com/sstephenson/rbenv&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://journal.kaush.co/2013/01/31/rbenv-guide/&#34;&gt;http://journal.kaush.co/2013/01/31/rbenv-guide/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 </description>
     </item>
     

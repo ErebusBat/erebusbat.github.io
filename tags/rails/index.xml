@@ -59,5 +59,109 @@ end
 </description>
     </item>
     
+    <item>
+      <title>Ruby Bundler Field Notes</title>
+      <link>http://www.erebusbat.com/2014/04/ruby-bundler-field-notes/</link>
+      <pubDate>Tue, 08 Apr 2014 14:18:07 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2014/04/ruby-bundler-field-notes/</guid>
+      <description>
+
+&lt;h2 id=&#34;links:bc6aa8c0f0fcd2cbdf86dac3c7ca596d&#34;&gt;Links&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://bundler.io/v1.6/bundler_setup.html&#34;&gt; Bundler Setup Docs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://bundler.io/v1.6/git.html&#34;&gt; Bundler with Git Repos&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://bundler.io/v1.6/gemfile.html&#34;&gt; Gemfile docs&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;setup:bc6aa8c0f0fcd2cbdf86dac3c7ca596d&#34;&gt;Setup&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ bundle init
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;script-rb:bc6aa8c0f0fcd2cbdf86dac3c7ca596d&#34;&gt;&lt;code&gt;script.rb&lt;/code&gt;&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;#!/usr/bin/env ruby
+require &#39;rubygems&#39;
+require &#39;bundler/setup&#39;
+Bundler.require
+
+# Or
+Bundler.require(:group)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;gemfile:bc6aa8c0f0fcd2cbdf86dac3c7ca596d&#34;&gt;&lt;code&gt;Gemfile&lt;/code&gt;&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;source &#39;https://rubygems.org&#39;    # Default
+
+gem &#39;nokogiri&#39;, :git =&amp;gt; &#39;git://github.com/tenderlove/nokogiri.git&#39;,
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Capistrano</title>
+      <link>http://www.erebusbat.com/2013/01/capistrano/</link>
+      <pubDate>Tue, 15 Jan 2013 22:44:00 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2013/01/capistrano/</guid>
+      <description>
+
+&lt;h2 id=&#34;capify-a-project:f8c45d657a54df5664f40d304c68ea31&#34;&gt;Capify a Project&lt;/h2&gt;
+
+&lt;p&gt;This page describes the basic method you can use to &lt;em&gt;capify&lt;/em&gt; a project to maintain a very flexible and easily maintainable deploy process.  This was documented/inspired in &lt;a href=&#34;http://railscasts.com/episodes/337-capistrano-recipes&#34;&gt;RailsCast #337&lt;/a&gt; Capistrano Recipes.&lt;/p&gt;
+
+&lt;h2 id=&#34;assumptions:f8c45d657a54df5664f40d304c68ea31&#34;&gt;Assumptions&lt;/h2&gt;
+
+&lt;p&gt;This is a very opinionated process.  Some things can be easily changed, they are listed as &lt;em&gt;suggested&lt;/em&gt; as below.  Other things can not easily be changed, they are listed as &lt;em&gt;required&lt;/em&gt; below.&lt;/p&gt;
+
+&lt;h2 id=&#34;web-application-server:f8c45d657a54df5664f40d304c68ea31&#34;&gt;Web/Application Server&lt;/h2&gt;
+
+&lt;p&gt;The required configuration is nginx/unicorn.  However adding/changing these should just be a matter of substituting recipes that yet to be written.&lt;/p&gt;
+
+&lt;h3 id=&#34;database:f8c45d657a54df5664f40d304c68ea31&#34;&gt;Database&lt;/h3&gt;
+
+&lt;p&gt;Currently there are no recipes written for any database; however plans are to support MySQL and PostgreSQL&lt;/p&gt;
+
+&lt;h3 id=&#34;server:f8c45d657a54df5664f40d304c68ea31&#34;&gt;Server&lt;/h3&gt;
+
+&lt;p&gt;A debian based linux server is required as all of the package management tasks use &lt;code&gt;apt&lt;/code&gt; commands.  Also a deploy user must be created with sudo rights before anything can be deployed.  The application will run under this user and it &lt;em&gt;should&lt;/em&gt; be the same name as the project to keep everything straight.  Although a &amp;ldquo;set :user, &amp;lsquo;deploy&amp;rsquo; &amp;ldquo; can override that.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Deployment via Capistrano Recipes</title>
+      <link>http://www.erebusbat.com/2013/01/deployment-via-capistrano-recipes/</link>
+      <pubDate>Tue, 15 Jan 2013 17:38:45 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2013/01/deployment-via-capistrano-recipes/</guid>
+      <description>
+
+&lt;h2 id=&#34;deployment-via-capistrano-recipes:68617cf050e3328f80fa5a8383c74cb3&#34;&gt;Deployment via Capistrano Recipes&lt;/h2&gt;
+
+&lt;p&gt;This page documents what you need to do to get a project up and running on a 100% fresh installed server.
+This assumes that you are using Capistrano Recipes as documented/inspired in &lt;a href=&#34;http://railscasts.com/episodes/337-capistrano-recipes&#34;&gt;RailsCast #337&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;It does not help you capify a project.&lt;/p&gt;
+
+&lt;h2 id=&#34;server-prep:68617cf050e3328f80fa5a8383c74cb3&#34;&gt;Server Prep&lt;/h2&gt;
+
+&lt;p&gt;You must create an admin deploy user, everything else will be handled by Capistrano.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;sudo adduser deploy
+sudo usermod -a -G sudo deploy
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You should do a &lt;code&gt;shh-copy-id&lt;/code&gt; or &lt;code&gt;.ssh/config&lt;/code&gt; setup now.&lt;/p&gt;
+
+&lt;h2 id=&#34;capistrano-tasks:68617cf050e3328f80fa5a8383c74cb3&#34;&gt;Capistrano Tasks&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;cd /path/to/app
+cap deploy:install deploy:setup deploy:cold
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
   </channel>
 </rss>

@@ -397,6 +397,97 @@ FROM
     </item>
     
     <item>
+      <title>Simple Ruby CLI Apps</title>
+      <link>http://www.erebusbat.com/2014/04/simple-ruby-cli-apps/</link>
+      <pubDate>Tue, 08 Apr 2014 21:52:21 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2014/04/simple-ruby-cli-apps/</guid>
+      <description>
+
+&lt;h2 id=&#34;see-also:628634f0f24cfc636eac2f4dfbfeb56c&#34;&gt;See Also&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.erebusbat.com/tags/bundler&#34;&gt;bundler&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;general-notes:628634f0f24cfc636eac2f4dfbfeb56c&#34;&gt;General Notes&lt;/h2&gt;
+
+&lt;h2 id=&#34;allow-file-to-be-a-library-script-at-the-same-time:628634f0f24cfc636eac2f4dfbfeb56c&#34;&gt;Allow file to be a library/script at the same time&lt;/h2&gt;
+
+&lt;h3 id=&#34;script-rb:628634f0f24cfc636eac2f4dfbfeb56c&#34;&gt;script.rb&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;###############
+# Entry Point
+###############
+if __FILE__ == $0 then
+  # Setup / Invocation code here
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;generic-script-header:628634f0f24cfc636eac2f4dfbfeb56c&#34;&gt;Generic Script Header&lt;/h2&gt;
+
+&lt;p&gt;Sets up Bundler and the current directory to be in the load path.&lt;/p&gt;
+
+&lt;h3 id=&#34;script-rb-1:628634f0f24cfc636eac2f4dfbfeb56c&#34;&gt;script.rb&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;#!/usr/bin/env ruby
+require &#39;rubygems&#39;
+require &#39;bundler/setup&#39;
+Bundler.require
+$: &amp;lt;&amp;lt; File.dirname(__FILE__) unless $:.include? File.dirname(__FILE__)
+
+###############
+# Entry Point
+###############
+if __FILE__ == $0 then
+  # Setup / Invocation code here
+end
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Ruby Bundler Field Notes</title>
+      <link>http://www.erebusbat.com/2014/04/ruby-bundler-field-notes/</link>
+      <pubDate>Tue, 08 Apr 2014 14:18:07 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2014/04/ruby-bundler-field-notes/</guid>
+      <description>
+
+&lt;h2 id=&#34;links:bc6aa8c0f0fcd2cbdf86dac3c7ca596d&#34;&gt;Links&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://bundler.io/v1.6/bundler_setup.html&#34;&gt; Bundler Setup Docs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://bundler.io/v1.6/git.html&#34;&gt; Bundler with Git Repos&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://bundler.io/v1.6/gemfile.html&#34;&gt; Gemfile docs&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;setup:bc6aa8c0f0fcd2cbdf86dac3c7ca596d&#34;&gt;Setup&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ bundle init
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;script-rb:bc6aa8c0f0fcd2cbdf86dac3c7ca596d&#34;&gt;&lt;code&gt;script.rb&lt;/code&gt;&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;#!/usr/bin/env ruby
+require &#39;rubygems&#39;
+require &#39;bundler/setup&#39;
+Bundler.require
+
+# Or
+Bundler.require(:group)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;gemfile:bc6aa8c0f0fcd2cbdf86dac3c7ca596d&#34;&gt;&lt;code&gt;Gemfile&lt;/code&gt;&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;source &#39;https://rubygems.org&#39;    # Default
+
+gem &#39;nokogiri&#39;, :git =&amp;gt; &#39;git://github.com/tenderlove/nokogiri.git&#39;,
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Microsoft SQL Server Field Notes</title>
       <link>http://www.erebusbat.com/2014/03/microsoft-sql-server-field-notes/</link>
       <pubDate>Wed, 26 Mar 2014 16:41:06 -0600</pubDate>
@@ -480,6 +571,54 @@ ORDER BY ReferenceTableName;
     </item>
     
     <item>
+      <title>Find Method at Runtime</title>
+      <link>http://www.erebusbat.com/2014/03/find-method-at-runtime/</link>
+      <pubDate>Sun, 02 Mar 2014 22:42:40 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2014/03/find-method-at-runtime/</guid>
+      <description>&lt;p&gt;How to find the source location of a Ruby method at runtime.&lt;/p&gt;
+
+&lt;p&gt;Taken from the &lt;a href=&#34;http://stackoverflow.com/questions/175655/how-to-find-where-a-method-is-defined-at-runtime&#34;&gt;Stack Overflow&lt;/a&gt; answer by &lt;a href=&#34;http://stackoverflow.com/users/62140/&#34;&gt;wesgarrison&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;I take no credit for the work.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;# How to find out where a method comes from.
+# Learned this from Dave Thomas while teaching Advanced Ruby Studio
+# Makes the case for separating method definitions into
+# modules, especially when enhancing built-in classes.
+module Perpetrator
+  def crime
+  end
+end
+
+class Fixnum
+  include Perpetrator
+end
+
+p 2.method(:crime)
+#&amp;lt;Method: Fixnum(Perpetrator)#crime&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you&amp;rsquo;re on Ruby 1.9+, you can use &lt;a href=&#34;http://www.ruby-doc.org/core-1.9.3/Method.html#method-i-source_location&#34;&gt;&lt;code&gt;source_location&lt;/code&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;require &#39;csv&#39;
+
+p CSV.new(&#39;string&#39;).method(:flock)
+# =&amp;gt; #&amp;lt;Method: CSV#flock&amp;gt;
+
+CSV.new(&#39;string&#39;).method(:flock).source_location
+# =&amp;gt; [&amp;quot;/path/to/ruby/1.9.2-p290/lib/ruby/1.9.1/forwardable.rb&amp;quot;, 180]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Note that this won&amp;rsquo;t work on everything, like native compiled code. The &lt;a href=&#34;http://www.ruby-doc.org/core-1.9.3/Method.html&#34;&gt;Method class&lt;/a&gt; has some neat functions, too, like &lt;a href=&#34;http://www.ruby-doc.org/core-1.9.3/Method.html#method-i-owner&#34;&gt;Method#owner&lt;/a&gt; which returns the file where the method is defined.&lt;/p&gt;
+
+&lt;p&gt;EDIT: Also see the &lt;code&gt;__file__&lt;/code&gt; and &lt;code&gt;__line__&lt;/code&gt; and notes for REE in the other answer, they&amp;rsquo;re handy too. &amp;ndash; wg&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Hide/Unhide Chart Axis</title>
       <link>http://www.erebusbat.com/2013/08/hide/unhide-chart-axis/</link>
       <pubDate>Fri, 09 Aug 2013 19:02:12 -0600</pubDate>
@@ -533,87 +672,6 @@ End Function
 
 # N=EMA Periods
 SmoothingConstant = 2 / (1 + N)
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Convert to Excel Time from Unix Time</title>
-      <link>http://www.erebusbat.com/2013/08/convert-to-excel-time-from-unix-time/</link>
-      <pubDate>Thu, 08 Aug 2013 18:50:09 -0600</pubDate>
-      
-      <guid>http://www.erebusbat.com/2013/08/convert-to-excel-time-from-unix-time/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;UnixTime&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;ExcelTime = (UnixTime + (&amp;quot;1/1/1970&amp;quot;-&amp;quot;1/1/1900&amp;quot;+1)*86400) / 86400
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>How to Format Data for OHLC charts</title>
-      <link>http://www.erebusbat.com/2013/08/how-to-format-data-for-ohlc-charts/</link>
-      <pubDate>Thu, 08 Aug 2013 18:49:36 -0600</pubDate>
-      
-      <guid>http://www.erebusbat.com/2013/08/how-to-format-data-for-ohlc-charts/</guid>
-      <description>
-
-&lt;h1 id=&#34;howto-format-data-for-ohlc-charts:1f72f7308066a43c90d3c8131ce4d84d&#34;&gt;HOWTO: Format Data for OHLC charts&lt;/h1&gt;
-
-&lt;p&gt;Format data in this manner:&lt;/p&gt;
-
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Date&lt;/th&gt;
-&lt;th&gt;Open&lt;/th&gt;
-&lt;th&gt;High&lt;/th&gt;
-&lt;th&gt;Low&lt;/th&gt;
-&lt;th&gt;Close&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;1/1/12&lt;/td&gt;
-&lt;td&gt;4.72202&lt;/td&gt;
-&lt;td&gt;5.4999&lt;/td&gt;
-&lt;td&gt;4.615&lt;/td&gt;
-&lt;td&gt;5.26766&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;td&gt;1/2/12&lt;/td&gt;
-&lt;td&gt;5.26766&lt;/td&gt;
-&lt;td&gt;5.47&lt;/td&gt;
-&lt;td&gt;4.8&lt;/td&gt;
-&lt;td&gt;5.21678&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Converting DTS/BluRay with FFmpeg</title>
-      <link>http://www.erebusbat.com/2013/08/converting-dts/bluray-with-ffmpeg/</link>
-      <pubDate>Thu, 08 Aug 2013 16:36:00 -0600</pubDate>
-      
-      <guid>http://www.erebusbat.com/2013/08/converting-dts/bluray-with-ffmpeg/</guid>
-      <description>&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ ffmpeg -i video.mkv
-Stream #0:0(eng): Video: h264 (High), yuv420p, 1280x536, SAR 1:1 DAR 160:67, 23.98 fps, 23.98 tbr, 1k tbn, 47.95 tbc (default)
-    Metadata:
-      title           : Video Title
-    Stream #0:1(eng): Audio: dts (DTS), 48000 Hz, 5.1(side), fltp, 1536 kb/s (default)
-    Metadata:
-      title           : DTS 5.1 1.5 Mbps
-    Stream #0:2(eng): Subtitle: subrip
-
-# AppleTV doesn&#39;t support DTS so we output AAC (2ch) and AC3 (5.1)
-$ ffmpeg -i video.mkv -i video.mkv \
-  -map 0:0 -c:v:0 copy \
-  -map 0:1 -ac:1 2 -c:a:0 libfdk_aac \
-  -map 1:1 -c:a:1 ac3 video.m4v
 &lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>

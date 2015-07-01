@@ -5,7 +5,7 @@
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
 
-        <title>Copy &amp; Convert Single Stream with FFmpeg &middot; ErebusBat</title>
+        <title>Rbenv &middot; ErebusBat</title>
         <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' type='text/css'>
         <link rel="stylesheet" href="http://www.erebusbat.com/libraries/normalize.3.0.1.css" />
         <link rel="stylesheet" href="http://www.erebusbat.com/css/liquorice.css" />
@@ -21,7 +21,7 @@
 
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-144-precomposed.png" sizes="144x144" />
-        <link rel="alternate" href="" type="application/rss+xml" title="ErebusBat" />
+        <link rel="alternate" href="http://www.erebusbat.com/tags/rbenv/index.xml" type="application/rss+xml" title="ErebusBat" />
     </head>
     <script>
   (function() {
@@ -64,65 +64,18 @@
 </header>
 
 
-
-
-
-
     <div class="container">
         <div class="row">
             <div class="sixteen columns">
-                <article class="li-article">
-                    <header class="li-article-header">
-                        <h1 class="li-article-title">Copy &amp; Convert Single Stream with FFmpeg</h1>
-                        <span class="li-article-taxonomies">
-                            
-
-                            
-                                with tags
-                                
-                                    <a href="http://www.erebusbat.com/tags/ffmpeg">ffmpeg</a>
-                                
-                            
-                        </span>
-                         - 
-                        <time class="li-article-date">Saturday, November 3, 2012</time>
-                    </header>
-                    <section>
-                        <p>Assume you have a video with AC3 audio, but you want AC3 <em>and</em> AAC audio in the output.</p>
-
-<p>The trick is the double <code>-i</code> to get another input to pump into <code>-map 1:</code></p>
-
-<pre><code class="language-sh">$ ffmpeg -i video.mkv -i video.mkv \
-  -map 0:1 -c:v:0 copy \                  # Copy video from stream 1
-  -map 0:0 -c:a:0 copy \                  # Copy audio from stream 0
-  -map 1:0 -c:a:1 libfdk_aac -ac:2 2 \    # Convert audio in stream 0 to AAC
-  video.m4v
-</code></pre>
-
-                    </section>
-                </article>
-            </div>
-        </div>
-
-        
-
-
-        <div class="row li-pagination">
-            <div class="eight columns">
-                <div class="li-pagination-previous">
+                <h1>Rbenv</h1>
+                <ul class="li-article-list">
                     
-                        Later article<br />
-                        <a href="http://www.erebusbat.com/2013/01/deployment-via-capistrano-recipes/"> Deployment via Capistrano Recipes</a>
+                        <li>
+                            <time class="li-article-date">May, 8, 2013</time>
+                            <h4><a href="http://www.erebusbat.com/2013/05/rbenv-quick-reference/">rbenv Quick Reference</a></h4>
+                        </li>
                     
-                </div>
-            </div>
-            <div class="eight columns">
-                <div class="li-pagination-next">
-                    
-                        Older article<br />
-                        <a href="http://www.erebusbat.com/2012/11/ffmpeg-field-notes/"> ffmpeg Field Notes</a>
-                    
-                </div>
+                </ul>
             </div>
         </div>
     </div>

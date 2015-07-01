@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bundler on ErebusBat</title>
+    <link>http://www.erebusbat.com/tags/bundler/</link>
+    <description>Recent content in Bundler on ErebusBat</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 08 Apr 2014 14:18:07 -0600</lastBuildDate>
+    <atom:link href="http://www.erebusbat.com/tags/bundler/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Ruby Bundler Field Notes</title>
+      <link>http://www.erebusbat.com/2014/04/ruby-bundler-field-notes/</link>
+      <pubDate>Tue, 08 Apr 2014 14:18:07 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2014/04/ruby-bundler-field-notes/</guid>
+      <description>
+
+&lt;h2 id=&#34;links:bc6aa8c0f0fcd2cbdf86dac3c7ca596d&#34;&gt;Links&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://bundler.io/v1.6/bundler_setup.html&#34;&gt; Bundler Setup Docs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://bundler.io/v1.6/git.html&#34;&gt; Bundler with Git Repos&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://bundler.io/v1.6/gemfile.html&#34;&gt; Gemfile docs&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;setup:bc6aa8c0f0fcd2cbdf86dac3c7ca596d&#34;&gt;Setup&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ bundle init
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;script-rb:bc6aa8c0f0fcd2cbdf86dac3c7ca596d&#34;&gt;&lt;code&gt;script.rb&lt;/code&gt;&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;#!/usr/bin/env ruby
+require &#39;rubygems&#39;
+require &#39;bundler/setup&#39;
+Bundler.require
+
+# Or
+Bundler.require(:group)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;gemfile:bc6aa8c0f0fcd2cbdf86dac3c7ca596d&#34;&gt;&lt;code&gt;Gemfile&lt;/code&gt;&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;source &#39;https://rubygems.org&#39;    # Default
+
+gem &#39;nokogiri&#39;, :git =&amp;gt; &#39;git://github.com/tenderlove/nokogiri.git&#39;,
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

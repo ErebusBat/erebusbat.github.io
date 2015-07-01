@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Capistrano on ErebusBat</title>
+    <link>http://www.erebusbat.com/tags/capistrano/</link>
+    <description>Recent content in Capistrano on ErebusBat</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 15 Jan 2013 22:44:00 -0600</lastBuildDate>
+    <atom:link href="http://www.erebusbat.com/tags/capistrano/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Capistrano</title>
+      <link>http://www.erebusbat.com/2013/01/capistrano/</link>
+      <pubDate>Tue, 15 Jan 2013 22:44:00 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2013/01/capistrano/</guid>
+      <description>
+
+&lt;h2 id=&#34;capify-a-project:f8c45d657a54df5664f40d304c68ea31&#34;&gt;Capify a Project&lt;/h2&gt;
+
+&lt;p&gt;This page describes the basic method you can use to &lt;em&gt;capify&lt;/em&gt; a project to maintain a very flexible and easily maintainable deploy process.  This was documented/inspired in &lt;a href=&#34;http://railscasts.com/episodes/337-capistrano-recipes&#34;&gt;RailsCast #337&lt;/a&gt; Capistrano Recipes.&lt;/p&gt;
+
+&lt;h2 id=&#34;assumptions:f8c45d657a54df5664f40d304c68ea31&#34;&gt;Assumptions&lt;/h2&gt;
+
+&lt;p&gt;This is a very opinionated process.  Some things can be easily changed, they are listed as &lt;em&gt;suggested&lt;/em&gt; as below.  Other things can not easily be changed, they are listed as &lt;em&gt;required&lt;/em&gt; below.&lt;/p&gt;
+
+&lt;h2 id=&#34;web-application-server:f8c45d657a54df5664f40d304c68ea31&#34;&gt;Web/Application Server&lt;/h2&gt;
+
+&lt;p&gt;The required configuration is nginx/unicorn.  However adding/changing these should just be a matter of substituting recipes that yet to be written.&lt;/p&gt;
+
+&lt;h3 id=&#34;database:f8c45d657a54df5664f40d304c68ea31&#34;&gt;Database&lt;/h3&gt;
+
+&lt;p&gt;Currently there are no recipes written for any database; however plans are to support MySQL and PostgreSQL&lt;/p&gt;
+
+&lt;h3 id=&#34;server:f8c45d657a54df5664f40d304c68ea31&#34;&gt;Server&lt;/h3&gt;
+
+&lt;p&gt;A debian based linux server is required as all of the package management tasks use &lt;code&gt;apt&lt;/code&gt; commands.  Also a deploy user must be created with sudo rights before anything can be deployed.  The application will run under this user and it &lt;em&gt;should&lt;/em&gt; be the same name as the project to keep everything straight.  Although a &amp;ldquo;set :user, &amp;lsquo;deploy&amp;rsquo; &amp;ldquo; can override that.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

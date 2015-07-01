@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Nokogiri on ErebusBat</title>
+    <link>http://www.erebusbat.com/tags/nokogiri/</link>
+    <description>Recent content in Nokogiri on ErebusBat</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 08 May 2013 22:33:03 -0600</lastBuildDate>
+    <atom:link href="http://www.erebusbat.com/tags/nokogiri/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Fix Nokogirl build warning</title>
+      <link>http://www.erebusbat.com/2013/05/fix-nokogirl-build-warning/</link>
+      <pubDate>Wed, 08 May 2013 22:33:03 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2013/05/fix-nokogirl-build-warning/</guid>
+      <description>
+
+&lt;h2 id=&#34;fix-build-warning:06003214dbbedc51a1addb7372c91b59&#34;&gt;Fix build warning&lt;/h2&gt;
+
+&lt;p&gt;If getting warnings like: &lt;code&gt;WARNING: Nokogiri was built against LibXML version 2.9.0, but has dynamically loaded 2.7.8&lt;/code&gt; then:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;gem uninstall nokogiri libxml-ruby
+
+brew update
+brew uninstall libxml2
+brew install libxml2 --with-xml2-config
+brew link libxml2
+brew install libxslt
+
+gem install nokogiri -- --with-xml2-include=/usr/local/opt/libxml2/include \
+ --with-xml2-lib=/usr/local/opt/libxml2/lib \
+ --with-xslt-dir=/usr/local/opt/libxslt
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Based off of &lt;a href=&#34;https://gist.github.com/devpuppy/1349681&#34;&gt;devpuppy&amp;rsquo;s work&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

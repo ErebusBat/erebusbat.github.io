@@ -5,7 +5,7 @@
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
 
-        <title>Copy &amp; Convert Single Stream with FFmpeg &middot; ErebusBat</title>
+        <title>Find Method at Runtime &middot; ErebusBat</title>
         <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' type='text/css'>
         <link rel="stylesheet" href="http://www.erebusbat.com/libraries/normalize.3.0.1.css" />
         <link rel="stylesheet" href="http://www.erebusbat.com/css/liquorice.css" />
@@ -73,31 +73,62 @@
             <div class="sixteen columns">
                 <article class="li-article">
                     <header class="li-article-header">
-                        <h1 class="li-article-title">Copy &amp; Convert Single Stream with FFmpeg</h1>
+                        <h1 class="li-article-title">Find Method at Runtime</h1>
                         <span class="li-article-taxonomies">
                             
 
                             
                                 with tags
                                 
-                                    <a href="http://www.erebusbat.com/tags/ffmpeg">ffmpeg</a>
+                                    <a href="http://www.erebusbat.com/tags/dokuwiki">DokuWiki</a>
+                                
+                                    <a href="http://www.erebusbat.com/tags/ruby">ruby</a>
                                 
                             
                         </span>
                          - 
-                        <time class="li-article-date">Saturday, November 3, 2012</time>
+                        <time class="li-article-date">Sunday, March 2, 2014</time>
                     </header>
                     <section>
-                        <p>Assume you have a video with AC3 audio, but you want AC3 <em>and</em> AAC audio in the output.</p>
+                        <p>How to find the source location of a Ruby method at runtime.</p>
 
-<p>The trick is the double <code>-i</code> to get another input to pump into <code>-map 1:</code></p>
+<p>Taken from the <a href="http://stackoverflow.com/questions/175655/how-to-find-where-a-method-is-defined-at-runtime">Stack Overflow</a> answer by <a href="http://stackoverflow.com/users/62140/">wesgarrison</a>.</p>
 
-<pre><code class="language-sh">$ ffmpeg -i video.mkv -i video.mkv \
-  -map 0:1 -c:v:0 copy \                  # Copy video from stream 1
-  -map 0:0 -c:a:0 copy \                  # Copy audio from stream 0
-  -map 1:0 -c:a:1 libfdk_aac -ac:2 2 \    # Convert audio in stream 0 to AAC
-  video.m4v
+<p>I take no credit for the work.</p>
+
+<hr />
+
+<pre><code class="language-ruby"># How to find out where a method comes from.
+# Learned this from Dave Thomas while teaching Advanced Ruby Studio
+# Makes the case for separating method definitions into
+# modules, especially when enhancing built-in classes.
+module Perpetrator
+  def crime
+  end
+end
+
+class Fixnum
+  include Perpetrator
+end
+
+p 2.method(:crime)
+#&lt;Method: Fixnum(Perpetrator)#crime&gt;
 </code></pre>
+
+<p>If you&rsquo;re on Ruby 1.9+, you can use <a href="http://www.ruby-doc.org/core-1.9.3/Method.html#method-i-source_location"><code>source_location</code></a></p>
+
+<pre><code class="language-ruby">require 'csv'
+
+p CSV.new('string').method(:flock)
+# =&gt; #&lt;Method: CSV#flock&gt;
+
+CSV.new('string').method(:flock).source_location
+# =&gt; [&quot;/path/to/ruby/1.9.2-p290/lib/ruby/1.9.1/forwardable.rb&quot;, 180]
+</code></pre>
+
+<p>Note that this won&rsquo;t work on everything, like native compiled code. The <a href="http://www.ruby-doc.org/core-1.9.3/Method.html">Method class</a> has some neat functions, too, like <a href="http://www.ruby-doc.org/core-1.9.3/Method.html#method-i-owner">Method#owner</a> which returns the file where the method is defined.</p>
+
+<p>EDIT: Also see the <code>__file__</code> and <code>__line__</code> and notes for REE in the other answer, they&rsquo;re handy too. &ndash; wg</p>
 
                     </section>
                 </article>
@@ -112,7 +143,7 @@
                 <div class="li-pagination-previous">
                     
                         Later article<br />
-                        <a href="http://www.erebusbat.com/2013/01/deployment-via-capistrano-recipes/"> Deployment via Capistrano Recipes</a>
+                        <a href="http://www.erebusbat.com/2014/03/microsoft-sql-server-field-notes/"> Microsoft SQL Server Field Notes</a>
                     
                 </div>
             </div>
@@ -120,7 +151,7 @@
                 <div class="li-pagination-next">
                     
                         Older article<br />
-                        <a href="http://www.erebusbat.com/2012/11/ffmpeg-field-notes/"> ffmpeg Field Notes</a>
+                        <a href="http://www.erebusbat.com/2013/08/hide/unhide-chart-axis/"> Hide/Unhide Chart Axis</a>
                     
                 </div>
             </div>

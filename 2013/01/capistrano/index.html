@@ -5,7 +5,7 @@
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
 
-        <title>Copy &amp; Convert Single Stream with FFmpeg &middot; ErebusBat</title>
+        <title>Capistrano &middot; ErebusBat</title>
         <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' type='text/css'>
         <link rel="stylesheet" href="http://www.erebusbat.com/libraries/normalize.3.0.1.css" />
         <link rel="stylesheet" href="http://www.erebusbat.com/css/liquorice.css" />
@@ -73,31 +73,46 @@
             <div class="sixteen columns">
                 <article class="li-article">
                     <header class="li-article-header">
-                        <h1 class="li-article-title">Copy &amp; Convert Single Stream with FFmpeg</h1>
+                        <h1 class="li-article-title">Capistrano</h1>
                         <span class="li-article-taxonomies">
                             
 
                             
                                 with tags
                                 
-                                    <a href="http://www.erebusbat.com/tags/ffmpeg">ffmpeg</a>
+                                    <a href="http://www.erebusbat.com/tags/dokuwiki">DokuWiki</a>
+                                
+                                    <a href="http://www.erebusbat.com/tags/capistrano">capistrano</a>
+                                
+                                    <a href="http://www.erebusbat.com/tags/rails">rails</a>
                                 
                             
                         </span>
                          - 
-                        <time class="li-article-date">Saturday, November 3, 2012</time>
+                        <time class="li-article-date">Tuesday, January 15, 2013</time>
                     </header>
                     <section>
-                        <p>Assume you have a video with AC3 audio, but you want AC3 <em>and</em> AAC audio in the output.</p>
+                        
 
-<p>The trick is the double <code>-i</code> to get another input to pump into <code>-map 1:</code></p>
+<h2 id="capify-a-project:f8c45d657a54df5664f40d304c68ea31">Capify a Project</h2>
 
-<pre><code class="language-sh">$ ffmpeg -i video.mkv -i video.mkv \
-  -map 0:1 -c:v:0 copy \                  # Copy video from stream 1
-  -map 0:0 -c:a:0 copy \                  # Copy audio from stream 0
-  -map 1:0 -c:a:1 libfdk_aac -ac:2 2 \    # Convert audio in stream 0 to AAC
-  video.m4v
-</code></pre>
+<p>This page describes the basic method you can use to <em>capify</em> a project to maintain a very flexible and easily maintainable deploy process.  This was documented/inspired in <a href="http://railscasts.com/episodes/337-capistrano-recipes">RailsCast #337</a> Capistrano Recipes.</p>
+
+<h2 id="assumptions:f8c45d657a54df5664f40d304c68ea31">Assumptions</h2>
+
+<p>This is a very opinionated process.  Some things can be easily changed, they are listed as <em>suggested</em> as below.  Other things can not easily be changed, they are listed as <em>required</em> below.</p>
+
+<h2 id="web-application-server:f8c45d657a54df5664f40d304c68ea31">Web/Application Server</h2>
+
+<p>The required configuration is nginx/unicorn.  However adding/changing these should just be a matter of substituting recipes that yet to be written.</p>
+
+<h3 id="database:f8c45d657a54df5664f40d304c68ea31">Database</h3>
+
+<p>Currently there are no recipes written for any database; however plans are to support MySQL and PostgreSQL</p>
+
+<h3 id="server:f8c45d657a54df5664f40d304c68ea31">Server</h3>
+
+<p>A debian based linux server is required as all of the package management tasks use <code>apt</code> commands.  Also a deploy user must be created with sudo rights before anything can be deployed.  The application will run under this user and it <em>should</em> be the same name as the project to keep everything straight.  Although a &ldquo;set :user, &lsquo;deploy&rsquo; &ldquo; can override that.</p>
 
                     </section>
                 </article>
@@ -112,7 +127,7 @@
                 <div class="li-pagination-previous">
                     
                         Later article<br />
-                        <a href="http://www.erebusbat.com/2013/01/deployment-via-capistrano-recipes/"> Deployment via Capistrano Recipes</a>
+                        <a href="http://www.erebusbat.com/2013/05/rbenv-quick-reference/"> rbenv Quick Reference</a>
                     
                 </div>
             </div>
@@ -120,7 +135,7 @@
                 <div class="li-pagination-next">
                     
                         Older article<br />
-                        <a href="http://www.erebusbat.com/2012/11/ffmpeg-field-notes/"> ffmpeg Field Notes</a>
+                        <a href="http://www.erebusbat.com/2013/01/deployment-via-capistrano-recipes/"> Deployment via Capistrano Recipes</a>
                     
                 </div>
             </div>

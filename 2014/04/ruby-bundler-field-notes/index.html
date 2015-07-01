@@ -5,7 +5,7 @@
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
 
-        <title>Copy &amp; Convert Single Stream with FFmpeg &middot; ErebusBat</title>
+        <title>Ruby Bundler Field Notes &middot; ErebusBat</title>
         <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' type='text/css'>
         <link rel="stylesheet" href="http://www.erebusbat.com/libraries/normalize.3.0.1.css" />
         <link rel="stylesheet" href="http://www.erebusbat.com/css/liquorice.css" />
@@ -73,30 +73,58 @@
             <div class="sixteen columns">
                 <article class="li-article">
                     <header class="li-article-header">
-                        <h1 class="li-article-title">Copy &amp; Convert Single Stream with FFmpeg</h1>
+                        <h1 class="li-article-title">Ruby Bundler Field Notes</h1>
                         <span class="li-article-taxonomies">
                             
 
                             
                                 with tags
                                 
-                                    <a href="http://www.erebusbat.com/tags/ffmpeg">ffmpeg</a>
+                                    <a href="http://www.erebusbat.com/tags/dokuwiki">DokuWiki</a>
+                                
+                                    <a href="http://www.erebusbat.com/tags/bundler">bundler</a>
+                                
+                                    <a href="http://www.erebusbat.com/tags/field-notes">field-notes</a>
+                                
+                                    <a href="http://www.erebusbat.com/tags/rails">rails</a>
                                 
                             
                         </span>
                          - 
-                        <time class="li-article-date">Saturday, November 3, 2012</time>
+                        <time class="li-article-date">Tuesday, April 8, 2014</time>
                     </header>
                     <section>
-                        <p>Assume you have a video with AC3 audio, but you want AC3 <em>and</em> AAC audio in the output.</p>
+                        
 
-<p>The trick is the double <code>-i</code> to get another input to pump into <code>-map 1:</code></p>
+<h2 id="links:bc6aa8c0f0fcd2cbdf86dac3c7ca596d">Links</h2>
 
-<pre><code class="language-sh">$ ffmpeg -i video.mkv -i video.mkv \
-  -map 0:1 -c:v:0 copy \                  # Copy video from stream 1
-  -map 0:0 -c:a:0 copy \                  # Copy audio from stream 0
-  -map 1:0 -c:a:1 libfdk_aac -ac:2 2 \    # Convert audio in stream 0 to AAC
-  video.m4v
+<ul>
+<li><a href="http://bundler.io/v1.6/bundler_setup.html"> Bundler Setup Docs</a></li>
+<li><a href="http://bundler.io/v1.6/git.html"> Bundler with Git Repos</a></li>
+<li><a href="http://bundler.io/v1.6/gemfile.html"> Gemfile docs</a></li>
+</ul>
+
+<h2 id="setup:bc6aa8c0f0fcd2cbdf86dac3c7ca596d">Setup</h2>
+
+<pre><code class="language-bash">$ bundle init
+</code></pre>
+
+<h4 id="script-rb:bc6aa8c0f0fcd2cbdf86dac3c7ca596d"><code>script.rb</code></h4>
+
+<pre><code class="language-ruby">#!/usr/bin/env ruby
+require 'rubygems'
+require 'bundler/setup'
+Bundler.require
+
+# Or
+Bundler.require(:group)
+</code></pre>
+
+<h4 id="gemfile:bc6aa8c0f0fcd2cbdf86dac3c7ca596d"><code>Gemfile</code></h4>
+
+<pre><code class="language-ruby">source 'https://rubygems.org'    # Default
+
+gem 'nokogiri', :git =&gt; 'git://github.com/tenderlove/nokogiri.git',
 </code></pre>
 
                     </section>
@@ -112,7 +140,7 @@
                 <div class="li-pagination-previous">
                     
                         Later article<br />
-                        <a href="http://www.erebusbat.com/2013/01/deployment-via-capistrano-recipes/"> Deployment via Capistrano Recipes</a>
+                        <a href="http://www.erebusbat.com/2014/04/simple-ruby-cli-apps/"> Simple Ruby CLI Apps</a>
                     
                 </div>
             </div>
@@ -120,7 +148,7 @@
                 <div class="li-pagination-next">
                     
                         Older article<br />
-                        <a href="http://www.erebusbat.com/2012/11/ffmpeg-field-notes/"> ffmpeg Field Notes</a>
+                        <a href="http://www.erebusbat.com/2014/03/microsoft-sql-server-field-notes/"> Microsoft SQL Server Field Notes</a>
                     
                 </div>
             </div>
