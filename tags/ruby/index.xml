@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ruby on ErebusBat</title>
+    <link>http://www.erebusbat.com/tags/ruby/</link>
+    <description>Recent content in Ruby on ErebusBat</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 01 Jul 2015 10:17:12 -0600</lastBuildDate>
+    <atom:link href="http://www.erebusbat.com/tags/ruby/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Rails: Allow users to use asterisks as wildcards.</title>
+      <link>http://www.erebusbat.com/2015/07/rails-allow-users-to-use-asterisks-as-wildcards./</link>
+      <pubDate>Wed, 01 Jul 2015 10:17:12 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2015/07/rails-allow-users-to-use-asterisks-as-wildcards./</guid>
+      <description>
+
+&lt;p&gt;Simple method that iterates a hash and any string values that contain an asterisk
+are changed to a percent sign.  It will &lt;em&gt;not&lt;/em&gt; iterate to sub hashes.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;def fix_asterisks hash
+  hash = hash.dup
+  hash.each_pair do |key, val|
+    if val.is_a?(String) &amp;amp;&amp;amp; val =~ /\*/
+      hash[key] = val.gsub(/\*/, &#39;%&#39;)
+    end
+  end
+end
+
+def controller_action
+  query = QueryObject.new(fix_asterisks(params[:query]))
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;examples:340c4c4ca88c80de8fce1a1ce85fedac&#34;&gt;Examples&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;def controller_action
+  query = QueryObject.new(fix_asterisks(params[:query]))
+  ...
+
+  # params[:query][:last_name] = &amp;quot;smith*&amp;quot;
+  p query.last_name
+  # =&amp;gt; &amp;quot;smith%&amp;quot;
+
+  # params[:query][:last_name] = &amp;quot;smith%&amp;quot;
+  p query.last_name
+  # =&amp;gt; &amp;quot;smith%&amp;quot;
+
+  # params[:query][:days] = &amp;quot;13&amp;quot;
+  p query.days
+  # =&amp;gt; &amp;quot;13&amp;quot;
+  ...
+
+  objs = Customer.where([&#39;last_name like ?&#39;, query.last_name])
+end
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -6,8 +6,58 @@
     <description>Recent content in Posts on ErebusBat</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Jun 2015 10:10:26 -0600</lastBuildDate>
+    <lastBuildDate>Wed, 01 Jul 2015 10:17:12 -0600</lastBuildDate>
     <atom:link href="http://www.erebusbat.com/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Rails: Allow users to use asterisks as wildcards.</title>
+      <link>http://www.erebusbat.com/2015/07/rails-allow-users-to-use-asterisks-as-wildcards./</link>
+      <pubDate>Wed, 01 Jul 2015 10:17:12 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2015/07/rails-allow-users-to-use-asterisks-as-wildcards./</guid>
+      <description>
+
+&lt;p&gt;Simple method that iterates a hash and any string values that contain an asterisk
+are changed to a percent sign.  It will &lt;em&gt;not&lt;/em&gt; iterate to sub hashes.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;def fix_asterisks hash
+  hash = hash.dup
+  hash.each_pair do |key, val|
+    if val.is_a?(String) &amp;amp;&amp;amp; val =~ /\*/
+      hash[key] = val.gsub(/\*/, &#39;%&#39;)
+    end
+  end
+end
+
+def controller_action
+  query = QueryObject.new(fix_asterisks(params[:query]))
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;examples:340c4c4ca88c80de8fce1a1ce85fedac&#34;&gt;Examples&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;def controller_action
+  query = QueryObject.new(fix_asterisks(params[:query]))
+  ...
+
+  # params[:query][:last_name] = &amp;quot;smith*&amp;quot;
+  p query.last_name
+  # =&amp;gt; &amp;quot;smith%&amp;quot;
+
+  # params[:query][:last_name] = &amp;quot;smith%&amp;quot;
+  p query.last_name
+  # =&amp;gt; &amp;quot;smith%&amp;quot;
+
+  # params[:query][:days] = &amp;quot;13&amp;quot;
+  p query.days
+  # =&amp;gt; &amp;quot;13&amp;quot;
+  ...
+
+  objs = Customer.where([&#39;last_name like ?&#39;, query.last_name])
+end
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
     
     <item>
       <title>App won&#39;t Install with Apple Configurator</title>
@@ -532,62 +582,6 @@ ffmpeg -f concat -i mylist.txt -c copy output.wav
   -map 0:0 -c:a:0 copy \                  # Copy audio from stream 0
   -map 1:0 -c:a:1 libfdk_aac -ac:2 2 \    # Convert audio in stream 0 to AAC
   video.m4v
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>FFmpeg Oneliners</title>
-      <link>http://www.erebusbat.com/2012/11/ffmpeg-oneliners/</link>
-      <pubDate>Sat, 03 Nov 2012 19:16:11 -0600</pubDate>
-      
-      <guid>http://www.erebusbat.com/2012/11/ffmpeg-oneliners/</guid>
-      <description>&lt;p&gt;Here are a bunch of &lt;code&gt;ffmpeg&lt;/code&gt; commands that I have collected&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;# File Info
-ffmpeg -i &amp;lt;file&amp;gt;
-
-# Convert (not transcode)
-ffmpeg -i &amp;lt;file&amp;gt; -c copy &amp;lt;file.out&amp;gt;
-
-# Convert lowbitrate -&amp;gt; 128k (to get around iCloud)
-ffmpeg -i in.m4a -b:a 128k out.mp3
-
-# Convert, but transcode audio to 2ch AC3
-ffmpeg -i &amp;lt;file.mkv&amp;gt; -c:v copy -c:a ac3 -ac 2 &amp;lt;file.mp4&amp;gt;
-
-# Extract Audio Stream (0:1 = 0-First input file  1-Second Stream)
-ffmpeg -i Movie.m4v -map 0:1 -acodec copy Movie_Audio.m4a
-
-# Extract Audio Stream (0:1 = 0-First input file  1-Second Stream)
-#   Copy 5 minutes from 25 min in (1500s=25m, 300s=5m)
-ffmpeg -i Movie.m4v -map 0:1 -acodec copy -ss 1500 -t 300 Movie_Audio.m4a
-
-# Convert audio file to iTunes format (works with non-standard extensions, like m4b)
-ffmpeg -i audio.mp3 -f adts -c:a libfdk_aac audio.m4b
-
-# Convert all MP3 files to AAC, then rename to M4B (for audiobooks)
-for f in *.mp3; do ffmpeg -i $f  -c:a libfdk_aac ${f:r}.m4a &amp;amp;&amp;amp; mv ${f:r}.m4a ${f:r}.m4b; done
-for f in *.mp3; do ffmpeg -i $f -f adts -c:a libfdk_aac ${f:r}.m4b; done
-for f in *.mp3; do ffmpeg -i $f -acodec libfdk_aac -b:a 96k -f adts ${f:r}.m4b; done
-
-# Convert to AAC/M4A that will import into iTunes
-ffmpeg -i Input.mp3 -c:a libfdk_aac Test96.m4a
-#     If you want a different file extension, specify iPod format:
-ffmpeg -i Input.mp3 -c:a libfdk_aac -f ipod -b:a 96k Test96.m4b
-
-# Convert all FLAC-&amp;gt;M4A, using separate folders
-mkdir aac; mkdir processed; for f in *.flac; do
-  ffmpeg -i $f -acodec libfdk_aac -b:a 256k &amp;quot;aac/${f:t:r}.m4a&amp;quot; &amp;amp;&amp;amp; mv $f processed/; done
-# Simple FLAC conversion
-for f in *.flac; do ffmpeg -i $f -c:a libfdk_aac -ab 256k ${f:r}.m4a; done
-
-# Take an input that has 0:0-h264 0:1-ac3 and output a file that copies those and adds an AAC channel
-# Notice the duplicated input, this is so we can copy one audio, but process the other
-ffmpeg -i movie.m4v -i movie.m4v -map 0:0 -c:v copy -map 0:1 -c:a:0 copy -map 1:1 -c:a:1 libfdk_aac movie_fixed.m4v
-
-# Convert flash demo video to h264/m4v mono
-ffmpeg -i dd6796a8c742c83457e1d7a32985cc5e.flv -c:v h264 -c:a libfdk_aac -ac:1 1 -ab:1 48k SCID-workshop2.m4v
 &lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>

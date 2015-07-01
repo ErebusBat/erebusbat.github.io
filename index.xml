@@ -6,8 +6,58 @@
     <description>Recent content on ErebusBat</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Jun 2015 10:10:26 -0600</lastBuildDate>
+    <lastBuildDate>Wed, 01 Jul 2015 10:17:12 -0600</lastBuildDate>
     <atom:link href="http://www.erebusbat.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Rails: Allow users to use asterisks as wildcards.</title>
+      <link>http://www.erebusbat.com/2015/07/rails-allow-users-to-use-asterisks-as-wildcards./</link>
+      <pubDate>Wed, 01 Jul 2015 10:17:12 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2015/07/rails-allow-users-to-use-asterisks-as-wildcards./</guid>
+      <description>
+
+&lt;p&gt;Simple method that iterates a hash and any string values that contain an asterisk
+are changed to a percent sign.  It will &lt;em&gt;not&lt;/em&gt; iterate to sub hashes.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;def fix_asterisks hash
+  hash = hash.dup
+  hash.each_pair do |key, val|
+    if val.is_a?(String) &amp;amp;&amp;amp; val =~ /\*/
+      hash[key] = val.gsub(/\*/, &#39;%&#39;)
+    end
+  end
+end
+
+def controller_action
+  query = QueryObject.new(fix_asterisks(params[:query]))
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;examples:340c4c4ca88c80de8fce1a1ce85fedac&#34;&gt;Examples&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;def controller_action
+  query = QueryObject.new(fix_asterisks(params[:query]))
+  ...
+
+  # params[:query][:last_name] = &amp;quot;smith*&amp;quot;
+  p query.last_name
+  # =&amp;gt; &amp;quot;smith%&amp;quot;
+
+  # params[:query][:last_name] = &amp;quot;smith%&amp;quot;
+  p query.last_name
+  # =&amp;gt; &amp;quot;smith%&amp;quot;
+
+  # params[:query][:days] = &amp;quot;13&amp;quot;
+  p query.days
+  # =&amp;gt; &amp;quot;13&amp;quot;
+  ...
+
+  objs = Customer.where([&#39;last_name like ?&#39;, query.last_name])
+end
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
     
     <item>
       <title>App won&#39;t Install with Apple Configurator</title>
@@ -494,6 +544,25 @@ $ ffmpeg -i video.mkv -i video.mkv \
     </item>
     
     <item>
+      <title>Copy &amp; Convert Single Stream with FFmpeg</title>
+      <link>http://www.erebusbat.com/2012/11/copy--convert-single-stream-with-ffmpeg/</link>
+      <pubDate>Sat, 03 Nov 2012 19:16:11 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2012/11/copy--convert-single-stream-with-ffmpeg/</guid>
+      <description>&lt;p&gt;Assume you have a video with AC3 audio, but you want AC3 &lt;em&gt;and&lt;/em&gt; AAC audio in the output.&lt;/p&gt;
+
+&lt;p&gt;The trick is the double &lt;code&gt;-i&lt;/code&gt; to get another input to pump into &lt;code&gt;-map 1:&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;$ ffmpeg -i video.mkv -i video.mkv \
+  -map 0:1 -c:v:0 copy \                  # Copy video from stream 1
+  -map 0:0 -c:a:0 copy \                  # Copy audio from stream 0
+  -map 1:0 -c:a:1 libfdk_aac -ac:2 2 \    # Convert audio in stream 0 to AAC
+  video.m4v
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
       <title>ffmpeg Field Notes</title>
       <link>http://www.erebusbat.com/2012/11/ffmpeg-field-notes/</link>
       <pubDate>Sat, 03 Nov 2012 19:16:11 -0600</pubDate>
@@ -718,56 +787,6 @@ ffmpeg -f concat -i mylist.txt -c copy output.wav
 --with-speex \
 --with-theora \
 --with-tools
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Copy &amp; Convert Single Stream with FFmpeg</title>
-      <link>http://www.erebusbat.com/2012/11/copy--convert-single-stream-with-ffmpeg/</link>
-      <pubDate>Sat, 03 Nov 2012 19:16:11 -0600</pubDate>
-      
-      <guid>http://www.erebusbat.com/2012/11/copy--convert-single-stream-with-ffmpeg/</guid>
-      <description>&lt;p&gt;Assume you have a video with AC3 audio, but you want AC3 &lt;em&gt;and&lt;/em&gt; AAC audio in the output.&lt;/p&gt;
-
-&lt;p&gt;The trick is the double &lt;code&gt;-i&lt;/code&gt; to get another input to pump into &lt;code&gt;-map 1:&lt;/code&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;$ ffmpeg -i video.mkv -i video.mkv \
-  -map 0:1 -c:v:0 copy \                  # Copy video from stream 1
-  -map 0:0 -c:a:0 copy \                  # Copy audio from stream 0
-  -map 1:0 -c:a:1 libfdk_aac -ac:2 2 \    # Convert audio in stream 0 to AAC
-  video.m4v
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Install full ffmpeg Homebrew</title>
-      <link>http://www.erebusbat.com/2012/11/install-full-ffmpeg-homebrew/</link>
-      <pubDate>Sat, 03 Nov 2012 19:16:11 -0600</pubDate>
-      
-      <guid>http://www.erebusbat.com/2012/11/install-full-ffmpeg-homebrew/</guid>
-      <description>&lt;p&gt;Will install &lt;code&gt;ffmpeg&lt;/code&gt; with all the codecs that I care about (namely fdk-aac).&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;brew install ffmpeg \
-  --with-fdk-aac \
-  --with-ffplay \
-  --with-freetype \
-  --with-frei0r \
-  --with-libass \
-  --with-libcaca \
-  --with-libvo-aacenc \
-  --with-libvorbis \
-  --with-libvpx \
-  --with-opencore-amr \
-  --with-openjpeg \
-  --with-openssl \
-  --with-opus \
-  --with-rtmpdump \
-  --with-schroedinger \
-  --with-speex \
-  --with-theora \
-  --with-tools
 &lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>

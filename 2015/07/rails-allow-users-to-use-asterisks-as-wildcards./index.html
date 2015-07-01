@@ -5,7 +5,7 @@
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
 
-        <title>MySQL Field Notes &middot; ErebusBat</title>
+        <title>Rails: Allow users to use asterisks as wildcards. &middot; ErebusBat</title>
         <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' type='text/css'>
         <link rel="stylesheet" href="http://www.erebusbat.com/libraries/normalize.3.0.1.css" />
         <link rel="stylesheet" href="http://www.erebusbat.com/css/liquorice.css" />
@@ -73,75 +73,63 @@
             <div class="sixteen columns">
                 <article class="li-article">
                     <header class="li-article-header">
-                        <h1 class="li-article-title">MySQL Field Notes</h1>
+                        <h1 class="li-article-title">Rails: Allow users to use asterisks as wildcards.</h1>
                         <span class="li-article-taxonomies">
                             
 
                             
                                 with tags
                                 
-                                    <a href="http://www.erebusbat.com/tags/mysql">mysql</a>
+                                    <a href="http://www.erebusbat.com/tags/ruby">ruby</a>
                                 
-                                    <a href="http://www.erebusbat.com/tags/field-notes">field-notes</a>
+                                    <a href="http://www.erebusbat.com/tags/rails">rails</a>
                                 
                             
                         </span>
                          - 
-                        <time class="li-article-date">Thursday, September 13, 2012</time>
+                        <time class="li-article-date">Wednesday, July 1, 2015</time>
                     </header>
                     <section>
                         
 
-<p>Misc notes and snippets in a <em>Field Notes</em> style</p>
+<p>Simple method that iterates a hash and any string values that contain an asterisk
+are changed to a percent sign.  It will <em>not</em> iterate to sub hashes.</p>
 
-<h2 id="create-db-user:a34e8838774afbd86c31d4cce476018f">Create DB / User</h2>
+<pre><code class="language-ruby">def fix_asterisks hash
+  hash = hash.dup
+  hash.each_pair do |key, val|
+    if val.is_a?(String) &amp;&amp; val =~ /\*/
+      hash[key] = val.gsub(/\*/, '%')
+    end
+  end
+end
 
-<p>Make sure the DB exists with a &ldquo;mysqladmin create jira&rdquo; first</p>
-
-<pre><code class="language-sql">-- Create User
-CREATE USER 'jira'@'localhost' IDENTIFIED BY 'password';
-
--- Grant root on jira DB
-GRANT ALL PRIVILEGES ON jira.* TO 'jira'@'localhost' WITH GRANT OPTION;
-FLUSH PRIVILEGES;
-
--- Grant root on all DBs/tables
-GRANT ALL PRIVILEGES ON *.* TO 'jira'@'localhost' WITH GRANT OPTION;
+def controller_action
+  query = QueryObject.new(fix_asterisks(params[:query]))
+end
 </code></pre>
 
-<h2 id="dates:a34e8838774afbd86c31d4cce476018f">Dates</h2>
+<h3 id="examples:340c4c4ca88c80de8fce1a1ce85fedac">Examples</h3>
 
-<p><a href="http://dev.mysql.com/doc/refman/5.5/en/date-and-time-functions.html">http://dev.mysql.com/doc/refman/5.5/en/date-and-time-functions.html</a></p>
+<pre><code class="language-ruby">def controller_action
+  query = QueryObject.new(fix_asterisks(params[:query]))
+  ...
 
-<pre><code class="language-sql">SELECT DATE_FORMAT(created_at,GET_FORMAT(DATE,'USA')) FROM users ;
--- 12.07.2011
-</code></pre>
+  # params[:query][:last_name] = &quot;smith*&quot;
+  p query.last_name
+  # =&gt; &quot;smith%&quot;
 
-<h2 id="coderwalls:a34e8838774afbd86c31d4cce476018f">Coderwalls</h2>
+  # params[:query][:last_name] = &quot;smith%&quot;
+  p query.last_name
+  # =&gt; &quot;smith%&quot;
 
-<p><a href="https://coderwall.com/p/gfwcfw">Move Homebrew MySql datadir</a></p>
+  # params[:query][:days] = &quot;13&quot;
+  p query.days
+  # =&gt; &quot;13&quot;
+  ...
 
-<h2 id="commands:a34e8838774afbd86c31d4cce476018f">Commands</h2>
-
-<pre><code class="language-sql">use database;
-drop user 'database'@'127.0.0.1';
-show tables;
-describe table;
-select Host,User from user;
-delete from user where Host='192.168.85.70';
-FLUSH PRIVILEGES;
-</code></pre>
-
-<h2 id="update-user-passwords:a34e8838774afbd86c31d4cce476018f">Update User Passwords</h2>
-
-<pre><code class="language-sql">--# Method 1
-use mysql;
-SET PASSWORD FOR 'user-name-here'@'hostname-name-here' = PASSWORD('new-password-here');
-
---# Method 2
-UPDATE mysql.user SET Password=PASSWORD('new-password-here') WHERE User='user-name-here' AND Host='host-name-here';
-FLUSH PRIVILEGES;
-
+  objs = Customer.where(['last_name like ?', query.last_name])
+end
 </code></pre>
 
                     </section>
@@ -156,8 +144,7 @@ FLUSH PRIVILEGES;
             <div class="eight columns">
                 <div class="li-pagination-previous">
                     
-                        Later article<br />
-                        <a href="http://www.erebusbat.com/2012/11/ffmpeg-oneliners/"> FFmpeg Oneliners</a>
+                        &nbsp;
                     
                 </div>
             </div>
@@ -165,7 +152,7 @@ FLUSH PRIVILEGES;
                 <div class="li-pagination-next">
                     
                         Older article<br />
-                        <a href="http://www.erebusbat.com/2012/09/zsh-field-notes/"> ZSH Field Notes</a>
+                        <a href="http://www.erebusbat.com/2015/06/app-wont-install-with-apple-configurator/"> App won&#39;t Install with Apple Configurator</a>
                     
                 </div>
             </div>
