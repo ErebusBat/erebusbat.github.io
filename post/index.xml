@@ -145,6 +145,81 @@ end
     </item>
     
     <item>
+      <title>PostgreSQL Field Notes</title>
+      <link>http://www.erebusbat.com/2014/06/postgresql-field-notes/</link>
+      <pubDate>Fri, 27 Jun 2014 21:17:59 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2014/06/postgresql-field-notes/</guid>
+      <description>&lt;p&gt;PostgreSQL Field Notes&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ export PGDATA=/usr/local/var/postgres
+$ pg_ctl status
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>initdb.txt pgsql initdb</title>
+      <link>http://www.erebusbat.com/2014/06/initdb.txt-pgsql-initdb/</link>
+      <pubDate>Fri, 27 Jun 2014 21:10:29 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2014/06/initdb.txt-pgsql-initdb/</guid>
+      <description>
+
+&lt;h2 id=&#34;postgresql:a6f8c6d51de4deb2312555679b437def&#34;&gt;PostgreSQL&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.postgresql.org/docs/9.4/static/app-initdb.html&#34;&gt;http://www.postgresql.org/docs/9.4/static/app-initdb.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;code&gt;initdb&lt;/code&gt; creates a new PostgreSQL database cluster. A database cluster is a collection of databases that are managed by a single server instance.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;initdb&lt;/code&gt; must be run as the user that will own the server process, because the server needs to have access to the files and directories that initdb creates.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ initdb -D /usr/local/var/postgres                                                                       The files belonging to this database system will be owned by user &amp;quot;aburns&amp;quot;.
+This user must also own the server process.
+
+The database cluster will be initialized with locale &amp;quot;en_US.UTF-8&amp;quot;.
+The default database encoding has accordingly been set to &amp;quot;UTF8&amp;quot;.
+The default text search configuration will be set to &amp;quot;english&amp;quot;.
+
+Data page checksums are disabled.
+
+fixing permissions on existing directory /usr/local/var/postgres ... ok
+creating subdirectories ... ok
+selecting default max_connections ... 100
+selecting default shared_buffers ... 128MB
+creating configuration files ... ok
+creating template1 database in /usr/local/var/postgres/base/1 ... ok
+initializing pg_authid ... ok
+initializing dependencies ... ok
+creating system views ... ok
+loading system objects&#39; descriptions ... ok
+creating collations ... ok
+creating conversions ... ok
+creating dictionaries ... ok
+setting privileges on built-in objects ... ok
+creating information schema ... ok
+loading PL/pgSQL server-side language ... ok
+vacuuming database template1 ... ok
+copying template1 to template0 ... ok
+copying template1 to postgres ... ok
+syncing data to disk ... ok
+
+WARNING: enabling &amp;quot;trust&amp;quot; authentication for local connections
+You can change this by editing pg_hba.conf or using the option -A, or
+--auth-local and --auth-host, the next time you run initdb.
+
+Success. You can now start the database server using:
+
+    postgres -D /usr/local/var/postgres
+or
+    pg_ctl -D /usr/local/var/postgres -l logfile start
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
       <title>AWK Field Notes</title>
       <link>http://www.erebusbat.com/2014/06/awk-field-notes/</link>
       <pubDate>Thu, 19 Jun 2014 13:52:50 -0600</pubDate>
@@ -539,49 +614,6 @@ $ ffmpeg -i video.mkv -i video.mkv \
   -map 0:0 -c:v:0 copy \
   -map 0:1 -ac:1 2 -c:a:0 libfdk_aac \
   -map 1:1 -c:a:1 ac3 video.m4v
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Concatenate files with ffmpeg</title>
-      <link>http://www.erebusbat.com/2012/11/concatenate-files-with-ffmpeg/</link>
-      <pubDate>Sat, 03 Nov 2012 19:16:11 -0600</pubDate>
-      
-      <guid>http://www.erebusbat.com/2012/11/concatenate-files-with-ffmpeg/</guid>
-      <description>
-
-&lt;p&gt;Take a list of media files and concatenate them into a single file.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&#34;references:5eb3cda2ab2d24c54adb700c53258e2d&#34;&gt;References&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://trac.ffmpeg.org/wiki/Concatenate&#34;&gt;FFmpeg Trac Docs&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;for f in *.wav; do echo &amp;quot;file &#39;$f&#39;&amp;quot; &amp;gt;&amp;gt; mylist.txt; done
-ffmpeg -f concat -i mylist.txt -c copy output.wav
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Copy &amp; Convert Single Stream with FFmpeg</title>
-      <link>http://www.erebusbat.com/2012/11/copy--convert-single-stream-with-ffmpeg/</link>
-      <pubDate>Sat, 03 Nov 2012 19:16:11 -0600</pubDate>
-      
-      <guid>http://www.erebusbat.com/2012/11/copy--convert-single-stream-with-ffmpeg/</guid>
-      <description>&lt;p&gt;Assume you have a video with AC3 audio, but you want AC3 &lt;em&gt;and&lt;/em&gt; AAC audio in the output.&lt;/p&gt;
-
-&lt;p&gt;The trick is the double &lt;code&gt;-i&lt;/code&gt; to get another input to pump into &lt;code&gt;-map 1:&lt;/code&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;$ ffmpeg -i video.mkv -i video.mkv \
-  -map 0:1 -c:v:0 copy \                  # Copy video from stream 1
-  -map 0:0 -c:a:0 copy \                  # Copy audio from stream 0
-  -map 1:0 -c:a:1 libfdk_aac -ac:2 2 \    # Convert audio in stream 0 to AAC
-  video.m4v
 &lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>

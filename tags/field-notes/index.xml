@@ -6,8 +6,22 @@
     <description>Recent content in Field Notes on ErebusBat</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 19 Jun 2014 13:52:50 -0600</lastBuildDate>
+    <lastBuildDate>Fri, 27 Jun 2014 21:17:59 -0600</lastBuildDate>
     <atom:link href="http://www.erebusbat.com/tags/field-notes/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>PostgreSQL Field Notes</title>
+      <link>http://www.erebusbat.com/2014/06/postgresql-field-notes/</link>
+      <pubDate>Fri, 27 Jun 2014 21:17:59 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2014/06/postgresql-field-notes/</guid>
+      <description>&lt;p&gt;PostgreSQL Field Notes&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ export PGDATA=/usr/local/var/postgres
+$ pg_ctl status
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
     
     <item>
       <title>AWK Field Notes</title>
