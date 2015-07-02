@@ -6,8 +6,41 @@
     <description>Recent content in Mysql on ErebusBat</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 15 Apr 2014 20:07:28 -0600</lastBuildDate>
+    <lastBuildDate>Thu, 02 Jul 2015 14:49:48 -0600</lastBuildDate>
     <atom:link href="http://www.erebusbat.com/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>MySQL Delete with JOIN and alias</title>
+      <link>http://www.erebusbat.com/2015/07/mysql-delete-with-join-and-alias/</link>
+      <pubDate>Thu, 02 Jul 2015 14:49:48 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2015/07/mysql-delete-with-join-and-alias/</guid>
+      <description>&lt;p&gt;Delete from an aliased table with a join.  Just make sure to use the table
+alias after the delete statement: &lt;code&gt;DELETE c&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;This will delete any customers who do not have both a &lt;code&gt;User&lt;/code&gt; and &lt;code&gt;Draw&lt;/code&gt; record&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;DELETE C
+FROM customers C
+    LEFT OUTER JOIN users U ON C.number=U.customer_number
+WHERE C.number NOT IN (
+    SELECT DISTINCT customer_number FROM customer_draws WHERE customer_number IS NOT NULL
+)
+AND U.id IS NULL;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It can be simplified by using another &lt;code&gt;OUTER&lt;/code&gt; join:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;DELETE C
+FROM customers C
+    LEFT OUTER JOIN users U ON C.number=U.customer_number
+    LEFT OUTER JOIN customer_draws CD ON C.number=CD.customer_number
+WHERE
+    U.id IS NULL AND  -- No User Record
+    CD.id IS NULL;    -- No Draw Record
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
     
     <item>
       <title>MySQL Dump Field Notes</title>

@@ -6,8 +6,41 @@
     <description>Recent content in Posts on ErebusBat</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Jul 2015 10:17:12 -0600</lastBuildDate>
+    <lastBuildDate>Thu, 02 Jul 2015 14:49:48 -0600</lastBuildDate>
     <atom:link href="http://www.erebusbat.com/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>MySQL Delete with JOIN and alias</title>
+      <link>http://www.erebusbat.com/2015/07/mysql-delete-with-join-and-alias/</link>
+      <pubDate>Thu, 02 Jul 2015 14:49:48 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2015/07/mysql-delete-with-join-and-alias/</guid>
+      <description>&lt;p&gt;Delete from an aliased table with a join.  Just make sure to use the table
+alias after the delete statement: &lt;code&gt;DELETE c&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;This will delete any customers who do not have both a &lt;code&gt;User&lt;/code&gt; and &lt;code&gt;Draw&lt;/code&gt; record&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;DELETE C
+FROM customers C
+    LEFT OUTER JOIN users U ON C.number=U.customer_number
+WHERE C.number NOT IN (
+    SELECT DISTINCT customer_number FROM customer_draws WHERE customer_number IS NOT NULL
+)
+AND U.id IS NULL;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It can be simplified by using another &lt;code&gt;OUTER&lt;/code&gt; join:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;DELETE C
+FROM customers C
+    LEFT OUTER JOIN users U ON C.number=U.customer_number
+    LEFT OUTER JOIN customer_draws CD ON C.number=CD.customer_number
+WHERE
+    U.id IS NULL AND  -- No User Record
+    CD.id IS NULL;    -- No Draw Record
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
     
     <item>
       <title>Rails: Allow users to use asterisks as wildcards.</title>
@@ -644,34 +677,6 @@ Function ToggleChartAxisValues(sheetName As String)
         ax.TickLabelPosition = xlTickLabelPositionNone
     End If
 End Function
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Calculating EMA in Excel</title>
-      <link>http://www.erebusbat.com/2013/08/calculating-ema-in-excel/</link>
-      <pubDate>Thu, 08 Aug 2013 20:13:07 -0600</pubDate>
-      
-      <guid>http://www.erebusbat.com/2013/08/calculating-ema-in-excel/</guid>
-      <description>
-
-&lt;h4 id=&#34;exponential-moving-average:8409931a967e1b7377cbecc480e552ae&#34;&gt;Exponential Moving Average&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.willowsolutions.com/tips/tips_2002_11.shtml&#34;&gt;http://www.willowsolutions.com/tips/tips_2002_11.shtml&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.willowsolutions.com/tips/tips_2002_11_1.shtml&#34;&gt;http://www.willowsolutions.com/tips/tips_2002_11_1.shtml&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.aaii.com/computerizedinvesting/article/spreadsheet-corner-constructing-moving-averages&#34;&gt;http://www.aaii.com/computerizedinvesting/article/spreadsheet-corner-constructing-moving-averages&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;A simple moving average calculates the average price for a set number of time periods. To calculate a 10 day moving average you would calculate the sum of the closing price for a period of 10 days and divide by 10. On the eleventh day you would add the price for the eleventh day to the average and subtract the price for the first day.&lt;/p&gt;
-
-&lt;p&gt;The formula used to calculate an EMA uses a smoothing constant. The smoothing constant applies the appropriate weighting for the most recent price relative to the previous day’s EMA calculation.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;EMA=(Today’s Last – Yesterday’s EMA) x (SmoothingConstant) + Yesterday’s EMA
-
-# N=EMA Periods
-SmoothingConstant = 2 / (1 + N)
 &lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
