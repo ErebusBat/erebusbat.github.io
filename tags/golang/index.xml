@@ -45,6 +45,33 @@
 &amp;gt;l&amp;lt; 108
 &amp;gt;d&amp;lt; 100
 &lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;full-script:1a90af6c5b320cda1ae891e245fd4f54&#34;&gt;Full Script&lt;/h3&gt;
+
+&lt;p&gt;A full script / application example (copy paste ready).&lt;br /&gt;
+Assumes the file is named &lt;code&gt;dump_char_codes.go&lt;/code&gt;, update static string in &lt;code&gt;log.Fatalf&lt;/code&gt; call for clarity if needed.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;package main
+
+import (
+	&amp;quot;fmt&amp;quot;
+	&amp;quot;log&amp;quot;
+	&amp;quot;os&amp;quot;
+)
+
+func dumpString(str string) {
+	for _, c := range str {
+		fmt.Printf(&amp;quot;&amp;gt;%s&amp;lt; %d\n&amp;quot;, string(c), c)
+	}
+}
+
+func main() {
+	if len(os.Args) != 2 {
+		log.Fatalf(&amp;quot;USAGE: dump_char_codes [string]&amp;quot;)
+	}
+	dumpString(os.Args[1])
+}
+&lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
     
