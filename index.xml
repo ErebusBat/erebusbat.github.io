@@ -6,8 +6,46 @@
     <description>Recent content on ErebusBat</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Jul 2015 14:49:48 -0600</lastBuildDate>
+    <lastBuildDate>Tue, 04 Aug 2015 13:29:12 -0600</lastBuildDate>
     <atom:link href="http://www.erebusbat.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Install TinyTDS Gem on OSX 10.10 Yosemite</title>
+      <link>http://www.erebusbat.com/2015/08/install-tinytds-gem-on-osx-10.10-yosemite/</link>
+      <pubDate>Tue, 04 Aug 2015 13:29:12 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2015/08/install-tinytds-gem-on-osx-10.10-yosemite/</guid>
+      <description>
+
+&lt;p&gt;There are a couple of &lt;a href=&#34;http://stackoverflow.com/questions/26613673/error-installing-tiny-tds-on-osx-10-10-yosemite&#34;&gt;howtos&lt;/a&gt; out there on how to fix the dreaded &lt;strong&gt;ERROR: Failed to build gem native extension.&lt;/strong&gt; when running &lt;code&gt;gem install tiny_tds&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;This one will fix it without having to force link &lt;code&gt;libiconv&lt;/code&gt; which is not a good thing to do.&lt;/p&gt;
+
+&lt;h3 id=&#34;prerequisites:405ae8145516492c8d939bdd28513b34&#34;&gt;Prerequisites&lt;/h3&gt;
+
+&lt;p&gt;First you want to make sure that you have &lt;code&gt;freetds&lt;/code&gt; and &lt;code&gt;libiconv&lt;/code&gt; installed in &lt;a href=&#34;http://brew.sh/&#34;&gt;Homebrew&lt;/a&gt;.  I already had these installed so YMMV on this step:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;brew install libiconv
+brew install freetds
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It is normal for &lt;code&gt;libiconv&lt;/code&gt; to complain that it is keg only, that is the whole point.&lt;/p&gt;
+
+&lt;h3 id=&#34;install-tiny-tds:405ae8145516492c8d939bdd28513b34&#34;&gt;Install tiny_tds&lt;/h3&gt;
+
+&lt;p&gt;Now it is just a simply matter of telling &lt;code&gt;gem install&lt;/code&gt; where &lt;code&gt;libiconv&lt;/code&gt; and &lt;code&gt;freetds&lt;/code&gt; are located.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ gem install tiny_tds -- --with-iconv-dir=$(brew --prefix libiconv) \
+  --with-freetds-dir=$(brew --prefix freetds)
+Building native extensions.  This could take a while...
+Successfully installed tiny_tds-0.6.2
+1 gem installed
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;IMPORTANT&lt;/strong&gt;: Do &lt;em&gt;not&lt;/em&gt; forget the double hyphen (&lt;code&gt;--&lt;/code&gt;) between the gem install
+command and the options.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>MySQL Delete with JOIN and alias</title>
@@ -675,36 +713,6 @@ CSV.new(&#39;string&#39;).method(:flock).source_location
 &lt;p&gt;Note that this won&amp;rsquo;t work on everything, like native compiled code. The &lt;a href=&#34;http://www.ruby-doc.org/core-1.9.3/Method.html&#34;&gt;Method class&lt;/a&gt; has some neat functions, too, like &lt;a href=&#34;http://www.ruby-doc.org/core-1.9.3/Method.html#method-i-owner&#34;&gt;Method#owner&lt;/a&gt; which returns the file where the method is defined.&lt;/p&gt;
 
 &lt;p&gt;EDIT: Also see the &lt;code&gt;__file__&lt;/code&gt; and &lt;code&gt;__line__&lt;/code&gt; and notes for REE in the other answer, they&amp;rsquo;re handy too. &amp;ndash; wg&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Hide/Unhide Chart Axis</title>
-      <link>http://www.erebusbat.com/2013/08/hide/unhide-chart-axis/</link>
-      <pubDate>Fri, 09 Aug 2013 19:02:12 -0600</pubDate>
-      
-      <guid>http://www.erebusbat.com/2013/08/hide/unhide-chart-axis/</guid>
-      <description>
-
-&lt;h2 id=&#34;hide-unhide-chart-axis:a9e8c812db8650e2096509e92c06400a&#34;&gt;Hide/Unhide Chart Axis&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-vbnet&#34;&gt;&#39;// This takes a sheet name, where it is a chart sheet.
-&#39;// If your chart lives on a regular worksheet then you will probably need to add a call to Sheet.ChartObject(&amp;quot;chart name&amp;quot;)
-Function ToggleChartAxisValues(sheetName As String)
-    Dim c As Chart, isHidden As Boolean, ax As Axis
-    Set c = Sheets(sheetName)
-    Set ax = c.Axes(xlValue)
-    isHidden = (ax.TickLabelPosition = xlTickLabelPositionNone)
-
-    If isHidden Then
-        &#39;// Unhide
-        ax.TickLabelPosition = xlTickLabelPositionNextToAxis
-    Else
-        &#39;// Hide
-        ax.TickLabelPosition = xlTickLabelPositionNone
-    End If
-End Function
-&lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
     
