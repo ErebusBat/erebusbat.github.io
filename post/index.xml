@@ -6,8 +6,93 @@
     <description>Recent content in Posts on ErebusBat</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 04 Aug 2015 13:29:12 -0600</lastBuildDate>
+    <lastBuildDate>Sat, 15 Aug 2015 07:02:24 -0600</lastBuildDate>
     <atom:link href="http://www.erebusbat.com/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>tarsnap field notes</title>
+      <link>http://www.erebusbat.com/2015/08/tarsnap-field-notes/</link>
+      <pubDate>Sat, 15 Aug 2015 07:02:24 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2015/08/tarsnap-field-notes/</guid>
+      <description>
+
+&lt;p&gt;My Tarsnap field notes&lt;/p&gt;
+
+&lt;h2 id=&#34;tarsnap:ea69290aa401e179885ab9a1d841c360&#34;&gt;Tarsnap&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# Listing archives stored with tarsnap
+$ tarsnap --list-archives | sort
+
+# Searching for a file in a backup archive:
+$ tarsnap -t -f dotfiles-20150815-120404 | grep &#39;.tmux&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;my-specifics:ea69290aa401e179885ab9a1d841c360&#34;&gt;My Specifics&lt;/h2&gt;
+
+&lt;p&gt;These are notes that are specific to &lt;a href=&#34;http://www.erebusbat.com/2015/08/two-days-with-tarsnap&#34;&gt;my setup&lt;/a&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# View previous backup history
+$ grep -E &#39;^(Not|Creating)&#39; ~/.tarsnap/tarsnapper.log | tail -n 25
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Two days with tarsnap</title>
+      <link>http://www.erebusbat.com/2015/08/two-days-with-tarsnap/</link>
+      <pubDate>Sat, 15 Aug 2015 06:38:32 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2015/08/two-days-with-tarsnap/</guid>
+      <description>
+
+&lt;p&gt;I have been using &lt;a href=&#34;https://www.tarsnap.com&#34;&gt;Tarsnap&lt;/a&gt; in &amp;lsquo;production&amp;rsquo; for two full days now.&lt;/p&gt;
+
+&lt;p&gt;And by production I mean it has been running on my laptop mostly without intervention.&lt;/p&gt;
+
+&lt;p&gt;And by mostly without intervention I mean that I have only had to touch it either out of curiosity or to add missing content.&lt;/p&gt;
+
+&lt;h2 id=&#34;workflow:84f8bed04f63ea3e57f753f8618bbe2d&#34;&gt;Workflow&lt;/h2&gt;
+
+&lt;p&gt;I have compiled &lt;a href=&#34;http://www.erebusbat.com/2015/08/tarsnap-field-notes/&#34;&gt;a page just for tarsnap field notes&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Although tarsnap can easily be run as a one off command or a very custom command in my crontab, it because quickly obvious that this would not scale or maintain well.&lt;/p&gt;
+
+&lt;p&gt;This led me to &lt;a href=&#34;https://github.com/miracle2k/tarsnapper&#34;&gt;Tarsnapper&lt;/a&gt; which is a wrapper around tarsnap which does two things:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Lets you define &amp;ldquo;backup jobs&amp;rdquo; (tarsnap invocations) in a config file,
+though on it&amp;rsquo;s own this has little advantage over just using a a shell
+script.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;The ability to expire old backups using a Grandfather-father-son backup
+scheme. This feature can be used in conjunction with tarsnapper
+backup jobs, or standalone, to be applied to any existing set of
+tarsnap backup archives, regardless of how they have been created.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Currently I have two tarsnapper config files, one for work files and one for personal files, that are invoked via my crontab at three and seven past the hour:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-crontab&#34;&gt;# Personal
+3 * * * * /bin/bash -l -c &#39;/usr/local/bin/tarsnapper -c /Users/erebusbat/.tarsnap/tarsnapper.conf make &amp;gt;&amp;gt; /Users/erebusbat/.tarsnap/tarsnapper.log 2&amp;gt;&amp;amp;1&#39;
+
+# Work
+7 * * * * /bin/bash -l -c &#39;/usr/local/bin/tarsnapper -c /Users/erebusbat/.tarsnap/tarsnapper-whf.conf make &amp;gt;&amp;gt; /Users/erebusbat/.tarsnap/tarsnapper.log 2&amp;gt;&amp;amp;1&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This workflow has worked quite well for the past two days.  I am easily able to pop into one of my tarsnapper config files and tweak a backup target or even add a new one and the next hour it will be in the backup. Tarsnapper appears to be doing a good job at rotating the backups on the schedules i have defined.&lt;/p&gt;
+
+&lt;h2 id=&#34;downsides-changes:84f8bed04f63ea3e57f753f8618bbe2d&#34;&gt;Downsides / Changes&lt;/h2&gt;
+
+&lt;p&gt;The biggest downside so far is that tarsnapper wraps (and therefore hides) raw tarsnap output (like &lt;code&gt;--print-stats&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;The biggest change i am considering at the moment is adding a daily crontab for less volatile targets.  I have not decided if I want to add something like bi-daily, daily, weekly, etc&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;At the longer ranges I am not sure the bandwidth savings would warrant the extra complexity.&lt;/p&gt;
+
+&lt;p&gt;I also have no automated error checking, so if I mess up a directory or tarsnapper config it might skip a whole target :(.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Install TinyTDS Gem on OSX 10.10 Yosemite</title>
@@ -582,137 +667,6 @@ Bundler.require(:group)
 
 gem &#39;nokogiri&#39;, :git =&amp;gt; &#39;git://github.com/tenderlove/nokogiri.git&#39;,
 &lt;/code&gt;&lt;/pre&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Microsoft SQL Server Field Notes</title>
-      <link>http://www.erebusbat.com/2014/03/microsoft-sql-server-field-notes/</link>
-      <pubDate>Wed, 26 Mar 2014 16:41:06 -0600</pubDate>
-      
-      <guid>http://www.erebusbat.com/2014/03/microsoft-sql-server-field-notes/</guid>
-      <description>
-
-&lt;p&gt;Random field notes on Microsoft SQL Server&lt;/p&gt;
-
-&lt;h2 id=&#34;misc-snippets:a34e8838774afbd86c31d4cce476018f&#34;&gt;Misc Snippets&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;-- Create new table from select:
-SELECT [WHFCustomerID], [CustomerNumber], [LastName], [FirstName], [MiddleInitial], [Address], [City], [State], [Zip], [PhoneNumber], [SocialSecurityNumber], [MedicaidID], [EmailAddress], [DateOfBirth], [Sex], [DateCreated], [DateUpdated], [WHFConvertDate], [MayoEventCode], [MayoUpdateDate]
-INTO Roundup_Test.dbo.Customers
-FROM Roundup.[dbo].[Customers];
-
--- Insert into existing table from select
-INSERT INTO Customers
-SELECT [WHFCustomerID], [CustomerNumber], [LastName], [FirstName], [MiddleInitial], [Address], [City], [State], [Zip], [PhoneNumber], [SocialSecurityNumber], [MedicaidID], [EmailAddress], [DateOfBirth], [Sex], [DateCreated], [DateUpdated], [WHFConvertDate], [MayoEventCode], [MayoUpdateDate]
-FROM Roundup.[dbo].[Customers];
-
---Strip time component
-update C
-SET C.DateOfBirth=DATEADD(dd, DATEDIFF(dd, 0, C.DateOfBirth), 0)
-from Customers C
-where C.CustomerNumber like &#39;W85%&#39;;
-
--- Display date as mm/dd/yyyy (text)
-select convert(char(10),getdate(), 0),101) as Today
-select convert(char(10),DATEADD(dd, DATEDIFF(dd, 0, CD.DateCollected), 0),101) as DateCollected
-
--- bundle_participants
-
--- TRUNCATE TABLE Roundup_Test.dbo.bundle_participants;
--- DROP TABLE Roundup_Test.dbo.bundle_participants;
-
-SET IDENTITY_INSERT Roundup_Test.dbo.bundle_participants ON;
-INSERT INTO Roundup_Test.dbo.bundle_participants
-(id,portal_id, family_id, family_seq_number, customer_number, member_id, ssn, dob, last_name, first_name, member_class, relationship_code, relationship_desc, is_split, address, city, state, zipcode, start_date, end_date, agency_code, gender, activation_date, sub_agency1, sub_agency2, is_termed, member_uid, phone_number, email, bundle_id, matched_by, created_at, updated_at )
-SELECT *
-  FROM Roundup.dbo.bundle_participants;
-SET IDENTITY_INSERT Roundup_Test.dbo.bundle_participants OFF;
-
-
-delete from Roundup.dbo.bundle_participants where portal_id=1;
-INSERT INTO Roundup.dbo.bundle_participants
-SELECT  [portal_id], [family_id], [family_seq_number], [customer_number], [member_id], [ssn], [dob], [last_name], [first_name], [member_class], [relationship_code], [relationship_desc], [is_split], [address], [city], [state], [zipcode], [start_date], [end_date], [agency_code], [gender], [activation_date], [sub_agency1], [sub_agency2], [is_termed], [phone_number], [email], [bundle_id], [matched_by], [created_at], [updated_at]
-	FROM Roundup_test.[dbo].[bundle_participants]
- where portal_id=1;
-
-
-
---Update with JOIN
--- http://stackoverflow.com/questions/1604091/update-a-table-using-join-in-sql-server
-UPDATE t1
-  SET t1.CalculatedColumn = t2.[Calculated Column]
-  FROM dbo.Table1 AS t1
-  INNER JOIN dbo.Table2 AS t2
-  ON t1.CommonField = t2.[Common Field]
-  WHERE t1.BatchNo = &#39;110&#39;;
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;ddl-management:a34e8838774afbd86c31d4cce476018f&#34;&gt;DDL/Management&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;-- Find FK References
-SELECT
-    f.name AS ForeignKey,
-    OBJECT_NAME(f.parent_object_id) AS TableName,
-    COL_NAME(fc.parent_object_id,
-    fc.parent_column_id) AS ColumnName,
-    OBJECT_NAME (f.referenced_object_id) AS ReferenceTableName,
-    COL_NAME(fc.referenced_object_id,
-    fc.referenced_column_id) AS ReferenceColumnName
-FROM
-    sys.foreign_keys AS f
-    INNER JOIN sys.foreign_key_columns AS fc ON f.OBJECT_ID = fc.constraint_object_id
-ORDER BY ReferenceTableName;
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Find Method at Runtime</title>
-      <link>http://www.erebusbat.com/2014/03/find-method-at-runtime/</link>
-      <pubDate>Sun, 02 Mar 2014 22:42:40 -0600</pubDate>
-      
-      <guid>http://www.erebusbat.com/2014/03/find-method-at-runtime/</guid>
-      <description>&lt;p&gt;How to find the source location of a Ruby method at runtime.&lt;/p&gt;
-
-&lt;p&gt;Taken from the &lt;a href=&#34;http://stackoverflow.com/questions/175655/how-to-find-where-a-method-is-defined-at-runtime&#34;&gt;Stack Overflow&lt;/a&gt; answer by &lt;a href=&#34;http://stackoverflow.com/users/62140/&#34;&gt;wesgarrison&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;I take no credit for the work.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;# How to find out where a method comes from.
-# Learned this from Dave Thomas while teaching Advanced Ruby Studio
-# Makes the case for separating method definitions into
-# modules, especially when enhancing built-in classes.
-module Perpetrator
-  def crime
-  end
-end
-
-class Fixnum
-  include Perpetrator
-end
-
-p 2.method(:crime)
-#&amp;lt;Method: Fixnum(Perpetrator)#crime&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;If you&amp;rsquo;re on Ruby 1.9+, you can use &lt;a href=&#34;http://www.ruby-doc.org/core-1.9.3/Method.html#method-i-source_location&#34;&gt;&lt;code&gt;source_location&lt;/code&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;require &#39;csv&#39;
-
-p CSV.new(&#39;string&#39;).method(:flock)
-# =&amp;gt; #&amp;lt;Method: CSV#flock&amp;gt;
-
-CSV.new(&#39;string&#39;).method(:flock).source_location
-# =&amp;gt; [&amp;quot;/path/to/ruby/1.9.2-p290/lib/ruby/1.9.1/forwardable.rb&amp;quot;, 180]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Note that this won&amp;rsquo;t work on everything, like native compiled code. The &lt;a href=&#34;http://www.ruby-doc.org/core-1.9.3/Method.html&#34;&gt;Method class&lt;/a&gt; has some neat functions, too, like &lt;a href=&#34;http://www.ruby-doc.org/core-1.9.3/Method.html#method-i-owner&#34;&gt;Method#owner&lt;/a&gt; which returns the file where the method is defined.&lt;/p&gt;
-
-&lt;p&gt;EDIT: Also see the &lt;code&gt;__file__&lt;/code&gt; and &lt;code&gt;__line__&lt;/code&gt; and notes for REE in the other answer, they&amp;rsquo;re handy too. &amp;ndash; wg&lt;/p&gt;
 </description>
     </item>
     

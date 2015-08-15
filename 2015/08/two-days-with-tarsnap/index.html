@@ -5,7 +5,7 @@
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
 
-        <title>Install TinyTDS Gem on OSX 10.10 Yosemite &middot; ErebusBat</title>
+        <title>Two days with tarsnap &middot; ErebusBat</title>
         <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' type='text/css'>
         <link rel="stylesheet" href="http://www.erebusbat.com/libraries/normalize.3.0.1.css" />
         <link rel="stylesheet" href="http://www.erebusbat.com/css/liquorice.css" />
@@ -73,52 +73,70 @@
             <div class="sixteen columns">
                 <article class="li-article">
                     <header class="li-article-header">
-                        <h1 class="li-article-title">Install TinyTDS Gem on OSX 10.10 Yosemite</h1>
+                        <h1 class="li-article-title">Two days with tarsnap</h1>
                         <span class="li-article-taxonomies">
                             
 
                             
                                 with tags
                                 
-                                    <a href="http://www.erebusbat.com/tags/ruby">ruby</a>
+                                    <a href="http://www.erebusbat.com/tags/tech">tech</a>
                                 
-                                    <a href="http://www.erebusbat.com/tags/rails">rails</a>
+                                    <a href="http://www.erebusbat.com/tags/tarsnap">tarsnap</a>
                                 
                             
                         </span>
                          - 
-                        <time class="li-article-date">Tuesday, August 4, 2015</time>
+                        <time class="li-article-date">Saturday, August 15, 2015</time>
                     </header>
                     <section>
                         
 
-<p>There are a couple of <a href="http://stackoverflow.com/questions/26613673/error-installing-tiny-tds-on-osx-10-10-yosemite">howtos</a> out there on how to fix the dreaded <strong>ERROR: Failed to build gem native extension.</strong> when running <code>gem install tiny_tds</code>.</p>
+<p>I have been using <a href="https://www.tarsnap.com">Tarsnap</a> in &lsquo;production&rsquo; for two full days now.</p>
 
-<p>This one will fix it without having to force link <code>libiconv</code> which is not a good thing to do.</p>
+<p>And by production I mean it has been running on my laptop mostly without intervention.</p>
 
-<h3 id="prerequisites:405ae8145516492c8d939bdd28513b34">Prerequisites</h3>
+<p>And by mostly without intervention I mean that I have only had to touch it either out of curiosity or to add missing content.</p>
 
-<p>First you want to make sure that you have <code>freetds</code> and <code>libiconv</code> installed in <a href="http://brew.sh/">Homebrew</a>.  I already had these installed so YMMV on this step:</p>
+<h2 id="workflow:84f8bed04f63ea3e57f753f8618bbe2d">Workflow</h2>
 
-<pre><code class="language-bash">brew install libiconv
-brew install freetds
+<p>I have compiled <a href="/2015/08/tarsnap-field-notes/">a page just for tarsnap field notes</a>.</p>
+
+<p>Although tarsnap can easily be run as a one off command or a very custom command in my crontab, it because quickly obvious that this would not scale or maintain well.</p>
+
+<p>This led me to <a href="https://github.com/miracle2k/tarsnapper">Tarsnapper</a> which is a wrapper around tarsnap which does two things:</p>
+
+<ul>
+<li><p>Lets you define &ldquo;backup jobs&rdquo; (tarsnap invocations) in a config file,
+though on it&rsquo;s own this has little advantage over just using a a shell
+script.</p></li>
+
+<li><p>The ability to expire old backups using a Grandfather-father-son backup
+scheme. This feature can be used in conjunction with tarsnapper
+backup jobs, or standalone, to be applied to any existing set of
+tarsnap backup archives, regardless of how they have been created.</p></li>
+</ul>
+
+<p>Currently I have two tarsnapper config files, one for work files and one for personal files, that are invoked via my crontab at three and seven past the hour:</p>
+
+<pre><code class="language-crontab"># Personal
+3 * * * * /bin/bash -l -c '/usr/local/bin/tarsnapper -c /Users/erebusbat/.tarsnap/tarsnapper.conf make &gt;&gt; /Users/erebusbat/.tarsnap/tarsnapper.log 2&gt;&amp;1'
+
+# Work
+7 * * * * /bin/bash -l -c '/usr/local/bin/tarsnapper -c /Users/erebusbat/.tarsnap/tarsnapper-whf.conf make &gt;&gt; /Users/erebusbat/.tarsnap/tarsnapper.log 2&gt;&amp;1'
 </code></pre>
 
-<p>It is normal for <code>libiconv</code> to complain that it is keg only, that is the whole point.</p>
+<p>This workflow has worked quite well for the past two days.  I am easily able to pop into one of my tarsnapper config files and tweak a backup target or even add a new one and the next hour it will be in the backup. Tarsnapper appears to be doing a good job at rotating the backups on the schedules i have defined.</p>
 
-<h3 id="install-tiny-tds:405ae8145516492c8d939bdd28513b34">Install tiny_tds</h3>
+<h2 id="downsides-changes:84f8bed04f63ea3e57f753f8618bbe2d">Downsides / Changes</h2>
 
-<p>Now it is just a simply matter of telling <code>gem install</code> where <code>libiconv</code> and <code>freetds</code> are located.</p>
+<p>The biggest downside so far is that tarsnapper wraps (and therefore hides) raw tarsnap output (like <code>--print-stats</code>).</p>
 
-<pre><code class="language-bash">$ gem install tiny_tds -- --with-iconv-dir=$(brew --prefix libiconv) \
-  --with-freetds-dir=$(brew --prefix freetds)
-Building native extensions.  This could take a while...
-Successfully installed tiny_tds-0.6.2
-1 gem installed
-</code></pre>
+<p>The biggest change i am considering at the moment is adding a daily crontab for less volatile targets.  I have not decided if I want to add something like bi-daily, daily, weekly, etc&hellip;</p>
 
-<p><strong>IMPORTANT</strong>: Do <em>not</em> forget the double hyphen (<code>--</code>) between the gem install
-command and the options.</p>
+<p>At the longer ranges I am not sure the bandwidth savings would warrant the extra complexity.</p>
+
+<p>I also have no automated error checking, so if I mess up a directory or tarsnapper config it might skip a whole target :(.</p>
 
                     </section>
                 </article>
@@ -133,7 +151,7 @@ command and the options.</p>
                 <div class="li-pagination-previous">
                     
                         Later article<br />
-                        <a href="http://www.erebusbat.com/2015/08/two-days-with-tarsnap/"> Two days with tarsnap</a>
+                        <a href="http://www.erebusbat.com/2015/08/tarsnap-field-notes/"> tarsnap field notes</a>
                     
                 </div>
             </div>
@@ -141,7 +159,7 @@ command and the options.</p>
                 <div class="li-pagination-next">
                     
                         Older article<br />
-                        <a href="http://www.erebusbat.com/2015/07/mysql-delete-with-join-and-alias/"> MySQL Delete with JOIN and alias</a>
+                        <a href="http://www.erebusbat.com/2015/08/install-tinytds-gem-on-osx-10.10-yosemite/"> Install TinyTDS Gem on OSX 10.10 Yosemite</a>
                     
                 </div>
             </div>

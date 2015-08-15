@@ -6,8 +6,37 @@
     <description>Recent content in Field Notes on ErebusBat</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 Jun 2014 21:17:59 -0600</lastBuildDate>
+    <lastBuildDate>Sat, 15 Aug 2015 07:02:24 -0600</lastBuildDate>
     <atom:link href="http://www.erebusbat.com/tags/field-notes/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>tarsnap field notes</title>
+      <link>http://www.erebusbat.com/2015/08/tarsnap-field-notes/</link>
+      <pubDate>Sat, 15 Aug 2015 07:02:24 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2015/08/tarsnap-field-notes/</guid>
+      <description>
+
+&lt;p&gt;My Tarsnap field notes&lt;/p&gt;
+
+&lt;h2 id=&#34;tarsnap:ea69290aa401e179885ab9a1d841c360&#34;&gt;Tarsnap&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# Listing archives stored with tarsnap
+$ tarsnap --list-archives | sort
+
+# Searching for a file in a backup archive:
+$ tarsnap -t -f dotfiles-20150815-120404 | grep &#39;.tmux&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;my-specifics:ea69290aa401e179885ab9a1d841c360&#34;&gt;My Specifics&lt;/h2&gt;
+
+&lt;p&gt;These are notes that are specific to &lt;a href=&#34;http://www.erebusbat.com/2015/08/two-days-with-tarsnap&#34;&gt;my setup&lt;/a&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# View previous backup history
+$ grep -E &#39;^(Not|Creating)&#39; ~/.tarsnap/tarsnapper.log | tail -n 25
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
     
     <item>
       <title>PostgreSQL Field Notes</title>

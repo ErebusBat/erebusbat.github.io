@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tarsnap on ErebusBat</title>
+    <link>http://www.erebusbat.com/tags/tarsnap/</link>
+    <description>Recent content in Tarsnap on ErebusBat</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 15 Aug 2015 07:02:24 -0600</lastBuildDate>
+    <atom:link href="http://www.erebusbat.com/tags/tarsnap/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>tarsnap field notes</title>
+      <link>http://www.erebusbat.com/2015/08/tarsnap-field-notes/</link>
+      <pubDate>Sat, 15 Aug 2015 07:02:24 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2015/08/tarsnap-field-notes/</guid>
+      <description>
+
+&lt;p&gt;My Tarsnap field notes&lt;/p&gt;
+
+&lt;h2 id=&#34;tarsnap:ea69290aa401e179885ab9a1d841c360&#34;&gt;Tarsnap&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# Listing archives stored with tarsnap
+$ tarsnap --list-archives | sort
+
+# Searching for a file in a backup archive:
+$ tarsnap -t -f dotfiles-20150815-120404 | grep &#39;.tmux&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;my-specifics:ea69290aa401e179885ab9a1d841c360&#34;&gt;My Specifics&lt;/h2&gt;
+
+&lt;p&gt;These are notes that are specific to &lt;a href=&#34;http://www.erebusbat.com/2015/08/two-days-with-tarsnap&#34;&gt;my setup&lt;/a&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# View previous backup history
+$ grep -E &#39;^(Not|Creating)&#39; ~/.tarsnap/tarsnapper.log | tail -n 25
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Two days with tarsnap</title>
+      <link>http://www.erebusbat.com/2015/08/two-days-with-tarsnap/</link>
+      <pubDate>Sat, 15 Aug 2015 06:38:32 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2015/08/two-days-with-tarsnap/</guid>
+      <description>
+
+&lt;p&gt;I have been using &lt;a href=&#34;https://www.tarsnap.com&#34;&gt;Tarsnap&lt;/a&gt; in &amp;lsquo;production&amp;rsquo; for two full days now.&lt;/p&gt;
+
+&lt;p&gt;And by production I mean it has been running on my laptop mostly without intervention.&lt;/p&gt;
+
+&lt;p&gt;And by mostly without intervention I mean that I have only had to touch it either out of curiosity or to add missing content.&lt;/p&gt;
+
+&lt;h2 id=&#34;workflow:84f8bed04f63ea3e57f753f8618bbe2d&#34;&gt;Workflow&lt;/h2&gt;
+
+&lt;p&gt;I have compiled &lt;a href=&#34;http://www.erebusbat.com/2015/08/tarsnap-field-notes/&#34;&gt;a page just for tarsnap field notes&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Although tarsnap can easily be run as a one off command or a very custom command in my crontab, it because quickly obvious that this would not scale or maintain well.&lt;/p&gt;
+
+&lt;p&gt;This led me to &lt;a href=&#34;https://github.com/miracle2k/tarsnapper&#34;&gt;Tarsnapper&lt;/a&gt; which is a wrapper around tarsnap which does two things:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Lets you define &amp;ldquo;backup jobs&amp;rdquo; (tarsnap invocations) in a config file,
+though on it&amp;rsquo;s own this has little advantage over just using a a shell
+script.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;The ability to expire old backups using a Grandfather-father-son backup
+scheme. This feature can be used in conjunction with tarsnapper
+backup jobs, or standalone, to be applied to any existing set of
+tarsnap backup archives, regardless of how they have been created.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Currently I have two tarsnapper config files, one for work files and one for personal files, that are invoked via my crontab at three and seven past the hour:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-crontab&#34;&gt;# Personal
+3 * * * * /bin/bash -l -c &#39;/usr/local/bin/tarsnapper -c /Users/erebusbat/.tarsnap/tarsnapper.conf make &amp;gt;&amp;gt; /Users/erebusbat/.tarsnap/tarsnapper.log 2&amp;gt;&amp;amp;1&#39;
+
+# Work
+7 * * * * /bin/bash -l -c &#39;/usr/local/bin/tarsnapper -c /Users/erebusbat/.tarsnap/tarsnapper-whf.conf make &amp;gt;&amp;gt; /Users/erebusbat/.tarsnap/tarsnapper.log 2&amp;gt;&amp;amp;1&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This workflow has worked quite well for the past two days.  I am easily able to pop into one of my tarsnapper config files and tweak a backup target or even add a new one and the next hour it will be in the backup. Tarsnapper appears to be doing a good job at rotating the backups on the schedules i have defined.&lt;/p&gt;
+
+&lt;h2 id=&#34;downsides-changes:84f8bed04f63ea3e57f753f8618bbe2d&#34;&gt;Downsides / Changes&lt;/h2&gt;
+
+&lt;p&gt;The biggest downside so far is that tarsnapper wraps (and therefore hides) raw tarsnap output (like &lt;code&gt;--print-stats&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;The biggest change i am considering at the moment is adding a daily crontab for less volatile targets.  I have not decided if I want to add something like bi-daily, daily, weekly, etc&amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;At the longer ranges I am not sure the bandwidth savings would warrant the extra complexity.&lt;/p&gt;
+
+&lt;p&gt;I also have no automated error checking, so if I mess up a directory or tarsnapper config it might skip a whole target :(.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
