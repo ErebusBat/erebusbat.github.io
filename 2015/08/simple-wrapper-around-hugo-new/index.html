@@ -5,7 +5,7 @@
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
 
-        <title>Install full ffmpeg Homebrew &middot; ErebusBat</title>
+        <title>Simple Wrapper around `hugo new` &middot; ErebusBat</title>
         <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' type='text/css'>
         <link rel="stylesheet" href="http://www.erebusbat.com/libraries/normalize.3.0.1.css" />
         <link rel="stylesheet" href="http://www.erebusbat.com/css/liquorice.css" />
@@ -73,43 +73,71 @@
             <div class="sixteen columns">
                 <article class="li-article">
                     <header class="li-article-header">
-                        <h1 class="li-article-title">Install full ffmpeg Homebrew</h1>
+                        <h1 class="li-article-title">Simple Wrapper around `hugo new`</h1>
                         <span class="li-article-taxonomies">
                             
 
                             
                                 with tags
                                 
-                                    <a href="http://www.erebusbat.com/tags/ffmpeg">ffmpeg</a>
+                                    <a href="http://www.erebusbat.com/tags/hugo">hugo</a>
                                 
                             
                         </span>
                          - 
-                        <time class="li-article-date">Saturday, November 3, 2012</time>
+                        <time class="li-article-date">Monday, August 17, 2015</time>
                     </header>
                     <section>
-                        <p>Will install <code>ffmpeg</code> with all the codecs that I care about (namely fdk-aac).</p>
+                        <p>I am slightly anal about how my files are structured on disk.  To this end I like to date prefix my post files.  <a href="http://hugo.io">Hugo</a> does not easily accommodate this and I found that it was causing me to not write blog posts or quick notes when I otherwise would have.</p>
 
-<pre><code class="language-bash">brew install ffmpeg \
-  --with-fdk-aac \
-  --with-ffplay \
-  --with-freetype \
-  --with-frei0r \
-  --with-libass \
-  --with-libcaca \
-  --with-libvo-aacenc \
-  --with-libvorbis \
-  --with-libvpx \
-  --with-opencore-amr \
-  --with-openjpeg \
-  --with-openssl \
-  --with-opus \
-  --with-rtmpdump \
-  --with-schroedinger \
-  --with-speex \
-  --with-theora \
-  --with-tools
+<p>To fix the issue I wrote a small little script: <a href="https://github.com/ErebusBat/hublog/blob/e5c75ad4336a1f82443c7ece56f18d44eed0ba9b/script/newpost.zsh">newpost.zsh</a>.  I can either call it as a one off, or from a <code>make new</code> to easily kick off new posts.</p>
+
+<p>It does require ZSH as I am using some of the nifty <a href="http://zsh.sourceforge.net/Doc/Release/Expansion.html#Parameter-Expansion">parameter expansion</a> that is unique to ZSH.</p>
+
+<p>Here is an example of a <code>make new</code> run, and the resulting output:</p>
+
+<pre><code class="language-bash">$ make new
+ASK=1 script/newpost.zsh
+TITLE: Hello World
+
+Listing existing post paths:
+content
+└── post
+    ├── apple
+    ├── dev
+    ├── ffmpeg
+    ├── fieldnotes
+    ├── golang
+    ├── linux
+    ├── mssql
+    ├── mysql
+    ├── pgsql
+    ├── rails
+    ├── ruby
+    └── tech
+
+13 directories
+PATH: dev
+hugo new post/dev/2015-0817-hello_world.md
+/data/src/hublog/content/post/dev/2015-0817-hello_world.md created
+
+$ cat /data/src/hublog/content/post/dev/2015-0817-hello_world.md
++++
+Draft = true
+Tags = [&quot;&quot;]
+date = &quot;2015-08-17T09:24:01-06:00&quot;
+title = &quot;2015 0817 hello_world&quot;
+
++++
+
+DO NOT FORGET TO FIX THE TITLE ABOVE
+
+AboveFold
+
+BelowFold
 </code></pre>
+
+<p>As you can see from the output (specificly <code>title</code> in the post frontmatter) it isn&rsquo;t a silver bullet; however it is MUCH easier to remove a date string and type a post title than it is with the inverse.</p>
 
                     </section>
                 </article>
@@ -123,8 +151,7 @@
             <div class="eight columns">
                 <div class="li-pagination-previous">
                     
-                        Later article<br />
-                        <a href="http://www.erebusbat.com/2012/11/ffmpeg-field-notes/"> ffmpeg Field Notes</a>
+                        &nbsp;
                     
                 </div>
             </div>
@@ -132,7 +159,7 @@
                 <div class="li-pagination-next">
                     
                         Older article<br />
-                        <a href="http://www.erebusbat.com/2012/11/concatenate-files-with-ffmpeg/"> Concatenate files with ffmpeg</a>
+                        <a href="http://www.erebusbat.com/2015/08/tarsnap-field-notes/"> tarsnap field notes</a>
                     
                 </div>
             </div>

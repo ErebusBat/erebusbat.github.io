@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Js on ErebusBat</title>
+    <link>http://www.erebusbat.com/tags/js/</link>
+    <description>Recent content in Js on ErebusBat</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 06 Aug 2015 13:02:09 -0600</lastBuildDate>
+    <atom:link href="http://www.erebusbat.com/tags/js/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Get Wunderlist List IDs for Launch Center Pro</title>
+      <link>http://www.erebusbat.com/2015/08/get-wunderlist-list-ids-for-launch-center-pro/</link>
+      <pubDate>Thu, 06 Aug 2015 13:02:09 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2015/08/get-wunderlist-list-ids-for-launch-center-pro/</guid>
+      <description>&lt;p&gt;If you use &lt;a href=&#34;https://itunes.apple.com/us/app/launch-center-pro/id532016360?mt=8&#34;&gt;LaunchCenter Pro&lt;/a&gt; on iOS then you know that you can create an action to open &lt;a href=&#34;https://www.wunderlist.com/&#34;&gt;Wunderlist&lt;/a&gt; to a specific list.  This is very useful as my wife and I use Wunderlist for shared shopping lists.&lt;/p&gt;
+
+&lt;p&gt;There is a minor difficulty when setting up the action:  Getting the list ID.  LaunchCenter Pro&amp;rsquo;s suggestion is to publish the list and then unpublished it to get the ID.  This method does not work for lists shared with you, the publish option is disabled.&lt;/p&gt;
+
+&lt;p&gt;However if you have access to a browser you can use this oneliner of JavaScript in your browser&amp;rsquo;s console and it will output all of your lists and their corresponding ID numbers.&lt;/p&gt;
+
+&lt;p&gt;I used Firefox 39.0 with Firebug, but YMMV; however I would think that it should work with any modern browser console.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;jQuery(&#39;li.list&#39;).each(function(i,e){
+  e = jQuery(e);
+  str = &amp;quot;#&amp;quot; + i + &amp;quot;\t&amp;quot; + e.attr(&#39;rel&#39;) + &amp;quot;\t&amp;quot; + e.attr(&#39;aria-label&#39;); console.log(str);
+})
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

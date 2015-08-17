@@ -101,7 +101,8 @@
 <ul>
 <li><a href="http://www.cs.elte.hu/zsh-manual/zsh_12.html">ZSH Conditional Expressions</a></li>
 <li><a href="http://zanshin.net/2013/09/03/how-to-use-homebrew-zsh-instead-of-max-os-x-default/">http://zanshin.net/2013/09/03/how-to-use-homebrew-zsh-instead-of-max-os-x-default/</a></li>
-<li><a href="http://linux-training.be/files/books/html/fun/index.html"> Some basic but good generic linux docs</a></li>
+<li><a href="http://linux-training.be/files/books/html/fun/index.html">Some basic but good generic linux docs</a></li>
+<li><a href="http://zsh.sourceforge.net/Doc/Release/Expansion.html#Parameter-Expansion">Parameter Expansion</a></li>
 </ul>
 
 <hr />
@@ -149,6 +150,25 @@ echo ${theVar:t:r}  # file
 </tr>
 </tbody>
 </table>
+
+<hr />
+
+<h3 id="substitution:aa364d83240e3026be0190c02971a96d">Substitution</h3>
+
+<pre><code class="language-bash">theVar=&quot;path/to/a/file.txt&quot;
+PTITLE=&quot;Hello World&quot;
+
+# Remove leading `path/to/` prefix, if it exists
+echo ${theVar#post/}  # a/file.txt
+
+# Replace all occurrences of match (space) with given (underscore)
+echo ${PTITLE// /_}   # HELLO_WORLD
+
+# Lowercase/Upercase $PTITLE variable
+echo ${(L)PTITLE}     # hello world
+echo ${(U)PTITLE}     # HELLO WORLD
+
+</code></pre>
 
 <hr />
 

@@ -6,8 +6,67 @@
     <description>Recent content in Posts on ErebusBat</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 15 Aug 2015 07:02:24 -0600</lastBuildDate>
+    <lastBuildDate>Mon, 17 Aug 2015 09:14:59 -0600</lastBuildDate>
     <atom:link href="http://www.erebusbat.com/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Simple Wrapper around `hugo new`</title>
+      <link>http://www.erebusbat.com/2015/08/simple-wrapper-around-hugo-new/</link>
+      <pubDate>Mon, 17 Aug 2015 09:14:59 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2015/08/simple-wrapper-around-hugo-new/</guid>
+      <description>&lt;p&gt;I am slightly anal about how my files are structured on disk.  To this end I like to date prefix my post files.  &lt;a href=&#34;http://hugo.io&#34;&gt;Hugo&lt;/a&gt; does not easily accommodate this and I found that it was causing me to not write blog posts or quick notes when I otherwise would have.&lt;/p&gt;
+
+&lt;p&gt;To fix the issue I wrote a small little script: &lt;a href=&#34;https://github.com/ErebusBat/hublog/blob/e5c75ad4336a1f82443c7ece56f18d44eed0ba9b/script/newpost.zsh&#34;&gt;newpost.zsh&lt;/a&gt;.  I can either call it as a one off, or from a &lt;code&gt;make new&lt;/code&gt; to easily kick off new posts.&lt;/p&gt;
+
+&lt;p&gt;It does require ZSH as I am using some of the nifty &lt;a href=&#34;http://zsh.sourceforge.net/Doc/Release/Expansion.html#Parameter-Expansion&#34;&gt;parameter expansion&lt;/a&gt; that is unique to ZSH.&lt;/p&gt;
+
+&lt;p&gt;Here is an example of a &lt;code&gt;make new&lt;/code&gt; run, and the resulting output:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ make new
+ASK=1 script/newpost.zsh
+TITLE: Hello World
+
+Listing existing post paths:
+content
+└── post
+    ├── apple
+    ├── dev
+    ├── ffmpeg
+    ├── fieldnotes
+    ├── golang
+    ├── linux
+    ├── mssql
+    ├── mysql
+    ├── pgsql
+    ├── rails
+    ├── ruby
+    └── tech
+
+13 directories
+PATH: dev
+hugo new post/dev/2015-0817-hello_world.md
+/data/src/hublog/content/post/dev/2015-0817-hello_world.md created
+
+$ cat /data/src/hublog/content/post/dev/2015-0817-hello_world.md
++++
+Draft = true
+Tags = [&amp;quot;&amp;quot;]
+date = &amp;quot;2015-08-17T09:24:01-06:00&amp;quot;
+title = &amp;quot;2015 0817 hello_world&amp;quot;
+
++++
+
+DO NOT FORGET TO FIX THE TITLE ABOVE
+
+AboveFold
+
+BelowFold
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;As you can see from the output (specificly &lt;code&gt;title&lt;/code&gt; in the post frontmatter) it isn&amp;rsquo;t a silver bullet; however it is MUCH easier to remove a date string and type a post title than it is with the inverse.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>tarsnap field notes</title>
@@ -91,6 +150,28 @@ tarsnap backup archives, regardless of how they have been created.&lt;/p&gt;&lt;
 &lt;p&gt;At the longer ranges I am not sure the bandwidth savings would warrant the extra complexity.&lt;/p&gt;
 
 &lt;p&gt;I also have no automated error checking, so if I mess up a directory or tarsnapper config it might skip a whole target :(.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Get Wunderlist List IDs for Launch Center Pro</title>
+      <link>http://www.erebusbat.com/2015/08/get-wunderlist-list-ids-for-launch-center-pro/</link>
+      <pubDate>Thu, 06 Aug 2015 13:02:09 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2015/08/get-wunderlist-list-ids-for-launch-center-pro/</guid>
+      <description>&lt;p&gt;If you use &lt;a href=&#34;https://itunes.apple.com/us/app/launch-center-pro/id532016360?mt=8&#34;&gt;LaunchCenter Pro&lt;/a&gt; on iOS then you know that you can create an action to open &lt;a href=&#34;https://www.wunderlist.com/&#34;&gt;Wunderlist&lt;/a&gt; to a specific list.  This is very useful as my wife and I use Wunderlist for shared shopping lists.&lt;/p&gt;
+
+&lt;p&gt;There is a minor difficulty when setting up the action:  Getting the list ID.  LaunchCenter Pro&amp;rsquo;s suggestion is to publish the list and then unpublished it to get the ID.  This method does not work for lists shared with you, the publish option is disabled.&lt;/p&gt;
+
+&lt;p&gt;However if you have access to a browser you can use this oneliner of JavaScript in your browser&amp;rsquo;s console and it will output all of your lists and their corresponding ID numbers.&lt;/p&gt;
+
+&lt;p&gt;I used Firefox 39.0 with Firebug, but YMMV; however I would think that it should work with any modern browser console.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-js&#34;&gt;jQuery(&#39;li.list&#39;).each(function(i,e){
+  e = jQuery(e);
+  str = &amp;quot;#&amp;quot; + i + &amp;quot;\t&amp;quot; + e.attr(&#39;rel&#39;) + &amp;quot;\t&amp;quot; + e.attr(&#39;aria-label&#39;); console.log(str);
+})
+&lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
     
@@ -575,97 +656,6 @@ FROM
         AND table_name=&#39;mytable&#39;
     ) AA
 ) A,(SELECT &#39;B KBMBGBTB&#39; units) B;
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Simple Ruby CLI Apps</title>
-      <link>http://www.erebusbat.com/2014/04/simple-ruby-cli-apps/</link>
-      <pubDate>Tue, 08 Apr 2014 21:52:21 -0600</pubDate>
-      
-      <guid>http://www.erebusbat.com/2014/04/simple-ruby-cli-apps/</guid>
-      <description>
-
-&lt;h2 id=&#34;see-also:628634f0f24cfc636eac2f4dfbfeb56c&#34;&gt;See Also&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.erebusbat.com/tags/bundler&#34;&gt;bundler&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;general-notes:628634f0f24cfc636eac2f4dfbfeb56c&#34;&gt;General Notes&lt;/h2&gt;
-
-&lt;h2 id=&#34;allow-file-to-be-a-library-script-at-the-same-time:628634f0f24cfc636eac2f4dfbfeb56c&#34;&gt;Allow file to be a library/script at the same time&lt;/h2&gt;
-
-&lt;h3 id=&#34;script-rb:628634f0f24cfc636eac2f4dfbfeb56c&#34;&gt;script.rb&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;###############
-# Entry Point
-###############
-if __FILE__ == $0 then
-  # Setup / Invocation code here
-end
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id=&#34;generic-script-header:628634f0f24cfc636eac2f4dfbfeb56c&#34;&gt;Generic Script Header&lt;/h2&gt;
-
-&lt;p&gt;Sets up Bundler and the current directory to be in the load path.&lt;/p&gt;
-
-&lt;h3 id=&#34;script-rb-1:628634f0f24cfc636eac2f4dfbfeb56c&#34;&gt;script.rb&lt;/h3&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;#!/usr/bin/env ruby
-require &#39;rubygems&#39;
-require &#39;bundler/setup&#39;
-Bundler.require
-$: &amp;lt;&amp;lt; File.dirname(__FILE__) unless $:.include? File.dirname(__FILE__)
-
-###############
-# Entry Point
-###############
-if __FILE__ == $0 then
-  # Setup / Invocation code here
-end
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Ruby Bundler Field Notes</title>
-      <link>http://www.erebusbat.com/2014/04/ruby-bundler-field-notes/</link>
-      <pubDate>Tue, 08 Apr 2014 14:18:07 -0600</pubDate>
-      
-      <guid>http://www.erebusbat.com/2014/04/ruby-bundler-field-notes/</guid>
-      <description>
-
-&lt;h2 id=&#34;links:bc6aa8c0f0fcd2cbdf86dac3c7ca596d&#34;&gt;Links&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://bundler.io/v1.6/bundler_setup.html&#34;&gt; Bundler Setup Docs&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://bundler.io/v1.6/git.html&#34;&gt; Bundler with Git Repos&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://bundler.io/v1.6/gemfile.html&#34;&gt; Gemfile docs&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;setup:bc6aa8c0f0fcd2cbdf86dac3c7ca596d&#34;&gt;Setup&lt;/h2&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;$ bundle init
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4 id=&#34;script-rb:bc6aa8c0f0fcd2cbdf86dac3c7ca596d&#34;&gt;&lt;code&gt;script.rb&lt;/code&gt;&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;#!/usr/bin/env ruby
-require &#39;rubygems&#39;
-require &#39;bundler/setup&#39;
-Bundler.require
-
-# Or
-Bundler.require(:group)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4 id=&#34;gemfile:bc6aa8c0f0fcd2cbdf86dac3c7ca596d&#34;&gt;&lt;code&gt;Gemfile&lt;/code&gt;&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-ruby&#34;&gt;source &#39;https://rubygems.org&#39;    # Default
-
-gem &#39;nokogiri&#39;, :git =&amp;gt; &#39;git://github.com/tenderlove/nokogiri.git&#39;,
 &lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>

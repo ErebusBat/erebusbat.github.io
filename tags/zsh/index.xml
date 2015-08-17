@@ -24,7 +24,8 @@
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;http://www.cs.elte.hu/zsh-manual/zsh_12.html&#34;&gt;ZSH Conditional Expressions&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://zanshin.net/2013/09/03/how-to-use-homebrew-zsh-instead-of-max-os-x-default/&#34;&gt;http://zanshin.net/2013/09/03/how-to-use-homebrew-zsh-instead-of-max-os-x-default/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://linux-training.be/files/books/html/fun/index.html&#34;&gt; Some basic but good generic linux docs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://linux-training.be/files/books/html/fun/index.html&#34;&gt;Some basic but good generic linux docs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://zsh.sourceforge.net/Doc/Release/Expansion.html#Parameter-Expansion&#34;&gt;Parameter Expansion&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;hr /&gt;
@@ -72,6 +73,25 @@ echo ${theVar:t:r}  # file
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&#34;substitution:aa364d83240e3026be0190c02971a96d&#34;&gt;Substitution&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;theVar=&amp;quot;path/to/a/file.txt&amp;quot;
+PTITLE=&amp;quot;Hello World&amp;quot;
+
+# Remove leading `path/to/` prefix, if it exists
+echo ${theVar#post/}  # a/file.txt
+
+# Replace all occurrences of match (space) with given (underscore)
+echo ${PTITLE// /_}   # HELLO_WORLD
+
+# Lowercase/Upercase $PTITLE variable
+echo ${(L)PTITLE}     # hello world
+echo ${(U)PTITLE}     # HELLO WORLD
+
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;hr /&gt;
 

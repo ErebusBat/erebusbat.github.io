@@ -5,7 +5,7 @@
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
 
-        <title>Install full ffmpeg Homebrew &middot; ErebusBat</title>
+        <title>Get Wunderlist List IDs for Launch Center Pro &middot; ErebusBat</title>
         <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' type='text/css'>
         <link rel="stylesheet" href="http://www.erebusbat.com/libraries/normalize.3.0.1.css" />
         <link rel="stylesheet" href="http://www.erebusbat.com/css/liquorice.css" />
@@ -73,42 +73,37 @@
             <div class="sixteen columns">
                 <article class="li-article">
                     <header class="li-article-header">
-                        <h1 class="li-article-title">Install full ffmpeg Homebrew</h1>
+                        <h1 class="li-article-title">Get Wunderlist List IDs for Launch Center Pro</h1>
                         <span class="li-article-taxonomies">
                             
 
                             
                                 with tags
                                 
-                                    <a href="http://www.erebusbat.com/tags/ffmpeg">ffmpeg</a>
+                                    <a href="http://www.erebusbat.com/tags/wunderlist">wunderlist</a>
+                                
+                                    <a href="http://www.erebusbat.com/tags/js">js</a>
+                                
+                                    <a href="http://www.erebusbat.com/tags/launchcenterpro">launchcenterpro</a>
                                 
                             
                         </span>
                          - 
-                        <time class="li-article-date">Saturday, November 3, 2012</time>
+                        <time class="li-article-date">Thursday, August 6, 2015</time>
                     </header>
                     <section>
-                        <p>Will install <code>ffmpeg</code> with all the codecs that I care about (namely fdk-aac).</p>
+                        <p>If you use <a href="https://itunes.apple.com/us/app/launch-center-pro/id532016360?mt=8">LaunchCenter Pro</a> on iOS then you know that you can create an action to open <a href="https://www.wunderlist.com/">Wunderlist</a> to a specific list.  This is very useful as my wife and I use Wunderlist for shared shopping lists.</p>
 
-<pre><code class="language-bash">brew install ffmpeg \
-  --with-fdk-aac \
-  --with-ffplay \
-  --with-freetype \
-  --with-frei0r \
-  --with-libass \
-  --with-libcaca \
-  --with-libvo-aacenc \
-  --with-libvorbis \
-  --with-libvpx \
-  --with-opencore-amr \
-  --with-openjpeg \
-  --with-openssl \
-  --with-opus \
-  --with-rtmpdump \
-  --with-schroedinger \
-  --with-speex \
-  --with-theora \
-  --with-tools
+<p>There is a minor difficulty when setting up the action:  Getting the list ID.  LaunchCenter Pro&rsquo;s suggestion is to publish the list and then unpublished it to get the ID.  This method does not work for lists shared with you, the publish option is disabled.</p>
+
+<p>However if you have access to a browser you can use this oneliner of JavaScript in your browser&rsquo;s console and it will output all of your lists and their corresponding ID numbers.</p>
+
+<p>I used Firefox 39.0 with Firebug, but YMMV; however I would think that it should work with any modern browser console.</p>
+
+<pre><code class="language-js">jQuery('li.list').each(function(i,e){
+  e = jQuery(e);
+  str = &quot;#&quot; + i + &quot;\t&quot; + e.attr('rel') + &quot;\t&quot; + e.attr('aria-label'); console.log(str);
+})
 </code></pre>
 
                     </section>
@@ -124,7 +119,7 @@
                 <div class="li-pagination-previous">
                     
                         Later article<br />
-                        <a href="http://www.erebusbat.com/2012/11/ffmpeg-field-notes/"> ffmpeg Field Notes</a>
+                        <a href="http://www.erebusbat.com/2015/08/two-days-with-tarsnap/"> Two days with tarsnap</a>
                     
                 </div>
             </div>
@@ -132,7 +127,7 @@
                 <div class="li-pagination-next">
                     
                         Older article<br />
-                        <a href="http://www.erebusbat.com/2012/11/concatenate-files-with-ffmpeg/"> Concatenate files with ffmpeg</a>
+                        <a href="http://www.erebusbat.com/2015/08/install-tinytds-gem-on-osx-10.10-yosemite/"> Install TinyTDS Gem on OSX 10.10 Yosemite</a>
                     
                 </div>
             </div>
