@@ -6,8 +6,192 @@
     <description>Recent content in Posts on ErebusBat</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 17 Aug 2015 09:14:59 -0600</lastBuildDate>
+    <lastBuildDate>Wed, 19 Aug 2015 13:26:07 -0600</lastBuildDate>
     <atom:link href="http://www.erebusbat.com/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>More flexible tarsnap backups with a Makefile</title>
+      <link>http://www.erebusbat.com/2015/08/more-flexible-tarsnap-backups-with-a-makefile/</link>
+      <pubDate>Wed, 19 Aug 2015 13:26:07 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2015/08/more-flexible-tarsnap-backups-with-a-makefile/</guid>
+      <description>
+
+&lt;p&gt;Better tarsnap backup management by using a Makefile.&lt;/p&gt;
+
+&lt;p&gt;Last time I &lt;a href=&#34;http://www.erebusbat.com/2015/08/two-days-with-tarsnap&#34;&gt;wrote about tarsnap&lt;/a&gt; I had just started using &lt;a href=&#34;https://github.com/miracle2k/tarsnapper&#34;&gt;Tarsnapper&lt;/a&gt;, which is an awesome wrapper around the even more awesome tarsnap utility.&lt;/p&gt;
+
+&lt;p&gt;I found my scheduling and task management still slightly wanting, as I mentioned at the end of my last post.&lt;/p&gt;
+
+&lt;p&gt;I decided to simplify (really it &lt;strong&gt;is&lt;/strong&gt; simpler, I promise!) by only having one crontab entry per timeframe (daily/hourly).&lt;/p&gt;
+
+&lt;p&gt;I don&amp;rsquo;t really foresee needing any less frequent backups than daily.  Tarsnap will store how ever long back I tell it to (via tarsnapper), the main reason is to not waste disk/time/bandwidth on things that are not as volatile and just don&amp;rsquo;t need to be backed up on a hourly schedule.&lt;/p&gt;
+
+&lt;p&gt;I can easily add or remove targets as needed, or change behavior by simply editing the &lt;code&gt;Makefile&lt;/code&gt;.  This means I am only focusing on this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-makefile&#34;&gt;...
+# Period based targets
+daily: aab work notify
+hourly: aab-hourly work-hourly notify
+
+# Actual Targets
+pers: personal
+personal: aab-hourly
+
+aab: aab-hourly aab-daily
+aab-hourly:
+	@$(call snaprun,aab-hour.conf,$(TARGET))
+aab-daily:
+	@$(call snaprun,aab-day.conf,$(TARGET))
+...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;All the calling is abstracted out to the &lt;code&gt;snaprun&lt;/code&gt; user defined function in the makefile.&lt;/p&gt;
+
+&lt;h1 id=&#34;scheduling:6dbc4d52f76daba0ff368d27de3be2ff&#34;&gt;Scheduling&lt;/h1&gt;
+
+&lt;p&gt;My updated crontab looks something like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-cron&#34;&gt;3 0-15,17-23 * * * /bin/bash -l -c &#39;cd /Users/ErebusBat/.tarsnap &amp;amp;&amp;amp; make hourly &amp;gt;&amp;gt; /Users/ErebusBat/.tarsnap/tarsnapper.log 2&amp;gt;&amp;amp;1&#39;
+3 16         * * * /bin/bash -l -c &#39;cd /Users/ErebusBat/.tarsnap &amp;amp;&amp;amp; make daily  &amp;gt;&amp;gt; /Users/ErebusBat/.tarsnap/tarsnapper.log 2&amp;gt;&amp;amp;1&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Other than the time differences, the only change is the makefile target.&lt;/p&gt;
+
+&lt;p&gt;I needed two different lines because I made the choice to have a daily backup imply an hourly backup.  This was so that I didn&amp;rsquo;t have two processes running at the same time.  Tarsnap would fail in that event and one of the backups would ultimately fail.&lt;/p&gt;
+
+&lt;p&gt;I chose 4pm as my daily time because it provides the time when most of my daily work output would have been done AND the most likely time my laptop would still be on.  Sometimes if I take it home and then do not get on it then it would not be powered up for a late night backup.&lt;/p&gt;
+
+&lt;p&gt;Another benefit of this design is my work back will run as soon as my personal backup is finished.  Before this change then, best case, my work backup would wait until the given time in cron to activate.  Worst case if my personal was not finished then the work backup would fail (due to an ongoing tarsnap transaction).&lt;/p&gt;
+
+&lt;h1 id=&#34;manual:6dbc4d52f76daba0ff368d27de3be2ff&#34;&gt;Manual&lt;/h1&gt;
+
+&lt;p&gt;Sometimes you make a change and you want it backed up right away.  I still have that ability:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;TARGET=blog make aab work
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That will process only the tarsnapper &lt;code&gt;src&lt;/code&gt; target, regardless if it is personal or work, it might look something like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;################################################################################
+## Started aab-hourly - Wed Aug 19 13:52:09 MDT 2015
+##     /Users/aburns/.tarsnap/conf.d/aab-hour.conf
+################################################################################
+Error: not defined in the config file: blog
+############### END - aab-hourly - Wed Aug 19 13:52:09 MDT 2015
+
+
+
+################################################################################
+## Started aab-daily - Wed Aug 19 13:52:09 MDT 2015
+##     /Users/aburns/.tarsnap/conf.d/aab-day.conf
+################################################################################
+Creating backup blog: /horcrux/blog-20150819-195209
+3 backups are matching
+1 of those can be deleted
+Deleting /horcrux/blog-20150819-185254
+############### END - aab-daily - Wed Aug 19 13:52:47 MDT 2015
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I got an error (that is why the &lt;code&gt;|| true&lt;/code&gt; is on the tarsnapper line in the makefile) because blog is only in the daily target.  But that is OK in this event.&lt;/p&gt;
+
+&lt;h2 id=&#34;full-makefile:6dbc4d52f76daba0ff368d27de3be2ff&#34;&gt;Full Makefile&lt;/h2&gt;
+
+&lt;p&gt;I am quite happy how this came out. I believe it is a perfect mixture of simplicity/power/flexability.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-Makefile&#34;&gt;####################################################################
+## Defines
+####################################################################
+HOME = /Users/ErebusBat
+CONF_ROOT = $(HOME)/.tarsnap/conf.d
+NOTIFY = /Users/ErebusBat/bin/notify
+TARSNAPPER = /usr/local/bin/tarsnapper
+
+################################################################################
+## Targets
+################################################################################
+default: help
+help:
+	$(info $(HELPTEXT))
+	@echo &amp;quot;&amp;quot;
+
+# Period based targets
+daily: aab work notify
+hourly: aab-hourly work-hourly notify
+
+# Actual Targets
+pers: personal
+personal: aab-hourly
+
+aab: aab-hourly aab-daily
+aab-hourly:
+	@$(call snaprun,aab-hour.conf,$(TARGET))
+aab-daily:
+	@$(call snaprun,aab-day.conf,$(TARGET))
+
+
+work: work-hourly work-daily
+work-hourly:
+	@$(call snaprun,work-hour.conf,$(TARGET))
+work-daily:
+	@$(call snaprun,work-day.conf,$(TARGET))
+
+# Helpers
+notify:
+	$(NOTIFY) &#39;Tarsnap Backups Completed&#39;
+
+
+####################################################################
+## Functions
+####################################################################
+
+# snaprun [tarsnapper conf file] (tarsnapper targets)
+define snaprun
+	echo &amp;quot;\n\n&amp;quot;
+	echo &amp;quot;################################################################################&amp;quot;
+	echo &amp;quot;## Started $@ - $$(date)&amp;quot;
+	echo &amp;quot;##     $(CONF_ROOT)/$(1)&amp;quot;
+	echo &amp;quot;################################################################################&amp;quot;
+	$(TARSNAPPER) -c $(CONF_ROOT)/$(1) make $(2) || true
+	echo &amp;quot;############### END - $@ - $$(date)&amp;quot;
+endef
+
+define HELPTEXT
+####################################################################
+## Tarsnap / Tarsnapper Backup Manager
+####################################################################
+
+This Makefile manages tarsnap backups using tarsnapper job definitions.
+The following targets are available:
+
+TARGETS
+        work = All work targets
+ work-hourly = Only targets that should be backed up hourly
+  work-daily = Only targets that should be backed up daily, impiles hourly
+
+        aab = All aab targets
+ aab-hourly = Only targets that should be backed up hourly
+  aab-daily = Only targets that should be backed up daily, impiles hourly
+
+      daily = All daily targets
+     hourly = All hourly targets
+
+CRONTAB
+  You can call this makefile from crontab:
+
+    3 0-15,17-23 * * * /bin/bash -l -c &#39;cd /Users/ErebusBat/.tarsnap &amp;amp;&amp;amp; make hourly &amp;gt;&amp;gt; /Users/ErebusBat/.tarsnap/tarsnapper.log 2&amp;gt;&amp;amp;1&#39;
+    3 16 * * * /bin/bash -l -c &#39;cd /Users/ErebusBat/.tarsnap &amp;amp;&amp;amp; make daily &amp;gt;&amp;gt; /Users/ErebusBat/.tarsnap/tarsnapper.log 2&amp;gt;&amp;amp;1&#39;
+
+	That will create a backup at three past the hour, with hourly backups being made every hour, except 4pm.  4:03 pm will create a daily backup (which implies an hourly backup)
+
+	4pm was chosen as the most likley time the laptop would still be on.
+endef
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://leanmarketing.ca/wp-content/uploads/2013/01/YO-DAWG-I-HEARD-YOU-LIKE-PROCESSES1.jpg&#34; alt=&#34;yo dawg&#34; /&gt;
+&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Simple Wrapper around `hugo new`</title>
@@ -576,86 +760,6 @@ ssh prodsrv &amp;quot;mysqldump database_production portal_agencies | gzip&amp;q
 # Copy table from production to file on local workstation
 ssh prodsrv &amp;quot;mysqldump database_production --comments widgets \
   | bzip2 -c&amp;quot; &amp;gt; widgets.sql.bz2
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Calculating Table Sizes in MySQL</title>
-      <link>http://www.erebusbat.com/2014/04/calculating-table-sizes-in-mysql/</link>
-      <pubDate>Tue, 15 Apr 2014 13:57:40 -0600</pubDate>
-      
-      <guid>http://www.erebusbat.com/2014/04/calculating-table-sizes-in-mysql/</guid>
-      <description>&lt;nav&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;#links:3e8ba73afe940e0453b56d3dc51e8ddc&#34;&gt;Links&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/nav&gt;
-
-&lt;p&gt;How to calculate table sized in MySQL&lt;/p&gt;
-
-&lt;h6 id=&#34;links:3e8ba73afe940e0453b56d3dc51e8ddc&#34;&gt;Links&lt;/h6&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://stackoverflow.com/a/6474642/3683&#34;&gt;SO: how-can-you-determine-how-much-disk-space-a-particular-mysql-table-is-taking-up&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-sql&#34;&gt;--BYTES
-SELECT (data_length+index_length) tablesize
-FROM information_schema.tables
-WHERE table_schema=&#39;mydb&#39; and table_name=&#39;mytable&#39;;
-
---KILOBYTES
-SELECT (data_length+index_length)/power(1024,1) tablesize_kb
-FROM information_schema.tables
-WHERE table_schema=&#39;mydb&#39; and table_name=&#39;mytable&#39;;
-
---MEGABYTES
-SELECT (data_length+index_length)/power(1024,2) tablesize_mb
-FROM information_schema.tables
-WHERE table_schema=&#39;mydb&#39; and table_name=&#39;mytable&#39;;
-
---GIGABYTES
-SELECT (data_length+index_length)/power(1024,3) tablesize_gb
-FROM information_schema.tables
-WHERE table_schema=&#39;mydb&#39; and table_name=&#39;mytable&#39;;
-
-
---GENERIC
---Here is a generic query where the maximum unit display is TB (TeraBytes)
-SELECT
-    CONCAT(FORMAT(DAT/POWER(1024,pw1),2),&#39; &#39;,SUBSTR(units,pw1*2+1,2)) DATSIZE,
-    CONCAT(FORMAT(NDX/POWER(1024,pw2),2),&#39; &#39;,SUBSTR(units,pw2*2+1,2)) NDXSIZE,
-    CONCAT(FORMAT(TBL/POWER(1024,pw3),2),&#39; &#39;,SUBSTR(units,pw3*2+1,2)) TBLSIZE
-FROM
-(
-    SELECT DAT,NDX,TBL,IF(px&amp;gt;4,4,px) pw1,IF(py&amp;gt;4,4,py) pw2,IF(pz&amp;gt;4,4,pz) pw3
-    FROM
-    (
-        SELECT data_length DAT,index_length NDX,data_length+index_length TBL,
-        FLOOR(LOG(IF(data_length=0,1,data_length))/LOG(1024)) px,
-        FLOOR(LOG(IF(index_length=0,1,index_length))/LOG(1024)) py,
-        FLOOR(LOG(IF(data_length+index_length=0,1,data_length+index_length))/LOG(1024)) pz
-        FROM information_schema.tables
-        WHERE table_schema=&#39;mydb&#39;
-        AND table_name=&#39;mytable&#39;
-    ) AA
-) A,(SELECT &#39;B KBMBGBTB&#39; units) B;
 &lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
