@@ -5,7 +5,7 @@
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
 
-        <title>MySQL Field Notes &middot; ErebusBat</title>
+        <title>TMUX Login Wrapper Script &middot; ErebusBat</title>
         <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' type='text/css'>
         <link rel="stylesheet" href="http://www.erebusbat.com/libraries/normalize.3.0.1.css" />
         <link rel="stylesheet" href="http://www.erebusbat.com/css/liquorice.css" />
@@ -73,76 +73,47 @@
             <div class="sixteen columns">
                 <article class="li-article">
                     <header class="li-article-header">
-                        <h1 class="li-article-title">MySQL Field Notes</h1>
+                        <h1 class="li-article-title">TMUX Login Wrapper Script</h1>
                         <span class="li-article-taxonomies">
                             
 
                             
                                 with tags
                                 
-                                    <a href="http://www.erebusbat.com/tags/mysql">mysql</a>
+                                    <a href="http://www.erebusbat.com/tags/tmux">tmux</a>
                                 
-                                    <a href="http://www.erebusbat.com/tags/field-notes">field-notes</a>
+                                    <a href="http://www.erebusbat.com/tags/vim">vim</a>
                                 
                             
                         </span>
                          - 
-                        <time class="li-article-date">Thursday, September 13, 2012</time>
+                        <time class="li-article-date">Wednesday, August 26, 2015</time>
                     </header>
                     <section>
                         
 
-<p>Misc notes and snippets in a <em>Field Notes</em> style</p>
+<p>After watching a <a href="https://www.youtube.com/watch?v=5r6yzFEXajQ">talk on Vim &amp; TMUX</a> by <a href="https://github.com/nicknisi">Nick Nisi</a> I was inspired to improve on his <a href="https://github.com/nicknisi/dotfiles/blob/master/bin/tm">tm script</a>.</p>
 
-<h2 id="create-db-user:a34e8838774afbd86c31d4cce476018f">Create DB / User</h2>
+<p>Like Nick&rsquo;s original, my script allows me to easily attach to running tmux sessions and create ad hoc new onces. I then added the ability to list any <a href="https://github.com/tmuxinator/tmuxinator">tmuxinator</a> configurations I have.</p>
 
-<p>Make sure the DB exists with a &ldquo;mysqladmin create jira&rdquo; first</p>
+<p>I wanted a workflow where I could easily connect to existing tmux sessions, which Nick&rsquo;s script did great.  However I am already a heavy Tmuxinator user and have several pre-defined configurations (as you can see).</p>
 
-<pre><code class="language-sql">-- Create User
-CREATE USER 'jira'@'localhost' IDENTIFIED BY 'password';
+<p>In the example gif video below you can see the general idea in action (forgive the horrid colors, that is another issue I am working on):</p>
 
--- Grant root on jira DB
-GRANT ALL PRIVILEGES ON jira.* TO 'jira'@'localhost' WITH GRANT OPTION;
-FLUSH PRIVILEGES;
+<p><img src="/img/2015/201508-tmlogin.gif" alt="gif" />
+</p>
 
--- Grant root on all DBs/tables
-GRANT ALL PRIVILEGES ON *.* TO 'jira'@'localhost' WITH GRANT OPTION;
-</code></pre>
+<h1 id="login-shell:1d7a3107e57203900f6e4fc32eccbfc8">Login Shell</h1>
 
-<h2 id="dates:a34e8838774afbd86c31d4cce476018f">Dates</h2>
+<p>I did set this up as my login shell, why?  Well with my current ZSH config it can take a second or two for my prompt to load.  I haven&rsquo;t had time to track down why that is happening.  After my sessions are loaded then I am not spinning up that many shells.</p>
 
-<p><a href="http://dev.mysql.com/doc/refman/5.5/en/date-and-time-functions.html">http://dev.mysql.com/doc/refman/5.5/en/date-and-time-functions.html</a></p>
+<p>However waiting on my slow shell session startup just to turn around and launch tmux to launch more ZSH seemed like a waste. By setting <code>tmlogin</code> as my login shell it spins up instantly.</p>
 
-<pre><code class="language-sql">SELECT DATE_FORMAT(created_at,GET_FORMAT(DATE,'USA')) FROM users ;
--- 12.07.2011
-</code></pre>
+<p>This did cause some minor problems, given that <code>tmlogin</code> is really not a shell.  Exporting my real shell in <code>tmlogin</code> seems to have fixed that.</p>
 
-<h2 id="coderwalls:a34e8838774afbd86c31d4cce476018f">Coderwalls</h2>
+<p>If you find it useful then please drop me a line, it is dirty and hacked together, but it works.</p>
 
-<p><a href="https://coderwall.com/p/gfwcfw">Move Homebrew MySql datadir</a></p>
-
-<h2 id="commands:a34e8838774afbd86c31d4cce476018f">Commands</h2>
-
-<pre><code class="language-sql">use database;
-drop user 'database'@'127.0.0.1';
-show tables;
-describe table;
-select Host,User from user;
-delete from user where Host='192.168.85.70';
-FLUSH PRIVILEGES;
-</code></pre>
-
-<h2 id="update-user-passwords:a34e8838774afbd86c31d4cce476018f">Update User Passwords</h2>
-
-<pre><code class="language-sql">--# Method 1
-use mysql;
-SET PASSWORD FOR 'user-name-here'@'hostname-name-here' = PASSWORD('new-password-here');
-
---# Method 2
-UPDATE mysql.user SET Password=PASSWORD('new-password-here') WHERE User='user-name-here' AND Host='host-name-here';
-FLUSH PRIVILEGES;
-
-</code></pre>
+<p>You can view <a href="https://gist.github.com/ErebusBat/dacc0bcd92d7aa1494f1">the gist here</a>.</p>
 
                     </section>
                 </article>
@@ -156,8 +127,7 @@ FLUSH PRIVILEGES;
             <div class="eight columns">
                 <div class="li-pagination-previous">
                     
-                        Later article<br />
-                        <a href="http://www.erebusbat.com/2012/11/install-full-ffmpeg-homebrew/"> Install full ffmpeg Homebrew</a>
+                        &nbsp;
                     
                 </div>
             </div>
@@ -165,7 +135,7 @@ FLUSH PRIVILEGES;
                 <div class="li-pagination-next">
                     
                         Older article<br />
-                        <a href="http://www.erebusbat.com/2012/09/zsh-field-notes/"> ZSH Field Notes</a>
+                        <a href="http://www.erebusbat.com/2015/08/more-flexible-tarsnap-backups-with-a-makefile/"> More flexible tarsnap backups with a Makefile</a>
                     
                 </div>
             </div>

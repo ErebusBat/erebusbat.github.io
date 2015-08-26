@@ -6,8 +6,41 @@
     <description>Recent content in Posts on ErebusBat</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 19 Aug 2015 13:26:07 -0600</lastBuildDate>
+    <lastBuildDate>Wed, 26 Aug 2015 09:42:56 -0600</lastBuildDate>
     <atom:link href="http://www.erebusbat.com/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>TMUX Login Wrapper Script</title>
+      <link>http://www.erebusbat.com/2015/08/tmux-login-wrapper-script/</link>
+      <pubDate>Wed, 26 Aug 2015 09:42:56 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2015/08/tmux-login-wrapper-script/</guid>
+      <description>
+
+&lt;p&gt;After watching a &lt;a href=&#34;https://www.youtube.com/watch?v=5r6yzFEXajQ&#34;&gt;talk on Vim &amp;amp; TMUX&lt;/a&gt; by &lt;a href=&#34;https://github.com/nicknisi&#34;&gt;Nick Nisi&lt;/a&gt; I was inspired to improve on his &lt;a href=&#34;https://github.com/nicknisi/dotfiles/blob/master/bin/tm&#34;&gt;tm script&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Like Nick&amp;rsquo;s original, my script allows me to easily attach to running tmux sessions and create ad hoc new onces. I then added the ability to list any &lt;a href=&#34;https://github.com/tmuxinator/tmuxinator&#34;&gt;tmuxinator&lt;/a&gt; configurations I have.&lt;/p&gt;
+
+&lt;p&gt;I wanted a workflow where I could easily connect to existing tmux sessions, which Nick&amp;rsquo;s script did great.  However I am already a heavy Tmuxinator user and have several pre-defined configurations (as you can see).&lt;/p&gt;
+
+&lt;p&gt;In the example gif video below you can see the general idea in action (forgive the horrid colors, that is another issue I am working on):&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://www.erebusbat.com/img/2015/201508-tmlogin.gif&#34; alt=&#34;gif&#34; /&gt;
+&lt;/p&gt;
+
+&lt;h1 id=&#34;login-shell:1d7a3107e57203900f6e4fc32eccbfc8&#34;&gt;Login Shell&lt;/h1&gt;
+
+&lt;p&gt;I did set this up as my login shell, why?  Well with my current ZSH config it can take a second or two for my prompt to load.  I haven&amp;rsquo;t had time to track down why that is happening.  After my sessions are loaded then I am not spinning up that many shells.&lt;/p&gt;
+
+&lt;p&gt;However waiting on my slow shell session startup just to turn around and launch tmux to launch more ZSH seemed like a waste. By setting &lt;code&gt;tmlogin&lt;/code&gt; as my login shell it spins up instantly.&lt;/p&gt;
+
+&lt;p&gt;This did cause some minor problems, given that &lt;code&gt;tmlogin&lt;/code&gt; is really not a shell.  Exporting my real shell in &lt;code&gt;tmlogin&lt;/code&gt; seems to have fixed that.&lt;/p&gt;
+
+&lt;p&gt;If you find it useful then please drop me a line, it is dirty and hacked together, but it works.&lt;/p&gt;
+
+&lt;p&gt;You can view &lt;a href=&#34;https://gist.github.com/ErebusBat/dacc0bcd92d7aa1494f1&#34;&gt;the gist here&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>More flexible tarsnap backups with a Makefile</title>
@@ -688,78 +721,6 @@ or
 &lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# Get amount of free mem (in -m MB)
 $ free -m | grep -E &#39;^Mem&#39; | awk &#39;{print $4}&#39;
 $ free -m | awk &#39;/^Mem/ {print $4}&#39;
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>MySQL Dump Field Notes</title>
-      <link>http://www.erebusbat.com/2014/04/mysql-dump-field-notes/</link>
-      <pubDate>Tue, 15 Apr 2014 20:07:28 -0600</pubDate>
-      
-      <guid>http://www.erebusbat.com/2014/04/mysql-dump-field-notes/</guid>
-      <description>
-
-&lt;p&gt;Misc notes and snippets in a &lt;em&gt;Field Notes&lt;/em&gt; style&lt;/p&gt;
-
-&lt;h4 id=&#34;large-tables:88db73746f7b201d5d160d4ae8934898&#34;&gt;Large Tables&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://stackoverflow.com/questions/5666784/how-can-i-slow-down-a-mysql-dump-as-to-not-affect-current-load-on-the-server&#34;&gt;http://stackoverflow.com/questions/5666784/how-can-i-slow-down-a-mysql-dump-as-to-not-affect-current-load-on-the-server&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# http://stackoverflow.com/a/12142501/3683
-mysqldump -u USER -p --single-transaction --quick \
-  --lock-tables=false DATABASE | gzip &amp;gt; OUTPUT.gz
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4 id=&#34;examples:88db73746f7b201d5d160d4ae8934898&#34;&gt;Examples&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;mysqldump [options] [db_name [tbl_name ...]]
-
-# Copy a subset of content to another server (-t no create table, -i add info comments):
-mysqldump -i -t -uroot database_development contents \
-  --where=&amp;quot;url LIKE &#39;corporate/protected%&#39;&amp;quot; \
-  | ssh devsrv &amp;quot;mysql database_production&amp;quot;
-
-mysqldump database_production widgets \
-  | bzip2 -c &amp;gt; production_widgets.sql.bz2
-
-bzcat db/sql/production_widgets.sql.bz2 \
-  | mysql -uroot database_development
-
-# Dump table over SSH tunnel w/o temp file
-ssh prodsrv &amp;quot;mysqldump database_production widgets&amp;quot; \
-  | mysql -uroot database_development
-ssh prodsrv &amp;quot;mysqldump database_production contents&amp;quot; \
-  | mysql -uroot database_development
-
-# Dump table over SSH, compress
-ssh prodsrv &amp;quot;mysqldump database_production widgets \
-  | gzip&amp;quot; \
-  | gzip -d \
-  | mysql -uroot database_development
-
-# Dump table to date/time stamped GPG encrypted file
-mysqldump database_production widgets \
-  | gpg -e -r user@domain.com -o &amp;quot;widgets-$(date +%Y%m%d-%H%M%S).sql.gpg&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h4 id=&#34;move-tables-data-around:88db73746f7b201d5d160d4ae8934898&#34;&gt;Move tables/data around&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# Copy table from local server to remote server, compressing the transport
-mysqldump -uroot database_development portal_agencies \
-  | gzip \
-  | ssh prodsrv &amp;quot;gzip -d | mysql database_production&amp;quot;
-
-# Copy table from remote server to local, compress
-ssh prodsrv &amp;quot;mysqldump database_production portal_agencies | gzip&amp;quot; \
-  | gzip -d \
-  | mysql -uroot database_development
-
-# Copy table from production to file on local workstation
-ssh prodsrv &amp;quot;mysqldump database_production --comments widgets \
-  | bzip2 -c&amp;quot; &amp;gt; widgets.sql.bz2
 &lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
