@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Awk on ErebusBat</title>
-    <link>http://www.erebusbat.com/tags/awk/</link>
-    <description>Recent content in Awk on ErebusBat</description>
+    <title>Syncthing on ErebusBat</title>
+    <link>http://www.erebusbat.com/tags/syncthing/</link>
+    <description>Recent content in Syncthing on ErebusBat</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 31 Aug 2015 14:24:33 -0600</lastBuildDate>
-    <atom:link href="http://www.erebusbat.com/tags/awk/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://www.erebusbat.com/tags/syncthing/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Create CSV of SyncThing Device/ID pairs</title>
@@ -25,31 +25,6 @@
 &lt;p&gt;This is very primitive so it will output a line for each id/name it sees, even if the ID has been seen before, which may or may not be what you want.&lt;/p&gt;
 
 &lt;p&gt;I am no &lt;code&gt;awk&lt;/code&gt; super wizz so I am sure there is a better way to output quoted strings, but this worked.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>AWK Field Notes</title>
-      <link>http://www.erebusbat.com/2014/06/awk-field-notes/</link>
-      <pubDate>Thu, 19 Jun 2014 13:52:50 -0600</pubDate>
-      
-      <guid>http://www.erebusbat.com/2014/06/awk-field-notes/</guid>
-      <description>
-
-&lt;p&gt;Misc notes and snippets in a &lt;em&gt;Field Notes&lt;/em&gt; style&lt;/p&gt;
-
-&lt;h4 id=&#34;links:6929c066a1635d550302642d3d7c34ff&#34;&gt;Links&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://stackoverflow.com/a/6546314/3683&#34;&gt;http://stackoverflow.com/a/6546314/3683&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&#34;quick:6929c066a1635d550302642d3d7c34ff&#34;&gt;Quick&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# Get amount of free mem (in -m MB)
-$ free -m | grep -E &#39;^Mem&#39; | awk &#39;{print $4}&#39;
-$ free -m | awk &#39;/^Mem/ {print $4}&#39;
-&lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
     

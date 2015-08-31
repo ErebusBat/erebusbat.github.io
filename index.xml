@@ -6,8 +6,27 @@
     <description>Recent content on ErebusBat</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 26 Aug 2015 09:42:56 -0600</lastBuildDate>
+    <lastBuildDate>Mon, 31 Aug 2015 14:24:33 -0600</lastBuildDate>
     <atom:link href="http://www.erebusbat.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Create CSV of SyncThing Device/ID pairs</title>
+      <link>http://www.erebusbat.com/2015/08/create-csv-of-syncthing-device/id-pairs/</link>
+      <pubDate>Mon, 31 Aug 2015 14:24:33 -0600</pubDate>
+      
+      <guid>http://www.erebusbat.com/2015/08/create-csv-of-syncthing-device/id-pairs/</guid>
+      <description>&lt;p&gt;How to extract SyncThing Device ID / Name pairs from syncthing log file.&lt;/p&gt;
+
+&lt;p&gt;I was setting up a &lt;a href=&#34;http://www.syncthing.org&#34;&gt;SyncThing&lt;/a&gt; (v0.11.23) cluster this morning and needed a list of my device IDs / names.  Looking at my SyncThing log it was fairly easy to whip up this oneliner:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;grep &amp;quot;name is&amp;quot; /usr/local/var/log/syncthing.log | awk &#39;{print &amp;quot;\&amp;quot;&amp;quot; $5 &amp;quot;\&amp;quot;&amp;quot; &amp;quot;,&amp;quot; $8}&#39; | sort -u
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This is very primitive so it will output a line for each id/name it sees, even if the ID has been seen before, which may or may not be what you want.&lt;/p&gt;
+
+&lt;p&gt;I am no &lt;code&gt;awk&lt;/code&gt; super wizz so I am sure there is a better way to output quoted strings, but this worked.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>TMUX Login Wrapper Script</title>
@@ -696,31 +715,6 @@ Success. You can now start the database server using:
     postgres -D /usr/local/var/postgres
 or
     pg_ctl -D /usr/local/var/postgres -l logfile start
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>AWK Field Notes</title>
-      <link>http://www.erebusbat.com/2014/06/awk-field-notes/</link>
-      <pubDate>Thu, 19 Jun 2014 13:52:50 -0600</pubDate>
-      
-      <guid>http://www.erebusbat.com/2014/06/awk-field-notes/</guid>
-      <description>
-
-&lt;p&gt;Misc notes and snippets in a &lt;em&gt;Field Notes&lt;/em&gt; style&lt;/p&gt;
-
-&lt;h4 id=&#34;links:6929c066a1635d550302642d3d7c34ff&#34;&gt;Links&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://stackoverflow.com/a/6546314/3683&#34;&gt;http://stackoverflow.com/a/6546314/3683&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&#34;quick:6929c066a1635d550302642d3d7c34ff&#34;&gt;Quick&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# Get amount of free mem (in -m MB)
-$ free -m | grep -E &#39;^Mem&#39; | awk &#39;{print $4}&#39;
-$ free -m | awk &#39;/^Mem/ {print $4}&#39;
 &lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
